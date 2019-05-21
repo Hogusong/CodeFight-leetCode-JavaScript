@@ -21,6 +21,31 @@
       P     I
 */
 
+function convertObj(s, rows) {
+  if (rows < 2) return s;
+  let r = 0;
+  let dict = {};
+  let key = 1;
+  for (let row=0; row<rows; row++) {
+    dict[row] = '';
+  }
+  for (let i=0; i<s.length; i++) {
+    dict[r] += s[i];
+    r += key;
+    if (r === rows - 1) {
+      key = -1;
+    } 
+    if (r === 0) {
+      key = 1;
+    }
+  }
+  let str = '';
+  for (let r=0; r<rows; r++) {
+    str += dict[r]
+  }
+  return str;
+}
+
 function conversion(s, rows) {
   if (rows < 2) return s;
   let r = 0;
@@ -47,4 +72,6 @@ function conversion(s, rows) {
 }
 
 console.log(conversion("PAYPALISHIRING", 3));
+console.log(convertObj("PAYPALISHIRING", 3));
 console.log(conversion("PAYPALISHIRING", 4));
+console.log(convertObj("PAYPALISHIRING", 4));
