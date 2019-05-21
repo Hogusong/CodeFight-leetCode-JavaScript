@@ -25,26 +25,18 @@ function conversion(s, rows) {
   if (rows < 2) return s;
   let r = 0;
   let result = [];
-  let direction = 'down';
+  let key = 1;
   for (let i=0; i<rows; i++) {
     result.push([]);
   }
   for (let i=0; i<s.length; i++) {
     result[r].push(s[i])
-    if (direction === 'down') {
-      if (r === rows - 1) {
-        direction = 'up';
-        r--;
-      } else {
-        r++;
-      }
-    } else {
-      if (r === 0) {
-        direction = 'down';
-        r++;
-      } else {
-        r--;
-      }
+    r += key;
+    if (r === rows - 1) {
+      key = -1;
+    } 
+    if (r === 0) {
+      key = 1;
     }
   }
   let str = '';
