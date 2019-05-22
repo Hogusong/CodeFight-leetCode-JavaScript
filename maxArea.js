@@ -21,3 +21,19 @@ var maxAreaBF = function(H) {
 
 input = [1,8,6,2,5,4,8,3,7]
 console.log(maxAreaBF(input));
+
+function findMaxArea(H) {
+  let maxArea = 0, left = 0;
+  let right = H.length - 1;
+  while (left < right) {
+    maxArea = Math.max(maxArea, Math.min(H[left], H[right]) * (right - left));
+    if (H[left] < H[right]) {
+      left++;
+    } else {
+      right--;
+    }
+  }
+  return maxArea;
+}
+
+console.log(findMaxArea(input));
