@@ -85,3 +85,21 @@ function commonPrefixVS(strs) {
 }
 
 console.log(commonPrefixVS(["flower","floa","flight"]));
+
+// Divide and Conquer
+function commonPrefixDC(strs) {
+  if (!strs || strs.length < 1) return '';
+  if (strs.length === 1) return strs[0];
+  const median = Math.floor(strs.length / 2);
+  const left = commonPrefixDC(strs.slice(0, median));
+  const right = commonPrefixDC(strs.slice(median));
+  let end = Math.min(left.length, right.length) ;
+  for (let i=0; i<end; i++) {
+    if (left[i] != right[i]) {
+      end = i;
+    }
+  }
+  return left.substr(0, end)
+}
+
+console.log(commonPrefixDC(["flower","floa","flight"]));
