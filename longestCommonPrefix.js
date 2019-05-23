@@ -28,3 +28,20 @@ function commonPrefixBF(strs) {
 }
 
 console.log(commonPrefixBF(["flower","flow","flight"]));
+
+// Horizontal scanning
+function commonPrefixHS(strs) {
+  if (!strs || strs.length < 1) return '';
+  if (strs.length === 1) return strs[0];
+  let prefix = strs[0];
+  for (let i=1; i<strs.length; i++) {
+    if (prefix.length === 1 && strs[i].indexOf(prefix) != 0) return '';
+    while (strs[i].indexOf(prefix) != 0) {
+      if (prefix.length === 1) return '';
+      prefix = prefix.substr(0, prefix.length-1);          
+    }
+  }
+  return prefix;
+}
+
+console.log(commonPrefixHS(["c","acc","ccc"]));
