@@ -28,3 +28,26 @@ function commonPrefixBF(strs) {
 }
 
 console.log(commonPrefixBF(["flower","flow","flight"]));
+
+function commonPrefixSliding(strs) {
+  if (!strs || strs.length < 1) return '';
+  if (strs.length === 1) return strs[0];
+  let prefix = strs[0];
+  let end = prefix.length;
+  for (let str of strs) {
+    if (end > str.length) {
+        end = str.length;
+    }
+    for (let i=0; i<str.length; i++) {
+      if (i >= end) {
+        break
+      } else if (prefix[i] != str[i]) {
+        end = i;
+        break;
+      }
+    }
+  }
+  return prefix.substr(0, end);
+}
+
+console.log(commonPrefixSliding(["flower","flow","flight"]));
