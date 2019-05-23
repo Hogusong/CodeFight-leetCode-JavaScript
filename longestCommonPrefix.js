@@ -68,7 +68,6 @@ function commonPrefixSW(strs) {
   return prefix.substr(0, end);
 }
 
-console.log(commonPrefixSW(["flower","flow","flight"]));
 
 // Vertical Scanning
 function commonPrefixVS(strs) {
