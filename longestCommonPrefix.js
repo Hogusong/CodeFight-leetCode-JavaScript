@@ -103,3 +103,27 @@ function commonPrefixDC(strs) {
 }
 
 console.log(commonPrefixDC(["flower","floa","flight"]));
+
+// Divide, Conquer and Sliding Window
+function commonPrefixDCS(strs) {
+  if (!strs || strs.length < 1) return '';
+  if (strs.length === 1) return strs[0];
+  return findCommonPrefix(strs, 0, strs.length-1);
+}
+
+function findCommonPrefix(strs, s, e) {
+  if (s === e) return strs[s];
+  const median = Math.floor((e + s) / 2);
+  const left = findCommonPrefix(strs, s, median);
+  const right = findCommonPrefix(strs, median+1, e);
+  let end = Math.min(left.length, right.length) ;
+  for (let i=0; i<end; i++) {
+    if (left[i] != right[i]) {
+      end = i;
+    }
+  }
+  return left.substr(0, end)  
+}
+
+console.log(commonPrefixDCS(["flower","floa","flight"]));
+console.log(commonPrefixDCS(["caa","","a","acb"]));
