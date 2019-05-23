@@ -127,3 +127,43 @@ function findCommonPrefix(strs, s, e) {
 
 console.log(commonPrefixDCS(["flower","floa","flight"]));
 console.log(commonPrefixDCS(["caa","","a","acb"]));
+
+// Divide and Brute Force
+function commonPrefixDBF(strs) {
+  if (!strs || strs.length < 1) return '';
+  if (strs.length === 1) return strs[0];
+  if (strs[0] === '') return '';
+
+  let median = Math.floor(strs[0].length / 2);
+  let found = median > 0 ? false : true;
+  let prefix = strs[0][0];
+  while (!found) {
+    found = true;
+    prefix = strs[0].substr(0, median);
+    for (let i=1; i<strs.length; i++) {
+      if (strs[i].indexOf(prefix) != 0) {
+        found = false;
+        median = Math.floor(median / 2);
+        break;
+      }
+    }
+  }
+  while(found) {
+    median++;
+    prefix = strs[0].substr(0, median);
+    for (let i=1; i<strs.length; i++) {
+      if (strs[i].indexOf(prefix) != 0) {
+        found = false;
+        break;
+      }
+    }
+    if (median === strs[0].length) {
+      return found ? strs[0] : strs[0].substr(0, median-1);
+    }
+  }
+  return strs[0].substr(0, median-1);
+}
+
+console.log(commonPrefixDBF(["flower","floa","flight"]));
+console.log(commonPrefixDBF(["caa","","a","acb"]));
+console.log(commonPrefixDBF(["aa","ab"]));
