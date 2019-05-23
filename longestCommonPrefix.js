@@ -69,3 +69,19 @@ function commonPrefixSW(strs) {
 }
 
 console.log(commonPrefixSW(["flower","flow","flight"]));
+
+// Vertical Scanning
+function commonPrefixVS(strs) {
+  if (strs == null || strs.length == 0) return "";
+  let prefix = strs[0];
+  for (let i = 0; i < prefix.length ; i++) {
+      const c = prefix[i];
+      for (let j = 1; j < strs.length; j ++) {
+          if (!strs[j][i] || strs[j][i] != c)
+              return prefix.substring(0, i);             
+      }
+  }
+  return prefix;
+}
+
+console.log(commonPrefixVS(["flower","floa","flight"]));
