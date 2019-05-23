@@ -45,3 +45,27 @@ function commonPrefixHS(strs) {
 }
 
 console.log(commonPrefixHS(["c","acc","ccc"]));
+
+// Sliding Window
+function commonPrefixSW(strs) {
+  if (!strs || strs.length < 1) return '';
+  if (strs.length === 1) return strs[0];
+  let prefix = strs[0];
+  let end = prefix.length;
+  for (let j=1; j<strs.length; j++) {
+    if (end > strs[j].length) {
+        end = strs[j].length;
+    }
+    for (let i=0; i<strs[j].length; i++) {
+      if (i >= end) {
+        break
+      } else if (prefix[i] != strs[j][i]) {
+        end = i;
+        break;
+      }
+    }
+  }
+  return prefix.substr(0, end);
+}
+
+console.log(commonPrefixSW(["flower","flow","flight"]));
