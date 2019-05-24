@@ -57,4 +57,20 @@ const node1 = new LinkedNode(1, new LinkedNode(4, new LinkedNode(5)));
 const node2 = new LinkedNode(1, new LinkedNode(3, new LinkedNode(4)));
 const node3 = new LinkedNode(2, new LinkedNode(6));
 const lists = [node1, node2, node3];
-console.log(mergeNodeList(lists));
+// console.log(mergeNodeList(lists));
+
+function mergeNodeListDC(lists) {
+  if (lists.length === 0) return null;
+  if (lists.length === 1) return lists[0];
+
+  const temp = [];
+  let index = 0;
+  while (index < lists.length-1) {
+    const node = mergeTwoNodes(lists[index++], lists[index++]);
+    temp.push(node);
+  }
+  if (index < lists.length) temp.push(lists[index]);
+  return mergeNodeListDC([...temp]);
+}
+
+console.log(mergeNodeListDC(lists));
