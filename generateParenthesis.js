@@ -6,7 +6,7 @@
 */
 
 // Brute Force and Recursion
-var generateBT = function(n) {
+var generateBFR = function(n) {
 
   function generateRec(A = []) {
     if (A.length == 2*n) {
@@ -15,19 +15,15 @@ var generateBT = function(n) {
       }
     } else {
       A.push('(')
-      console.log('T', ++t_count, A)
       generateRec(A)
       A.pop()
       A.push(')')
-      console.log('B', ++b_count, A)
       generateRec(A)
       A.pop()
     }
   }
 
   ans = []
-  t_count = 0
-  b_count = 0
   generateRec()
   return ans
 }
@@ -41,4 +37,23 @@ function valid(A) {
   return bal == 0
 }
 
-console.log(generate(2));
+n = 3
+console.log(generateBFR(n));
+
+//  BackTracking and Recursion
+function generateBTR(n) {
+  ans = [];
+  backtrack(n);
+  return ans;
+}
+
+function backtrack(n, S='', left = 0, right = 0) {
+  if (S.length === 2*n) {
+    ans.push(S)
+    return
+  }
+  if (left < n) backtrack(n, S+'(', left+1, right);
+  if (right < left) backtrack(n, S+')', left, right+1);
+}
+
+console.log(generateBTR(n));
