@@ -42,8 +42,10 @@ function swapPairsUsingArray(head) {
   const list = [];
   let curr = head;
   while (curr) {
-    list.push(curr);
+    const node = curr;
     curr = curr.next;
+    node.next = null;
+    list.push(node);
   }
 
   const root = list[1];
