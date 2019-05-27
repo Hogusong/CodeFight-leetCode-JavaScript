@@ -96,8 +96,11 @@ function longestValidParenthesesStack(s) {
 
 //  Extending
 function longestValidParenthesesExt(s) {
+  let start = 0, end = s.length - 1;
+  while (s[start] === ')') {  start++;  }
+  while (s[end] === '(')   {  end--;  }
   let bal = 0, max_len = 0, count = 0;
-  for (let i=0; i<s.length; i++) {
+  for (let i=start; i<=end; i++) {
     count++;
     bal += (s[i] === '(')? 1 : -1;
     
@@ -109,7 +112,7 @@ function longestValidParenthesesExt(s) {
   }
 
   [bal, count] = [0, 0];
-  for (let i=s.length-1; i>=0; i--) {
+  for (let i=end; i>=start; i--) {
     count++;
     bal += (s[i] === '(')? 1 : -1;
     
