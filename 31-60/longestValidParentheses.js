@@ -24,15 +24,16 @@ function longestValidParenthesesBF(s) {
 }
 
 function isValid(s) { 
-  let stack = [];
+  let bal = 0;
   for (let i=0; i<s.length; i++) {
-    if (s[i] === '(') stack.push('(');
-    else if (stack.length > 0 && stack[stack.length-1] === '(') stack.pop();
-    else return false;
+    if (s[i] === '(') bal++;
+    else if (bal > 0) bal--;
+    else return false; 
   }
-  return stack.length === 0;
+  return bal === 0;
 }
 
+//  Dynamic Programming
 function longestValidParenthesesDP(s) {
   let max = 0, i = 0;
   const dp = [];
@@ -50,6 +51,7 @@ function longestValidParenthesesDP(s) {
   return max;
 }
 
+//  Using Stack
 function longestValidParenthesesStack(s) {
   let max = 0, stack = [-1];
   for (let i = 0; i < s.length; i++) {
