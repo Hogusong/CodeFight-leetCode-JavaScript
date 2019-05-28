@@ -20,14 +20,10 @@ function searchInRotated(nums, target) {
   return binarySearch(nums, target, pivot + 1, len - 1)
 };
 
-function findPivot(nums) {
-  let start = 0, end = nums.length - 1;
-  if (nums[start] < nums[end]) return -1;
-  while (end >= start) {
-      const c = Math.floor((start + end) / 2);
-      if (nums[c] > nums[c+1]) return c;
-      if (nums[c] > nums[end]) start = c ;
-      else end = c ;
+function findPivot(arr) {
+  if (arr[0] < arr[arr.length-1]) return -1;
+  for (let i=1; i<arr.length; i++) {
+    if (arr[i-1] > arr[i]) return i-1;
   }
   return -1
 }
