@@ -21,8 +21,8 @@ function searchRange(nums, target) {
 }
 
 function searchRec(nums, target, from, to) {
-  if (from === to) return nums[from] === target ? from : -1;
-  const center = Math.floor((from+to) / 2);
+  if (from > to) return -1;
+  const center = Math.floor((from + to + 1) / 2);
   if (nums[center] > target) return searchRec(nums, target, from, center-1);
   if (nums[center] < target) return searchRec(nums, target, center+1, to);
   return center;
