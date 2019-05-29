@@ -15,14 +15,14 @@ function isValidSudoku(board) {
 
 function isValidRow(arr, value, cols, c) {
   for (let i=0; i<cols; i++) {
-    if (i != c && arr[i] != '.' && value === arr[i]) return false;
+    if (i != c && value === arr[i]) return false;
   }
   return true;
 }
 
 function isValidCol(board, value, rows, r, c) {
   for (let i=0; i<rows; i++) {
-    if (i != r && board[i][c] != '.' && value === board[i][c]) return false;
+    if (i != r && value === board[i][c]) return false;
   }
   return true;
 }
@@ -32,7 +32,7 @@ function isValidSqare(board, value, r, c) {
   const c_from = Math.floor(c/3) * 3;
   for (let i=r_from; i<r_from+3; i++) {
     for (let j=c_from; j<c_from+3; j++) {
-      if ((i != r || j != c) && board[i][j] != '.' && board[i][j] === value) return false;
+      if ((i != r || j != c) && board[i][j] === value) return false;
     }
   } 
   return true;
