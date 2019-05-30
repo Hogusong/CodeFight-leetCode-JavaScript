@@ -24,5 +24,41 @@
 */
 
 function isMatching(s, p) {
+  if (s.length < 1) return p.length === 0 || p === '*';
+  const table = setTable(s.length, p.length);
+  table[0][0] = true;
 
+  for (let j=1; j<=p.length; j++) {
+    if (p[j-1] === '*') table[0][j] = table[0][j-1];
+  }
+  console.log(table)
+
+  for (let i=1; i<=s.length; i++) {
+    for (let j=1; j<=p.length; j++) {
+      if (p[j-1] === '*') {
+        table[i][j] = table[i][j-1] || table[i-1][j];
+      } else if (p[j-1] === '?' || s[i-1] === p[j-1]) {
+        table[i][j] = table[i-1][j-1] ;
+      } else {
+        table[i][j] = false;
+      }
+    }
+  }
+  console.log(table)
+  return table[s.length][p.length];
 }
+
+function setTable(m, n) {
+  const temp = [];
+  for (let i=0; i<=m; i++) {
+    const rows = [];
+    for (let j=0; j<=n; j++) {
+      rows[j] = false;
+    }
+    temp.push(rows);
+  }
+  return temp;
+}
+
+console.log(isMatching('abcde', '*d?'));
+console.log(isMatching('abcde', 'a*e'));
