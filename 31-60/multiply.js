@@ -56,11 +56,11 @@ function combineTwo(L, R) {
   return temp;
 }
 
-function multiply2(a, b) {
-  if ((a | 0) == 0 || (b | 0) == 0) return '0';
+function multiply2(num1, num2) {
+  if (num1 == '0' || num2 == '0') return '0';
 
-  a = a.split('').reverse();
-  b = b.split('').reverse();
+  a = num1.split('').reverse();
+  b = num2.split('').reverse();
   var result = [];
 
   for (var i = 0; a[i] >= 0; i++) {
