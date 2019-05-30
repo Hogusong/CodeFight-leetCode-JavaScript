@@ -59,29 +59,28 @@ function combineTwo(L, R) {
 function multiply2(num1, num2) {
   if (num1 == '0' || num2 == '0') return '0';
 
-  a = num1.split('').reverse();
-  b = num2.split('').reverse();
-  var result = [];
+  a = num1.split('');
+  b = num2.split('');
+  let result = [];
 
-  for (var i = 0; a[i] >= 0; i++) {
-      for (var j = 0; b[j] >= 0; j++) {
-          if (!result[i + j]) {
-              result[i + j] = 0;
-          }
-
-          result[i + j] += a[i] * b[j];
+  for (let i = a.length-1; a[i] >= 0; i--) {
+    for (let j = b.length-1; b[j] >= 0; j--) {
+      if (!result[i + j]) {
+        result[i + j] = 0;
       }
+      result[i + j] += a[i] * b[j];
+    }
   }
 
-  for (var i = 0; result[i] >= 0; i++) {
-      if (result[i] >= 10) {
-          if (!result[i + 1]) {
-              result[i + 1] = 0;
-          }
-
-          result[i + 1] += parseInt(result[i] / 10);
-          result[i] %= 10;
+  result = result.reverse();
+  for (let i = 0; result[i] >= 0; i++) {
+    if (result[i] >= 10) {
+      if (!result[i + 1]) {
+        result[i + 1] = 0;
       }
+      result[i + 1] += parseInt(result[i] / 10);
+      result[i] %= 10;
+    }
   }
 
   return result.reverse().join('');
@@ -96,3 +95,4 @@ n2 = '987654321';           //  "121932631112635269"
 n1 = '9';
 n2 = '99';
 console.log(multiply(n1, n2));
+console.log(multiply2(n1, n2));
