@@ -25,3 +25,22 @@ function trapBF(height) {
 }
 
 console.log(trapBF([0,1,0,2,1,0,1,3,2,1,2,1]));
+
+//  Dynamic Programming
+function trapDP(height) {
+  let ans = 0, len = height.length, l_max = [], r_max = [];
+  l_max[0] = height[0];
+  for (let i=1; i<len; i++) {
+    l_max[i] = Math.max(height[i], l_max[i-1]);
+  }
+  r_max[len-1] = height[len-1];
+  for (let i=len-2; i>= 0; i--) {
+    r_max[i] = Math.max(height[i], r_max[i + 1])
+  }
+  for (let i=1; i<len-1; i++) {
+    ans += Math.min(l_max[i], r_max[i]) - height[i];
+  }
+  return ans;
+}
+
+console.log(trapDP([0,1,0,2,1,0,1,3,2,1,2,1]));
