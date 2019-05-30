@@ -59,12 +59,12 @@ function combineTwo(L, R) {
 function multiply2(num1, num2) {
   if (num1 == '0' || num2 == '0') return '0';
 
-  a = num1.split('');
-  b = num2.split('');
+  a = num1.split('').reverse();
+  b = num2.split('').reverse();
   let result = [];
 
-  for (let i = a.length-1; a[i] >= 0; i--) {
-    for (let j = b.length-1; b[j] >= 0; j--) {
+  for (let i = 0; a[i] >= 0; i++) {
+    for (let j = 0; b[j] >= 0; j++) {
       if (!result[i + j]) {
         result[i + j] = 0;
       }
@@ -72,7 +72,6 @@ function multiply2(num1, num2) {
     }
   }
 
-  result = result.reverse();
   for (let i = 0; result[i] >= 0; i++) {
     if (result[i] >= 10) {
       if (!result[i + 1]) {
@@ -88,11 +87,11 @@ function multiply2(num1, num2) {
 
 n1 = '123456789';
 n2 = '987654321';           //  "121932631112635269"
-// n1 = "96423702883453279"
-// n2 = "72156405165936898"    //  6957587772858372748255887645188542
+n1 = "96423702883453279"
+n2 = "72156405165936898"    //  6957587772858372748255887645188542
 // n1 = '123';
 // n2 = '23';
-n1 = '9';
-n2 = '99';
+// n1 = '9';
+// n2 = '99';
 console.log(multiply(n1, n2));
 console.log(multiply2(n1, n2));
