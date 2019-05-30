@@ -44,3 +44,21 @@ function trapDP(height) {
 }
 
 console.log(trapDP([0,1,0,2,1,0,1,3,2,1,2,1]));
+
+//  Using Point
+function trapUsingPoint(height) {
+  let ans = 0, left = 0, right = height.length - 1;
+  let left_max = 0, right_max = 0;
+  while (left < right) {
+    if (height[left] < height[right]) {
+      height[left] >= left_max ? left_max = height[left] : ans += left_max - height[left];
+      left++;
+    } else {
+      height[right] >= right_max ? right_max = height[right] : ans +=right_max - height[right];
+      right--;
+    }
+  }
+  return ans;
+}
+
+console.log(trapUsingPoint([0,1,0,2,1,0,1,3,2,1,2,1]));
