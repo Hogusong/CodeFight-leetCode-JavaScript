@@ -11,47 +11,88 @@
 */
 
 function multiply(num1, num2) {
-  if (num1 === '0' || num2 === '0') return '0'
-
-  let n1 = +num1, n2 = +num2;
-  if (n1 > n2) [n1, num1, n2, num2] = [n2, num2, n1, num1];
-  let count = 0, ans = '';
-  let jump_count = '1', jump_value = num2;
-
-  while (count < n1) {
-    if (+addTwo(''+count, jump_count) <= n1) {
-      ans = addTwo(ans, jump_value);
-      count = +addTwo(''+count, jump_count);
-      jump_count = addTwo(jump_count, jump_count);
-      jump_value = addTwo(jump_value, jump_value);
-    } else {
-      jump_count = '1';
-      jump_value = num2
-      ans = addTwo(ans, jump_value);
-      count = +addTwo(''+count, '1');
-    }
+  if (num1 === '0' || num2 === '0') return '0';
+  if (num1.length > num2.length) {
+    a = num1.split('');
+    b = num2.split('');  
+  } else {
+    a = num2.split('');
+    b = num1.split('');  
   }
-  return ans;
+  const ans = [];
+  for (let i=a.length-1; i>=0; i--) {
+    const temp = [];
+    for (let k=0; k<a.length-1-i; k++) {
+      temp.push(0);
+    }
+    for (let j=b.length-1; j>=0; j--) {
+      temp.push(a[i]*b[j]);
+    }
+    ans.push(temp);
+  }
+  const result = mergeArr(ans);
+  return result.reverse().join('');
 }
 
-function addTwo(s1, s2) {
-  let i_1 = s1.length-1, i_2 = s2.length-1, up = 0;
-  let ans = '';
-  while (i_1 >= 0 || i_2 >= 0) {
-    const value = (i_1 >= 0 ? +s1[i_1] : 0) + (i_2 >= 0 ? +s2[i_2] : 0) + up;
-    up = Math.floor(value / 10);
-    const v = value % 10;
-    ans = v + ans;
-    i_1--;
-    i_2--;
+function mergeArr(arr) {
+  if (arr.length == 1) return arr[0];
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeArr(arr.slice(0, mid));
+  const right = mergeArr(arr.slice(mid));
+  return combineTwo(left, right);
+}
+
+function combineTwo(L, R) {
+  const temp = [];
+  let idx = 0, up = 0;
+  while (idx < L.length || idx < R.length) {
+    const sum = (idx < L.length ? L[idx] : 0) + (idx < R.length ? R[idx] : 0) + up;
+    const value = sum % 10;
+    up = Math.floor(sum / 10);
+    temp.push(value);
+    idx++;
   }
-  if (up > 0) ans = up + ans;
-  return ans;
+  if (up > 0)  temp.push(up)
+  return temp;
+}
+
+function multiply2(a, b) {
+  if ((a | 0) == 0 || (b | 0) == 0) return '0';
+
+  a = a.split('').reverse();
+  b = b.split('').reverse();
+  var result = [];
+
+  for (var i = 0; a[i] >= 0; i++) {
+      for (var j = 0; b[j] >= 0; j++) {
+          if (!result[i + j]) {
+              result[i + j] = 0;
+          }
+
+          result[i + j] += a[i] * b[j];
+      }
+  }
+
+  for (var i = 0; result[i] >= 0; i++) {
+      if (result[i] >= 10) {
+          if (!result[i + 1]) {
+              result[i + 1] = 0;
+          }
+
+          result[i + 1] += parseInt(result[i] / 10);
+          result[i] %= 10;
+      }
+  }
+
+  return result.reverse().join('');
 }
 
 n1 = '123456789';
 n2 = '987654321';           //  "121932631112635269"
-n1 = "96423702883453279"
-n2 = "72156405165936898"    //  6957587772858372748255887645188542
-                            //  6957587772858389429556486482605809
+// n1 = "96423702883453279"
+// n2 = "72156405165936898"    //  6957587772858372748255887645188542
+// n1 = '123';
+// n2 = '23';
+n1 = '9';
+n2 = '99';
 console.log(multiply(n1, n2));
