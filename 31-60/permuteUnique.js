@@ -62,4 +62,31 @@ function included(T, A) {
   return exist;
 }
 
-console.log(permuteUnique([1,1,2]));
+arr = [1,1,2];
+console.log(permuteUnique(arr));
+
+function uniquePermutate(nums) {
+  if (nums.length < 2) return [nums];
+  let result = [], used = [];
+  for (let i=0; i<nums.length; i++) used[i] = false;
+  nums = nums.sort((a,b) => a - b);
+  permuteRec(result, [], nums, used, nums.length)
+  return result;
+}
+
+function permuteRec(result, temp, nums, used, n) {
+  if (n === 0) {
+    result.push([...temp]);
+    return;
+  }
+  for (let i=0; i<used.length; i++) {
+    if (used[i] || (i > 0 && nums[i] === nums[i-1] && used[i-1])) continue;
+    used[i] = true;
+    temp.push(nums[i]);
+    permuteRec(result, temp, nums, used, n-1);
+    temp.pop();
+    used[i] = false;
+  }
+}
+
+console.log(uniquePermutate(arr));
