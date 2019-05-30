@@ -21,7 +21,37 @@ function permute(nums) {
       }
     }
   }
-  return answer;
+  // return answer;
 }
 
-console.log(permute([1,2,3]));
+arr = [1,2,3,4,5,6,7,8,9]
+console.time('Using Queue');
+console.log(permute(arr));
+console.timeEnd('Using Queue');
+
+function permutateR(nums) {
+  if (nums.length < 2) return [nums];
+  let result = [], used = [];
+  for (let i=0; i<nums.length; i++) used[i] = false;
+  permuteRec(result, [], nums, used, nums.length)
+  // return result;
+}
+
+function permuteRec(result, temp, nums, used, n) {
+  if (n === 0) {
+    result.push([...temp]);
+    return;
+  }
+  for (let i=0; i<used.length; i++) {
+    if (used[i] || (i > 0 && nums[i] === nums[i-1] && used[i-1])) continue;
+    used[i] = true;
+    temp.push(nums[i]);
+    permuteRec(result, temp, nums, used, n-1);
+    temp.pop();
+    used[i] = false;
+  }
+}
+
+console.time('Recursion');
+console.log(permutateR(arr));
+console.timeEnd('Recursion');
