@@ -30,4 +30,22 @@ function canJump(nums) {
 arr = [3,2,1,0,1];
 // arr = [8,2,1,0,1,0,0,0];
 // arr = [3,0,0,0];
+arr = [1,2,0,1]
 console.log(canJump(arr));
+
+//  Scanning
+function canJumpScan(nums) {
+  if (nums.length < 2) return true;
+  if (nums[0] === 0) return false;
+
+  let max_jump = nums[0];
+  for (let i = 1; i < nums.length-1; i++) {
+    max_jump--;
+    if (nums[i] === 0) {
+      if (max_jump < 1) return false;
+    } else {
+      max_jump = Math.max(nums[i], max_jump);
+    }
+  }
+  return true;
+}
