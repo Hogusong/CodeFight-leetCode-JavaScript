@@ -33,7 +33,7 @@ arr = [3,2,1,0,1];
 arr = [1,2,0,1]
 console.log(canJump(arr));
 
-//  Scanning
+//  Scanning ( This is the best in time & space. )
 function canJumpScan(nums) {
   if (nums.length < 2) return true;
   if (nums[0] === 0) return false;
@@ -68,3 +68,55 @@ function canJumpFromPosition(curr_idx, nums) {
 }
 
 console.log(canJumpBT(arr));
+
+//  Dynamin Programming : Top Down
+function canJumpDP_TD(nums) {
+  memo = [];
+  for (let i = 0; i < nums.length; i++) {
+    memo[i] = 'Unknown';
+  }
+  memo[memo.length-1] = 'Good';
+  return canJumpInPosition(0, nums);
+}
+
+function canJumpInPosition(curr_idx, nums) {
+  if (memo[curr_idx] != 'Unknown') {
+    return memo[curr_idx] === 'Good' ? true : false;
+  }
+
+  let max_move = Math.min(curr_idx + nums[curr_idx], nums.length - 1);
+  for (let next = curr_idx + 1; next <= max_move; next++) {
+    if (canJumpInPosition(next, nums)) {
+      memo[curr_idx] = 'Good';
+      return true;
+    }
+  }
+
+  memo[curr_idx] = 'Bad';
+  return false;
+}
+
+console.log(canJumpDP_TD(arr));
+
+//  Dynamin Programming : Bottom Up
+function canJumpDP_BU(nums) {
+  let memo = [];
+  for (let i = 0; i < nums.length; i++) {
+    memo[i] = 'Unknown';
+  }
+  memo[memo.length-1] = 'Good';
+
+  for (let i = nums.length - 2; i >= 0; i--) {
+    let max_move = Math.min(i + nums[i], nums.length - 1);
+    for (let j = i + 1; j <= max_move; j++) {
+      if (memo[j] === 'Good') {
+        memo[i] = 'Good';
+        break;
+      }
+    }
+  }
+
+  return memo[0] === 'Good';
+}
+
+console.log(canJumpDP_BU(arr));
