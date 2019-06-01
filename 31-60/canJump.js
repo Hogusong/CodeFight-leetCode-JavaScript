@@ -49,3 +49,22 @@ function canJumpScan(nums) {
   }
   return true;
 }
+
+console.log(canJumpScan(arr));
+
+//  BackTracking
+function canJumpBT(nums) {
+  return canJumpFromPosition(0, nums)
+}
+
+function canJumpFromPosition(curr_idx, nums) {
+  if (curr_idx === nums.length - 1) return true;
+
+  const max_move = Math.min(curr_idx + nums[curr_idx], nums.length - 1);
+  for (let next = curr_idx + 1; next <= max_move; next++) {
+    if (canJumpFromPosition(next, nums)) return true;
+  }
+  return false;
+}
+
+console.log(canJumpBT(arr));
