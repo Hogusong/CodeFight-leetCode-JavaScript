@@ -42,3 +42,39 @@ function spiralOrder(matrix) {
 matrix = [  [1, 2, 3, 4], [5, 6, 7, 8],  [9, 10, 11, 12]  ];
 matrix = [  [1, 2, 3, 4], [5, 6, 7, 8],  [9, 10, 11, 12], [13, 14, 15, 16]  ];
 console.log(spiralOrder(matrix));
+
+//  Simulation
+function spiralOrderS(matrix) {
+  if (matrix.length < 1) return [];
+  const m = matrix.length,  n = matrix[0].length;
+  let seen = [], ans = [];
+  for (let i = 0; i < m; i++) {
+    const row = [];
+    for (let j = 0; j < n; j++) {
+      row.push(false);
+    }
+    seen.push(row);
+  }
+
+  let dr = [0, 1, 0, -1],  dc = [1, 0, -1, 0];
+  let r = 0, c = 0, di = 0;
+  for (let i = 0; i < m * n; i++) {
+    ans.push(matrix[r][c]);
+    seen[r][c] = true;
+    const cr = r + dr[di];
+    const cc = c + dc[di];
+    if (cr >= 0 && cr < m && cc >= 0 && cc < n && !seen[cr][cc]) {
+      r = cr;
+      c = cc;
+    } else {
+      di = (di + 1) % 4;
+      r += dr[di];
+      c += dc[di];
+    }
+  }
+  return ans;
+}
+
+console.log(spiralOrderS(matrix));
+matrix = [  [ 1, 2, 3 ],  [ 4, 5, 6 ],  [ 7, 8, 9 ]  ];
+console.log(spiralOrderS(matrix));
