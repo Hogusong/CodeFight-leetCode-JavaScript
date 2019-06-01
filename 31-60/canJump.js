@@ -120,3 +120,16 @@ function canJumpDP_BU(nums) {
 }
 
 console.log(canJumpDP_BU(arr));
+
+//  Greedy ( Another best way. )
+function canJumpGreedy(nums) {
+  let last_idx = nums.length - 1;
+  for (let i = nums.length - 2; i >= 0; i--) {
+    if (nums[i] >= last_idx - i) {
+      last_idx = i;
+    }
+  }
+  return last_idx === 0
+}
+
+console.log(canJumpGreedy(arr));
