@@ -69,3 +69,36 @@ function getPath(P, B) {
 
 console.log(uniquePathsBF(3,2));
 console.log(uniquePathsBF(7,3));
+
+function uniquePaths(m, n) {
+  if (m === 1 || n === 1) return 1;
+
+  const arr = [];
+  for (let i = 1; i < n; i++) arr.push('d');
+  for (let i = 1; i < m; i++) arr.push('r');
+
+  let result = [], used = [];
+  for (let i=0; i<arr.length; i++) used[i] = false;
+
+  // arr = arr.sort((a,b) => a - b);   //  do it if needed.
+
+  permuteRec(result, [], arr, used, arr.length);
+  return result.length;
+}
+
+function permuteRec(result, temp, arr, used, n) {
+  if (n === 0) {
+    result.push([...temp]);
+    return;
+  }
+  for (let i = 0; i < used.length; i++) {
+    if (used[i] || (i > 0 && arr[i] === arr[i-1]) && used[i-1]) continue;
+    used[i] = true;
+    temp.push(arr[i]);
+    permuteRec(result, temp, arr, used, n-1);
+    used[i] = false;
+  }
+}
+
+console.log(uniquePaths(3,2));
+console.log(uniquePaths(7,3));
