@@ -102,3 +102,19 @@ function permuteRec(result, temp, arr, used, n) {
 
 console.log(uniquePaths(3,2));
 console.log(uniquePaths(7,3));
+
+//  Dynamic Programming
+function uniquePathsDP(m, n) {
+  dict = {};
+  return uniquePathsRec(m, n);
+}
+
+function uniquePathsRec(m, n) {
+  if (m === 1 || n === 1) return 1;
+  if (!dict[(m-1) + ':' + n]) dict[(m-1) + ':' + n] = uniquePathsRec(m-1, n);
+  if (!dict[m + ':' + (n-1)]) dict[m + ':' + (n-1)] = uniquePathsRec(m, n-1);
+  return  dict[(m-1) + ':' + n] + dict[m + ':' + (n-1)];
+}
+
+console.log(uniquePathsDP(3,2));
+console.log(uniquePathsDP(7,3));
