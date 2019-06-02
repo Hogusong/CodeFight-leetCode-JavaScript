@@ -16,27 +16,27 @@ function getPermutation(n, k) {
   for (let i = 0; i < n; i++) nums[i] = i + 1;
   if (k === 1) return nums.join('');
 
-  let fact = 1
+  let fact = 1    // get factorial of n - 1.
   for (let i = 1; i < n; i++) fact *= i;
-  k--;
+  k--;            // k can be used as index.
 
   result = [];
-  result = getPermute(result, nums, n, k, fact);
+  result = getKthPermute(result, nums, n, k, fact);
   return result.join('')
 }
 
-function getPermute(result, nums, n, k, fact) {
+function getKthPermute(result, nums, n, k, fact) {
   if (nums.length === 1 || n === 1) {
     result.push(nums[0]);
     return result;
   }
-  let num = Math.floor(k / fact) + 1;
-  result.push(nums[num-1]);
-  nums.splice(num-1, 1);
+  let index = Math.floor(k / fact);
+  result.push(nums[index]);
+  nums.splice(index, 1);
   k = k % fact;
   fact = fact / (n - 1);
   n--;
-  return getPermute(result, nums, n, k, fact);
+  return getKthPermute(result, nums, n, k, fact);
 }
 
 console.log(getPermutation(9, 37098));
