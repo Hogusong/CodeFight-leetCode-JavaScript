@@ -118,3 +118,31 @@ function uniquePathsRec(m, n) {
 
 console.log(uniquePathsDP(3,2));
 console.log(uniquePathsDP(7,3));
+
+//  Using Table
+function uniquePathsUT(m, n) {
+  const table = []
+  //  Initialize the table
+  for (let i = 0; i < m; i++) {
+    const row = [];
+    for (let j = 0; j < n; j++) {
+      //  First row and column has only 1 possible path to reach.
+      if (i === 0 || j === 0) row.push(1);
+      //  Temporary set 0 for all other spots.
+      else row.push(0)
+    }
+    table.push(row);
+  }
+
+  //  Calculate possible ways for each spot.
+  for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        table[i][j] = table[i-1][j] + table[i][j-1];
+      }
+  }
+  //  Get the answer from right-bottom corner and return it.
+  return table[m-1][n-1];
+}
+
+console.log(uniquePathsUT(3,2));
+console.log(uniquePathsUT(7,3));
