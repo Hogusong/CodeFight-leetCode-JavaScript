@@ -67,3 +67,31 @@ function climb_Stairs(i, n, memo) {
 console.log(climbStairsRM(5));
 console.log(climbStairsRM(8));
 console.log(climbStairsRM(10));
+
+//  Dynamic Programming with Array
+function climbStairsDPA(n) {
+  const dp = [];
+  dp[1] = 1;
+  dp[2] = 2;
+  for (let i = 3; i <= n; i++) {
+    dp[i] = dp[i-1] + dp[i-2];
+  }
+  return dp[n];
+}
+
+console.log(climbStairsDPA(5));
+console.log(climbStairsDPA(8));
+console.log(climbStairsDPA(10));
+
+function climbStairsFib(n) {
+  if (n === 1) return 1;
+  let first = 1,  second = 2;
+  for (let i = 3; i <= n; i++) {
+    [first, second] = [second, first + second]
+  }
+  return second;
+}
+
+console.log(climbStairsFib(5));
+console.log(climbStairsFib(8));
+console.log(climbStairsFib(10));
