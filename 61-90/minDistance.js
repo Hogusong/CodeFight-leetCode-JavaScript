@@ -73,3 +73,34 @@ function convertObjRec(W1, W2, m, n) {
 }
 
 console.log(minDistanceDPObj(w1, w2));
+
+//  Dynamic Programming using Table
+function minDistanceDPTable(word1, word2) {
+  table = [];
+  for (let i = 0; i <= word1.length; i++) {
+    table[i] = [];
+    for (let j = 0; j <= word2.length; j++) {
+      table[i][j] = '';
+    }
+  }
+  return convertTableRec(word1, word2, 0, 0);
+}
+
+function convertTableRec(W1, W2, i, j) {
+  if (i === W1.length) return W2.length - j;
+  if (j === W2.length) return W1.length - i;
+  if (W1[i] === W2[j]) {
+    if (!table[i][j]) table[i][j] = convertTableRec(W1, W2, i+1, j+1);
+    return table[i][j];
+  }
+  //  Insert
+  if (!table[i+1][j]) table[i+1][j] = convertTableRec(W1, W2, i+1, j);
+  //  Remove
+  if (!table[i][j+1]) table[i][j+1] = convertTableRec(W1, W2, i, j+1);
+  //  Replace
+  if (!table[i+1][j+1]) table[i+1][j+1] = convertTableRec(W1, W2, i+1, j+1);
+
+  return 1 + Math.min(table[i+1][j], table[i+1][j+1], table[i][j+1]);
+}
+
+console.log(minDistanceDPTable(w1, w2));
