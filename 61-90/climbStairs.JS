@@ -29,3 +29,23 @@ function climbStairsBFRec(i, n) {
 console.log(climbStairsBF(5));
 console.log(climbStairsBF(8));
 console.log(climbStairsBF(10));
+
+//  Dynamic Programming and Recursion
+function climbStairsDP(n) {
+  if (n === 1) return 1
+  dict = {}
+  return climbingRec(0, n);
+}
+
+function climbingRec(i, n) {
+  if (i > n) return 0;
+  if (n === i) return 1;
+
+  if (!dict[i+1]) dict[i+1] = climbingRec(i+1, n);
+  if (!dict[i+2]) dict[i+2] = climbingRec(i+2, n);
+  return dict[i+1] + dict[i+2];
+}
+
+console.log(climbStairsDP(5));
+console.log(climbStairsDP(8));
+console.log(climbStairsDP(10));
