@@ -47,3 +47,29 @@ function editDist(W1 , W2 , m, n) {
 w1 = 'sunday';
 w2 = 'saturday';
 console.log(minDistanceDC(w1, w2));
+
+//  Dynamic Programming using Object
+function minDistanceDPObj(word1, word2) {
+  dict = {};
+  return convertObjRec(word1, word2, 0, 0);
+}
+
+function convertObjRec(W1, W2, m, n) {
+  if (m === W1.length) return W2.length - n;
+  if (n === W2.length) return W1.length - m;
+  if (W1[m] === W2[n]) {
+    if (!dict[(m+1) + ':' + (n+1)]) {
+      dict[(m+1) + ':' + (n+1)] = convertObjRec(W1, W2, m+1, n+1);
+    }
+    return dict[(m+1) + ':' + (n+1)];
+  }
+  //  Insert
+  if (!dict[m + ':' + (n+1)])     dict[m + ':' + (n+1)] = convertObjRec(W1, W2, m, n+1);
+  //  Remove
+  if (!dict[(m+1) + ':' + n])     dict[(m+1) + ':' + n] = convertObjRec(W1, W2, m+1, n);
+  //  Replace
+  if (!dict[(m+1) + ':' + (n+1)]) dict[(m+1) + ':' + (n+1)] = convertObjRec(W1, W2, m+1, n+1);
+  return 1 + Math.min(dict[m + ':' + (n+1)], dict[(m+1) + ':' + (n+1)], dict[(m+1) + ':' + n]);
+}
+
+console.log(minDistanceDPObj(w1, w2));
