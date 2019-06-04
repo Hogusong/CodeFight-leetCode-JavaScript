@@ -32,3 +32,27 @@ input = [ [0,1,2,0],
           [3,4,5,2],          
           [1,3,1,5] ]         
 console.log(setZeroes(input));
+
+//  Brute Force: Using O(1) space
+function setZeroesBFO1(matrix) {
+  let SETZERO = null;
+  let R = matrix.length;
+  let C = matrix[0].length;
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    if (matrix[r][c] === 0) {
+      for (let j = 0; j < C; j++) matrix[r][j] = matrix[r][j] != 0 ? SETZERO : matrix[r][j];
+      for (let i = 0; i < R; i++) matrix[i][c] = matrix[i][c] != 0 ? SETZERO : matrix[i][c];
+    }
+  }
+
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    if (matrix[r][c] === SETZERO) matrix[r][c] = 0;
+  }
+
+  return matrix;
+}
+
+input = [ [0,1,2,0], 
+          [3,4,5,2],          
+          [1,3,1,5] ]         
+console.log(setZeroesBFO1(input));
