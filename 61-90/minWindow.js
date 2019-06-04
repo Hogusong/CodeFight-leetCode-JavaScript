@@ -93,3 +93,53 @@ T = "ABAC";
 S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
 T = "ask_country";
 console.log(minWindow(S, T));       //  "sk_not_what_your_c"
+
+//  Sliding Window
+function minWindowSliding(s, t) {
+  if (s.length == 0 || t.length == 0) return "";
+  
+  // Dictionary for keeping a count of all the unique characters in t.
+  const dictT = {};
+  for (let i = 0; i < t.length; i++) {
+      dictT[t[i]] = dictT[t[i]] ? dictT[t[i]] + 1: 1;
+  }
+  
+  let sumOfUnique = Object.keys(dictT).length;  //  num of unique characters in t
+  let l = 0,  r = 0                             //  Left and Right pointer
+  let countUnique = 0;                      //  To keep track num of unique characters
+  //  To keep a count of all the unique characters in the current window.
+  let dictWindow = {};
+  //  To keep [window length, left, right]
+  const ans = [-1, 0, 1];
+
+  while (r < s.length) {
+    let c = s[r];
+    //  Add a character from the right to the window
+    dictWindow[c] = dictWindow[c] ? dictWindow[c] + 1 : 1;
+
+    if (dictT[c] && dictWindow[c] === dictT[c]) countUnique++;
+
+    // Try and contract the window till the point where it ceases to be 'desirable'.
+    while(l <= r && countUnique === sumOfUnique) {
+      c = s[l];
+      if (ans[0] < 0 || r - l + 1 < ans[0]) {
+        ans[0] = r - l + 1;
+        ans[1] = l;
+        ans[2] = r;
+      }
+      // Left pointer is no longer a part of the window.
+      l++;
+      dictWindow[c] = dictWindow[c] - 1;
+      if (dictT[c] && dictWindow[c] < dictT[c]) countUnique--;
+    }
+    r++;      // Keep expanding the window once we are done contracting.
+  }
+  
+  return ans[0] == -1 ? '' : s.substring(ans[1], ans[2] + 1);
+}
+
+S = "ADOBECAODEBANC";
+T = "ABACB";
+S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
+T = "ask_you";
+console.log(minWindowSliding(S, T));       //  "you_ask"
