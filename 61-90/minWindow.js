@@ -15,15 +15,18 @@ function minWindow(s, t) {
   if (s === t) return s;
   const loc = {}, count = {};
   let idx = 0
+  for (let c of t) {
+    if (!count[c]) count[c] = 0;
+    count[c] ++;
+  }
+
   for (let char of t) {
     temp = loc[char];
-    if (!count[char]) count[char]= 0;
     const point = temp ? temp[temp.length-1] +1  : 0;
     idx = s.indexOf(char, point);
     if (idx > -1) {
       if (!loc[char]) loc[char] = [];
       loc[char].push(idx);
-      count[char] = count[char] + 1;
     } else return '';
   }
 
@@ -90,8 +93,8 @@ function possibleSets(arr, n) {
 
 S = "ADOBECAODEBANC";
 T = "ABAC";
-S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
-T = "ask_country";
+// S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
+// T = "ask_country";
 console.log(minWindow(S, T));       //  "sk_not_what_your_c"
 
 //  Sliding Window
@@ -104,23 +107,24 @@ function minWindowSliding(s, t) {
       dictT[t[i]] = dictT[t[i]] ? dictT[t[i]] + 1: 1;
   }
   
-  let sumOfUnique = Object.keys(dictT).length;  //  num of unique characters in t
+  let uniqueInT = Object.keys(dictT).length;  //  num of unique characters in t
   let l = 0,  r = 0                             //  Left and Right pointer
-  let countUnique = 0;                      //  To keep track num of unique characters
+  let uniqueInWin = 0;                      //  To keep track num of unique characters
   //  To keep a count of all the unique characters in the current window.
-  let dictWindow = {};
+  let dictWin = {};
   //  To keep [window length, left, right]
   const ans = [-1, 0, 1];
 
   while (r < s.length) {
     let c = s[r];
     //  Add a character from the right to the window
-    dictWindow[c] = dictWindow[c] ? dictWindow[c] + 1 : 1;
-
-    if (dictT[c] && dictWindow[c] === dictT[c]) countUnique++;
+    if (dictT[c]) {
+      dictWin[c] = dictWin[c] ? dictWin[c] + 1 : 1;
+      if (dictWin[c] === dictT[c]) uniqueInWin++;
+    }
 
     // Try and contract the window till the point where it ceases to be 'desirable'.
-    while(l <= r && countUnique === sumOfUnique) {
+    while(l <= r && uniqueInWin === uniqueInT) {
       c = s[l];
       if (ans[0] < 0 || r - l + 1 < ans[0]) {
         ans[0] = r - l + 1;
@@ -129,8 +133,10 @@ function minWindowSliding(s, t) {
       }
       // Left pointer is no longer a part of the window.
       l++;
-      dictWindow[c] = dictWindow[c] - 1;
-      if (dictT[c] && dictWindow[c] < dictT[c]) countUnique--;
+      if (dictT[c]) {
+        dictWin[c] = dictWin[c] - 1;
+        if (dictT[c] && dictWin[c] < dictT[c]) uniqueInWin--;
+      }
     }
     r++;      // Keep expanding the window once we are done contracting.
   }
@@ -138,8 +144,4 @@ function minWindowSliding(s, t) {
   return ans[0] == -1 ? '' : s.substring(ans[1], ans[2] + 1);
 }
 
-S = "ADOBECAODEBANC";
-T = "ABACB";
-S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
-T = "ask_you";
-console.log(minWindowSliding(S, T));       //  "you_ask"
+console.log(minWindowSliding(S, T));
