@@ -93,8 +93,8 @@ function possibleSets(arr, n) {
 
 S = "ADOBECAODEBANC";
 T = "ABAC";
-// S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
-// T = "ask_country";
+S = "ask_not_what_your_country_can_do_for_you_ask_what_you_can";
+T = "ask_country";
 console.log(minWindow(S, T));       //  "sk_not_what_your_c"
 
 //  Sliding Window
@@ -144,4 +144,50 @@ function minWindowSliding(s, t) {
   return ans[0] == -1 ? '' : s.substring(ans[1], ans[2] + 1);
 }
 
+console.time("Sliding");
 console.log(minWindowSliding(S, T));
+console.timeEnd("Sliding");
+
+function minWindowMime(S, T) {
+  if (S.length === 0 || T.length === 0) return '';
+
+  dictT = {};
+  for (let chr of T) {
+    dictT[chr] = dictT[chr] ? dictT[chr] + 1 : 1;
+  }
+  const uniqueInT = Object.keys(dictT).length;
+
+  let l = 0, r = 0, dictWin = {}, uniqueInWin = 0;
+  const ans = [-1, 0, 1];
+
+  while (r < S.length) {
+    let chr = S[r];
+    if (dictT[chr]) {
+      dictWin[chr] = dictWin[chr] ? dictWin[chr] + 1 : 1;
+      if (dictWin[chr] === dictT[chr]) uniqueInWin++ 
+    }
+
+    while (l <= r && uniqueInT === uniqueInWin) {
+      chr = S[l];
+
+      if (ans[0] < 0 || r - l + 1 < ans[0]) {
+        ans[0] = r - l + 1;
+        ans[1] = l;
+        ans[2] = r;
+      }
+      if (dictT[chr]) {
+        dictWin[chr] --;
+        if (dictT[chr] > dictWin[chr]) uniqueInWin --;
+      }
+      l++;
+    }
+    r++;
+  }
+  return ans[0] < 0 ? '' : S.substring(ans[1], ans[2]+1);
+}
+
+// S = "ADOBECODEBANC";
+// T = "ABC";
+console.time('Mine');
+console.log(minWindowMime(S, T));
+console.timeEnd('Mine');
