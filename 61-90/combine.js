@@ -30,4 +30,27 @@ function makeArray(n) {
   return [ans];
 }
 
-console.log(combine(4, 2));
+N = 4, K = 2;
+console.log(combine(N, K));
+
+//  Iterative Algorithim
+function combineIter(n, k) {
+  const result = [];
+  const arr = [];
+  for (let i = 1; i <= k; i++) arr.push(i);
+  
+  while (arr[k-1] <= n) {
+    result.push([...arr]);
+    let t = k - 1;
+    while (t > 0 && arr[t] === n - k + t + 1) {
+      t--;
+    }
+    arr[t]++;
+    for (let i = t + 1; i < k; i++) {
+      arr[i] = arr[i-1] + 1;
+    }
+  }
+  return result;
+}
+
+console.log(combineIter(N, K));
