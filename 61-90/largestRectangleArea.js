@@ -17,20 +17,22 @@ function largestRectangleArea(heights) {
     if (stack.length < 1 || heights[stack[stack.length-1]] <= heights[index]) {
       stack.push(index++);
     } else {
-      const top = stack.pop();
-      if (stack.length < 1) area = heights[top] * index;
-      else area = heights[top] * (index - stack[stack.length-1] - 1);
-      max_area = Math.max(max_area, area);
+      max_area = getMaxArea(heights, stack, index, max_area);
     }
   }
   while (stack.length > 0) {
-    const top = stack.pop();
-    if (stack.length < 1) area = heights[top] * len;
-    else area = heights[top] * (len - stack[stack.length-1] - 1);
-    max_area = Math.max(max_area, area);
+    max_area = getMaxArea(heights, stack, len, max_area)
   }
   return max_area;
 }
 
-input = [ [2,1,5,6,2,3], [2,1,5,6,3,3], [3,4,3,0,5,6] ];
+function getMaxArea(heights, stack, index, max_area) {
+  const top = stack.pop();
+  if (stack.length < 1) area = heights[top] * index;
+  else area = heights[top] * (index - stack[stack.length-1] - 1);
+  return Math.max(max_area, area);
+}
+
+input = [ [2,1,5,6,2,3], [2,1,3,6,2,3], [3,4,3,0,4,6], [2,3,2,5,4,6,2,3] ];
 for (let ip of input) console.log(largestRectangleArea(ip));
+console.log(largestRectangleArea([2,3,1,5,4,6,2,3]))
