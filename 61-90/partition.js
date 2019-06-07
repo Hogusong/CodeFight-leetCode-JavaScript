@@ -1,6 +1,6 @@
 /*
   Given a linked list and a value x, partition it such that 
-  all nodes less than x come before nodes greater than or equal to x.
+  all nodes less than x come front nodes greater than or equal to x.
   You should preserve the original relative order of the nodes in each of the two partitions.
 
   Input: head = 1->4->3->2->5->2, x = 3       Output: 1->2->2->4->3->5
@@ -39,7 +39,7 @@ function partition(head, x) {
       }
     }
   }
-  return root.next;
+  return (root.next) ? root.next : head ;
 }
 
 function printNode(node) {
@@ -56,4 +56,30 @@ node = partition(N, 3);
 printNode(node);
 N = new LinkedNode(4, new LinkedNode(5, new LinkedNode(7, new LinkedNode(2, new LinkedNode(1, new LinkedNode(3))))));
 node = partition(N, 3);
+printNode(node);
+
+function makePartition(head, x) {
+  const root = new LinkedNode(0);
+  const back_head = new LinkedNode(0);
+  let front = root, back = back_head;
+  while (head) {
+    if (head.val < x) {
+      front.next = head;
+      front = front.next;
+    } else {
+      back.next = head;
+      back = back.next;
+    }
+    head = head.next;
+  }
+  back.next = null;
+  front.next = back_head.next;
+  return root.next;
+}
+
+N = new LinkedNode(1, new LinkedNode(4, new LinkedNode(3, new LinkedNode(2, new LinkedNode(5, new LinkedNode(1))))));
+node = makePartition(N, 3);
+printNode(node);
+N = new LinkedNode(4, new LinkedNode(5, new LinkedNode(7, new LinkedNode(2, new LinkedNode(1, new LinkedNode(3))))));
+node = makePartition(N, 3);
 printNode(node);
