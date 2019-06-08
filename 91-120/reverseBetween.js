@@ -49,6 +49,7 @@ function reverseBetween(head, m, n) {
   return root.next;
 }
 
+console.log()
 node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
 N = reverseBetween(node, 2, 5);
 printNode(N);
@@ -106,6 +107,7 @@ function recurseAndReverse(right, m, n) {
   }
 }
 
+console.log()
 node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
 N = reverseBetweenRec(node, 2, 5);
 printNode(N);
@@ -131,6 +133,7 @@ function reverseBetween2(head, m, n) {
   return head
 }
 
+console.log()
 node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
 N = reverseBetween2(node, 2, 5);
 printNode(N);
@@ -139,4 +142,52 @@ N = reverseBetween2(node, 1, 2);
 printNode(N);
 node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
 N = reverseBetween2(node, 3, 4);
+printNode(N);
+
+function reverseBetween3(head, m, n) {
+
+  if (head == null)  return null;
+
+  // Move the two pointers until they reach the proper starting point
+  // in the list.
+  let cur = head, prev = null, i = 1;
+  while (m > i) {
+      prev = cur;
+      cur = cur.next;
+      i++;
+  }
+
+  // The two pointers that will fix the final connections.
+  let con = prev, tail = cur;
+
+  // Iteratively reverse the nodes until n becomes 0.
+  let third = null;
+  while (n >= i) {
+    third = cur.next;
+    cur.next = prev;
+    prev = cur;
+    cur = third;
+    i++;
+  }
+
+  // Adjust the final connections as explained in the algorithm
+  if (con != null) {
+    con.next = prev;
+  } else {
+    head = prev;
+  }
+
+  tail.next = cur;
+  return head;
+}
+
+console.log()
+node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+N = reverseBetween3(node, 2, 5);
+printNode(N);
+node = new ListNode(2, new ListNode(3));
+N = reverseBetween3(node, 1, 2);
+printNode(N);
+node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+N = reverseBetween3(node, 3, 4);
 printNode(N);
