@@ -6,35 +6,35 @@
 */
 
 function restoreIpAddresses(s) {
-  if (s.length < 4 || s.length > 12) return [];
-  return convert(s)
+  const size = s.length;
+  if (size < 4 || size > 12) return [];
+  return  searchIPAdress(s, size);
 }
 
-function convert(s) { 
-  let l = [], size = s.length;
-  for (let i = 1; i < size - 2; i++) { 
-    for (let j = i + 1; j < size - 1; j++) { 
-      for (let k = j + 1; k < size; k++) { 
-        snew = s; 
-        snew = snew.substring(0, k) +  "." + snew.substring(k); 
-        snew = snew.substring(0, j) +  "." + snew.substring(j); 
-        snew = snew.substring(0, i) +  "." + snew.substring(i); 
-        if (isValid(snew)) l.push(snew);  
-      } 
-    } 
-  } 
-  return l; 
-} 
-
-function isValid(ip) { 
-  let S = ip.split("."); 
-  for (let s of S) { 
-    const i = +s; 
-    if (s.length > 3 || i < 0 || i > 255) return false; 
-    if (s.length > 1 && (i == 0 || s[0] == '0')) return false; 
+function searchIPAdress(str, size) {
+  let result = [], newStr = '';
+  for (let i = 1; i < size - 2; i++) {
+    for (let j = i + 1; j < size - 1; j++) {
+      for (let k = j + 1; k < size; k++) {
+        newStr = str.substring(0, k) + '.' + str.substring(k);
+        newStr = newStr.substring(0, j) + '.' + newStr.substring(j);
+        newStr = newStr.substring(0, i) + '.' + newStr.substring(i);
+        if (isValidAddress(newStr)) result.push(newStr);
+      }
+    }
   }
-  return true; 
-} 
+  return result;
+}
+
+function isValidAddress(str) {
+  const S = str.split('.');
+  for (let s of S) {
+    const i = +s;
+    if (s.length > 3 || i < 0 || i > 255) return false;
+    if (s.length > 1 && s[0] === '0') return false;
+  }
+  return true;
+}
 
 console.log(restoreIpAddresses('25525511135'));
 console.log(restoreIpAddresses('12515221125'));
