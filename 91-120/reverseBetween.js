@@ -67,3 +67,51 @@ function printNode(N) {
   }
   console.log(str);
 }
+
+function reverseBetweenRec(head, m, n) {
+  left = head;
+  stop = false;
+  recurseAndReverse(head, m, n);
+  return head;
+}
+
+function recurseAndReverse(right, m, n) {
+
+  if (n == 1) return;
+  
+  // Keep moving the right pointer one step forward until (n == 1)
+  right = right.next;
+
+  // Keep moving left pointer to the right until we reach the proper node
+  // from where the reversal is to start.
+  if (m > 1) left = left.next;
+
+  // Recurse with m and n reduced.
+  recurseAndReverse(right, m - 1, n - 1);
+
+  // In case both the pointers cross each other or become equal, we
+  // stop i.e. don't swap data any further. We are done reversing at this
+  // point.
+  if (left == right || right.next == left)   stop = true;
+
+  // Until the boolean stop is false, swap data between the two pointers
+  if (!stop) {
+    let t = left.val;
+    left.val = right.val;
+    right.val = t;
+
+    // Move left one step to the right.
+    // The right pointer moves one step back via backtracking.
+    left = left.next;
+  }
+}
+
+node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+N = reverseBetweenRec(node, 2, 5);
+printNode(N);
+node = new ListNode(2, new ListNode(3));
+N = reverseBetweenRec(node, 1, 2);
+printNode(N);
+node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+N = reverseBetweenRec(node, 3, 4);
+printNode(N);
