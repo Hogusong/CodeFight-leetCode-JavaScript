@@ -42,3 +42,24 @@ function traversal(curr) {
 }
 
 console.log(inorderTraversal(t1));
+
+function inorderTraversalIter(root) {
+  if (!root) return [];
+  let result = [], stack = [root];
+  while (stack.length > 0) {
+    curr = stack[stack.length-1];
+    if (!curr.left) {
+      result.push(curr.val);
+      stack.pop();
+      if (curr.right) {
+        stack.push(curr.right);
+      }
+    } else {
+      stack.push(curr.left);
+      curr.left = null;
+    }
+  }
+  return result;
+}
+
+console.log(inorderTraversalIter(t1));
