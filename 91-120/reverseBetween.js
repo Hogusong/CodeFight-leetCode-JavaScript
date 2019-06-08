@@ -115,3 +115,28 @@ printNode(N);
 node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
 N = reverseBetweenRec(node, 3, 4);
 printNode(N);
+
+function reverseBetween2(head, m, n) {
+  let i = 0, left = head, right = head, count = 1;
+  for (count = 1; count < m; count++) left = left.next;
+  while (m+i <= n-i) {
+    right = left;
+    for (count = m+i; count < n-i; count++) right = right.next
+    const t = left.val;
+    left.val = right.val;
+    right.val = t;
+    i++;
+    left = left.next
+  }
+  return head
+}
+
+node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+N = reverseBetween2(node, 2, 5);
+printNode(N);
+node = new ListNode(2, new ListNode(3));
+N = reverseBetween2(node, 1, 2);
+printNode(N);
+node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+N = reverseBetween2(node, 3, 4);
+printNode(N);
