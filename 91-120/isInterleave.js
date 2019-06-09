@@ -52,3 +52,34 @@ s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
 console.log(is_Interleave(s1, s2, s3));
 s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
 console.log(is_Interleave(s1, s2, s3) + '\n');
+
+function isInterleaveDP(s1, s2, s3) {
+  if (s1 === '' && s2 === '' && s3 === '') return true;
+  if (s1.length + s2.length != s3.length) return false;
+  if (s1[0] != s3[0] && s2[0] != s3[0]) return false;
+
+  dict = {};
+  return isInterleaveRecDP(s1, 0, s2, 0, s3, 0);
+}
+
+function isInterleaveRecDP(s1, i, s2, j, s3, k) {
+  if (s1[i] != s3[k] && s2[j] != s3[k]) return false;
+  if (k === s3.length - 1) {
+    if (i >= s1.length) return s3[k] === s2[j];
+    else return s3[k] === s1[i];
+  }
+
+  if (!dict[(i+1)+':'+j]) dict[(i+1)+':'+j] = isInterleaveRecDP(s1, i+1, s2, j, s3, k+1);
+  if (!dict[i+':'+(j+1)]) dict[i+':'+(j+1)] = isInterleaveRecDP(s1, i, s2, j+1, s3, k+1);
+
+  if (s1[i] === s3[k] && s2[j] === s3[k]) {
+    return dict[(i+1)+':'+j] || dict[i+':'+(j+1)];
+  } else if (s1[i] != s3[k]) {
+    return dict[i+':'+(j+1)];
+  } else return dict[(i+1)+':'+j];
+}
+
+s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
+console.log(isInterleaveDP(s1, s2, s3));
+s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+console.log(isInterleaveDP(s1, s2, s3));
