@@ -82,4 +82,33 @@ function isInterleaveRecDP(s1, i, s2, j, s3, k) {
 s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
 console.log(isInterleaveDP(s1, s2, s3));
 s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
-console.log(isInterleaveDP(s1, s2, s3));
+console.log(isInterleaveDP(s1, s2, s3) + '\n');
+
+//  Using table
+function interleaving(s1, s2, s3) {
+  table = [];
+  for (let i = 0; i < s1.length; i++) {
+    const row = [];
+    for (let j = 0; j < s2.length; j++) {
+      row[j] = -1;
+    }
+    table.push(row);
+  }
+  return interleavingTable(s1, 0, s2, 0, s3, 0)
+}
+
+function interleavingTable(s1, i, s2, j, s3, k) {
+  if (i === s1.length) return s2.substring(j) === s3.substring(k);
+  if (j === s2.length) return s1.substring(i) === s3.substring(k);
+  if (table[i][j] >= 0) return table[i][j] === 1 ? true : false;
+
+  ans = false
+  if (s3[k] === s1[i] && interleavingTable(s1, i+1, s2, j, s3, k+1) || s3[k] === s2[j] && interleavingTable(s1, i, s2, j+1, s3, k+1)) ans = true;
+  table[i][j] = ans ? 1 : 0;
+  return ans;
+}
+
+s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
+console.log(interleaving(s1, s2, s3));
+s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+console.log(interleaving(s1, s2, s3) + '\n');
