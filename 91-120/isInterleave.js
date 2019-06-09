@@ -9,6 +9,7 @@
 */
 
 function isInterleave(s1, s2, s3) {
+  if (s1 === '' && s2 === '' && s3 === '') return true;
   if (s1.length + s2.length != s3.length) return false;
   if (s1[0] != s3[0] && s2[0] != s3[0]) return false;
 
@@ -16,11 +17,9 @@ function isInterleave(s1, s2, s3) {
 }
 
 function isInterleaveRec(s1, i, s2, j, s3, k) {
+  if (i === s1.length) return s2.substring(j) === s3.substring(k);
+  if (j === s2.length) return s1.substring(i) === s3.substring(k);
   if (s1[i] != s3[k] && s2[j] != s3[k]) return false;
-  if (k === s3.length - 1) {
-    if (i >= s1.length) return s3[k] === s2[j];
-    else return s3[k] === s1[i];
-  }
 
   if (s1[i] === s3[k] && s2[j] === s3[k]) {
     return isInterleaveRec(s1, i+1, s2, j, s3, k+1) || isInterleaveRec(s1, i, s2, j+1, s3, k+1);
@@ -52,4 +51,4 @@ console.log(isInterleave(s1, s2, s3) + '\n');
 s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
 console.log(is_Interleave(s1, s2, s3));
 s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
-console.log(is_Interleave(s1, s2, s3));
+console.log(is_Interleave(s1, s2, s3) + '\n');
