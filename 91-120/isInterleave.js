@@ -122,3 +122,35 @@ s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
 console.log(interleaving(s1, s2, s3));
 s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
 console.log(interleaving(s1, s2, s3) + '\n');
+
+function isInterleave2D(s1, s2, s3) {
+  if (s3.length != s1.length + s2.length) return false;
+  table = [];
+  for (let i = 0; i <= s1.length; i++) {
+    const row = [];
+    for (let j = 0; j <= s2.length; j++) {
+      row[j] = -1;
+    }
+    table.push(row);
+  }
+  
+  for (let i = 0; i <= s1.length; i++) {
+    for (let j = 0; j <= s2.length; j++) {
+      if (i == 0 && j == 0) {
+        table[i][j] = true;
+      } else if (i == 0) {
+        table[i][j] = table[i][j - 1] && s2[j - 1] == s3[i + j - 1];
+      } else if (j == 0) {
+        table[i][j] = table[i - 1][j] && s1[i - 1] == s3[i + j - 1];
+      } else {
+        table[i][j] = (table[i - 1][j] && s1[i - 1] == s3[i + j - 1]) || (table[i][j - 1] && s2[j - 1] == s3[i + j - 1]);
+      }
+    }
+  }
+  return table[s1.length][s2.length];
+}
+
+s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
+console.log(isInterleave2D(s1, s2, s3));
+s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+console.log(isInterleave2D(s1, s2, s3) + '\n');
