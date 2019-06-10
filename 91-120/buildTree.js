@@ -34,5 +34,25 @@ function buildTree(preorder, inorder) {
 
 P = [3,9,20,15,7];
 I = [9,3,15,20,7];
-
 console.log(buildTree(P, I));
+
+//  Not completed.
+function buildTreeSW(preorder, inorder) {
+  if (preorder.length != inorder.length) return null;
+  if (preorder.length < 1) return null;
+  return buildTreeSW_Rec(preorder, inorder, 0)
+};
+
+function buildTreeSW_Rec(P, I, s) {
+  const root = new TreeNode(P[s]);
+  const i = I.indexOf(P[s], s);
+  if (i >= 0) {
+    root.left = buildTreeSW_Rec(P, I, s+1, );
+    root.right = buildTreeSW_Rec(P, I, i+1);
+  }
+  return root;  
+}
+
+P = ['A', 'B', 'D', 'H', 'E', 'C', 'F', 'I', 'G'];
+I = ['D', 'H', 'B', 'E', 'A', 'I', 'F', 'C', 'G'];
+console.log(buildTreeSW(P, I));
