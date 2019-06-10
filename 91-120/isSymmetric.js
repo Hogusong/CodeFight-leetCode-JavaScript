@@ -63,3 +63,15 @@ function checkValues(L, R) {
   }
   return true;
 }
+
+//  Recursive
+function isSymmetric(root) {
+  return isMirror(root, root);
+}
+
+function compareRec(L, R) {
+  if (!L && !R) return true;
+  if (!L || !R) return false;
+  if (L.val != R.val) return false;
+  return isMirror(L.left, R.right) && isMirror(L.right, R.left);
+}
