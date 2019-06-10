@@ -47,3 +47,24 @@ function isValidRec(node, lower, upper) {
 }
 
 console.log(isValidBST(t5));
+
+//  Inorder traversal
+function isValidBST_Inorder(root) {
+  if (!root) return true;
+  let stack = [root],  last = null;
+  while (stack.length > 0) {
+    let curr = stack[stack.length-1];
+    if (curr.left) {
+      stack.push(curr.left);
+      curr.left = null;
+    } else {
+      if (last != null && last >= curr.val) return false;
+      stack.pop();
+      last = curr.val;
+      if (curr.right) stack.push(curr.right)
+    }
+  }
+  return true;
+}
+
+console.log(isValidBST_Inorder(t5));
