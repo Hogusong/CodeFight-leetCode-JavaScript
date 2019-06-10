@@ -68,3 +68,30 @@ function isValidBST_Inorder(root) {
 }
 
 console.log(isValidBST_Inorder(t5));
+
+//  Iteration
+function isValidBST_Iteration(root) {
+  stack = [], uppers = [], lowers = [];
+  let lower = null, upper = null;
+  update(root, lower, upper)
+
+  while(stack.length > 0) {
+    root = stack.pop();
+    upper = uppers.pop();
+    lower = lowers.pop();
+
+    if (!root) continue;
+    const val = root.val;
+    if (lower != null && val <= lower) return false;
+    if (upper != null && val >= upper) return false;
+    update(root.right, val, upper);
+    update(root.left, lower, val);
+  }
+  return true;
+}
+
+function update(node, lower, upper) {
+  stack.push(node);
+  uppers.push(upper);
+  lowers.push(lower);
+}
