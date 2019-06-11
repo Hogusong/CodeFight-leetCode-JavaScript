@@ -30,3 +30,19 @@ function hasPathSum(root, sum) {
   }
   return false;
 }
+
+function hasPathSum(root, sum) {
+  if (!root) return false;
+  return findPathSum(root, sum, root.val);
+}
+
+function findPathSum(node, sum, pathSum) {
+  if (!node.left && !node.right) return sum === pathSum;
+
+  if (node.left && node.right) {
+    return findPathSum(node.left, sum, pathSum + node.left.val) ||
+            findPathSum(node.right, sum, pathSum + node.right.val);
+  } else if (!node.right) {
+    return findPathSum(node.left, sum, pathSum + node.left.val);
+  } else return findPathSum(node.right, sum, pathSum + node.right.val);
+}
