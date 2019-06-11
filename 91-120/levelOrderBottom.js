@@ -29,3 +29,32 @@ function levelOrderBottom(root) {
   }
   return result.reverse();
 }
+
+//  Sliding Window
+function readBottomTop(root) {
+  if (!root) return [];
+
+  let from = 0, to = 1, added = 1;
+  let stack = [root];
+  const result = []
+  while (added > 0) {
+    added = 0;
+    const arr = [];
+    for (let i = from; i < to; i++) {
+      const node = stack[i];
+      arr.push(node.val);
+      if (node.left) {
+        stack.push(node.left);
+        added ++;
+      }
+      if (node.right) {
+        stack.push(node.right);
+        added ++;
+      }
+    }
+    from = to;
+    to += added;
+    result.push(arr);
+  }
+  return result.reverse();
+}
