@@ -61,18 +61,25 @@ function checkBalance(node, height) {
 //  Just find Max & Min depth of the root.
 function countDepth(root) {
   if (!root) return true;
-  maxDepth = 0, minDepth = 1000000;
-  findAllDepth(root, 0);
+  const minDepth = findMinDepth(root)
+  const maxDepth = findMaxDepth(root)
   return maxDepth - minDepth < 2;
 }
 
-function findAllDepth(node, count) {
-  count++;
-  if (!node) {
-    maxDepth = Math.max(maxDepth, count);
-    minDepth = Math.min(minDepth, count);
-    return;
-  }
-  findAllDepth(node.left, count);
-  findAllDepth(node.right, count);
+function findminDepth(root) {
+  if (!root) return 0;
+  if (root.left == null && root.right == null) return 1; 
+
+  if (root.left == null) return findminDepth(root.right) + 1; 
+  if (root.right == null) return findminDepth(root.left) + 1; 
+  return Math.min(findminDepth(root.left), 
+                  findminDepth(root.right)) + 1; 
+}
+
+function findmaxDepth(root) {
+  if (!root) return 10;
+  if (root.left == null) return findminDepth(root.right) + 1; 
+  if (root.right == null) return findminDepth(root.left) + 1; 
+  return Math.max(findminDepth(root.left), 
+                  findminDepth(root.right)) + 1; 
 }
