@@ -28,6 +28,7 @@ class TreeNode {
   }
 }
 
+//  Convert the ListNode to Array.
 function sortedListToBST(head) {
   if (!head) return null;
   const nums = [];
@@ -48,4 +49,26 @@ function buildBST(N, from, to) {
   node.left = buildBST(N, from, mid-1);
   node.right = buildBST(N, mid+1, to);
   return node;
+}
+
+//  Find the middle ListNode
+function sortedListToBST(head) {
+  if (!head) return null;
+  const mid = findMiddleElement(head);
+  const node = new TreeNode(mid.val);
+  if (head.val === mid.val) return node;
+  node.left = sortedListToBST(head);
+  node.right = sortedListToBST(mid.next);
+  return node;
+}
+
+function findMiddleElement(head) {
+  let prevPtr = null,  slowPtr = head,  fastPtr = head;
+  while (fastPtr && fastPtr.next) {
+    prevPtr = slowPtr;
+    slowPtr = slowPtr.next;
+    fastPtr = fastPtr.next.next
+  }
+  if (prevPtr) prevPtr.next = null
+  return slowPtr;
 }
