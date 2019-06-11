@@ -41,3 +41,25 @@ function pathSum(root, sum) {
   }
   return result;
 }
+
+//  Recursion
+function pathSum(root, sum) {
+  if (!root) return [];
+  result = [];
+  findPathSum(root, sum, [root.val], root.val);
+  return result;
+}
+
+function findPathSum(node, sum, path, pathSum) {
+  if (!node.left && !node.right) {
+    if (sum === pathSum) result.push(path);
+    return
+  }
+
+  if (node.left && node.right) {
+    findPathSum(node.left, sum, [...path, node.left.val], pathSum + node.left.val);
+    findPathSum(node.right, sum, [...path, node.right.val], pathSum + node.right.val);
+  } else if (!node.right) {
+    findPathSum(node.left, sum, [...path, node.left.val], pathSum + node.left.val);
+  } else findPathSum(node.right, sum, [...path, node.right.val], pathSum + node.right.val);
+}
