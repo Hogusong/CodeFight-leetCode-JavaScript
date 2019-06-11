@@ -14,6 +14,7 @@
   return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 */
 
+//  Using Stack
 function hasPathSum(root, sum) {
   if (!root) return false;
   let stack = [{'node': root, 'sum': root.val}];
@@ -31,6 +32,7 @@ function hasPathSum(root, sum) {
   return false;
 }
 
+//  Recursion
 function hasPathSum(root, sum) {
   if (!root) return false;
   return findPathSum(root, sum, root.val);
