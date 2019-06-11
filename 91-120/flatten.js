@@ -19,6 +19,7 @@
             6
 */
 
+//  Using Array
 function flatten(root) {
   if (!root) return null;
   result = [root]
@@ -39,4 +40,22 @@ function getPreorder(node) {
   result.push(node);
   getPreorder(node.left);
   getPreorder(node.right);
+}
+
+//  Recursion
+function flatten(root) {
+  if (!root) return null;
+
+  let left = root.left;
+  let right = root.right;
+
+  root.left = null;
+  flatten(left);
+  flatten(right);
+
+  root.right = left;
+  let curr = root;
+  while (curr.right) curr = curr.right
+  curr.right = right;
+  return root;
 }
