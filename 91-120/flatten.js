@@ -59,3 +59,20 @@ function flatten(root) {
   curr.right = right;
   return root;
 }
+
+//  Non-Recursion, No Stack
+function flatten(root) {
+  let curr = root;
+  while (curr) {
+    if (curr.left) {
+      if (curr.right) {
+        let next = curr.left;
+        while (next.right) next = next.right;
+        next.right = curr.right;
+      }
+      curr.right = curr.left;
+      curr.left = null;
+    }
+  }
+  return root;
+}
