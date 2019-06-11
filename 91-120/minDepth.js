@@ -23,3 +23,20 @@ function minimumDepth(root) {
   return Math.min(minimumDepth(root.left), 
               minimumDepth(root.right)) + 1; 
 }
+
+function minDepth(root) {
+  if (!root) return 0;
+  let stack = [{'node': root , 'depth' : 1}] 
+
+  while(stack.length > 0) {
+    const temp = [...stack];
+    stack = [];
+    for (let t of temp) {
+      const node = t['node'] ;
+      const depth = t['depth'] ;
+      if (!node.left && !node.right) return depth ;
+      if (node.left)	stack.push({'node' : node.left , 'depth' : depth+1}) 
+      if (node.right)	stack.push({'node': node.right , 'depth' : depth+1}) 
+    }
+  }
+}
