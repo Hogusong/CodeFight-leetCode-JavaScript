@@ -16,6 +16,12 @@
   
   babgbag     babgbag     babgbag     babgbag     babgbag
   ^^ ^        ^^    ^     ^    ^^       ^  ^^         ^^^
+
+       b/1  a/1  b/1  g/1  b/1  a/1  g/1
+  b/0  0+1   1   1+1   2   2+1   3    3
+  a/0   0   0+1   1    1    1   1+3   4
+  g/0   0    0    0   0+1   1    1   1+4      Output: 5
+
 */
 
 //  Using Array ( It takes too long. No good)
@@ -57,3 +63,35 @@ function findIndex(s, chr, i) {
 s = "babgbag";
 t = "bag";
 console.log(numDistinct(s, t));
+
+//  Using 2D Matrix
+function numDistinctM(s, t) {
+  const m = t.length;
+  const n = s.length;
+  if (m > n) return 0;
+
+  const mat = [];
+  for (let i = 0; i <= m ; i++){
+    const row = [];
+    for (let j = 0; j <= n; j++) {
+      if (i === 0) row[j] = 1;
+      else if (j === 0) row[j] = 0;
+      else row[j] = ''
+    }
+    mat.push(row);
+  }
+
+  for (let i  = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (t[i-1] != s[j-1]) mat[i][j] = mat[i][j-1];
+      else mat[i][j] = mat[i][j - 1] + mat[i - 1][j - 1];
+    }
+  }
+  console.log(mat)
+  return mat[m][n];
+}
+
+T = "ge"; 
+S = "geeksforgeeks"; 
+console.log(numDistinctM(S, T));
+console.log(numDistinctM(s, t));
