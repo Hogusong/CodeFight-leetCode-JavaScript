@@ -30,5 +30,27 @@ function getPathTotal(T, row, col, total) {
 
 T = [ [2], [3,4], [6,5,7], [4,1,8,3] ];
 // T = [ [2] ];
-T = [ [2],  [3,4] ];
+// T = [ [2],  [3,4] ];
 console.log(minPathTotal(T));
+
+function minPathTotal2(triangle) {
+  const R = triangle.length;
+  if (R < 1) return 0;
+  const C = triangle[R-1].length;
+
+  const dp = [];
+  for (let i = 0; i < R; i++) dp.push();
+
+  for (let i = 1; i < R; i++) {
+    for (let j = 0; j < i+1; j++) {
+      if (j < 1) triangle[i][j] += triangle[i-1][0];
+      else if (j === i) triangle[i][j] += triangle[i-1][j-1];
+      else triangle[i][j] += Math.min(triangle[i-1][j-1], triangle[i-1][j]);
+    }
+  }
+
+  console.log(triangle)
+  return Math.min(...triangle[R-1]);
+}
+ 
+console.log(minPathTotal2(T));
