@@ -54,3 +54,25 @@ function getNext(node) {
 //   }
 //   return null;
 // }
+
+//  Iterative 
+function connect(root) {
+  if (!root) return null;
+
+  let node = root;
+  while (node) {
+    let curr = node;
+    while (curr) {
+      if (curr.left) {
+        if (curr.right) curr.left.next = curr.right;
+        else curr.left.next = getNext(curr.next);
+      }
+      if (curr.right) curr.right.next = getNext(curr.next);
+      curr = curr.next;
+    }
+    if (node.left) node = node.left;
+    else if (node.right) node = node.right;
+    else node = getNext(node)
+  }
+  return root;
+}
