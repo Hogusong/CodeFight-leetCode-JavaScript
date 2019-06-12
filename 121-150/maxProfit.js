@@ -35,6 +35,7 @@ function maxProfit2(prices) {
   if (prices.length < 2) return 0;
   let maxP = 0;
   for (let i = 0; i < prices.length-1; i++) {
+    if (prices[i] >= prices[i+1]) continue;
     for (let j = i+1; j < prices.length; j++) {
       maxP = Math.max(maxP, prices[j] - prices[i]);
     }
