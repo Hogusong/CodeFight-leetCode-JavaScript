@@ -45,7 +45,24 @@ function connect(root) {
     for (let i = 1; i < stack.length; i++) {
       stack[i-1].next = stack[i];
     }
-    stack[stack.length-1].next = null;
   }
   return root;
+}
+
+//  Recursion
+function connect(root) {
+  if (!root) return null;
+  root.next = null;
+  connectRec(root)
+  return root;
+}
+
+function connectRec(node) {
+  if (!node) return;
+
+  if (node.left) node.left.next = node.right;
+  if (node.right) node.right.next = (node.next) ? node.next.left : null;
+
+  connectRec(node.left);
+  connectRec(node.right);
 }
