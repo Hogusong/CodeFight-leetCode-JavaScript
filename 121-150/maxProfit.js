@@ -49,3 +49,17 @@ P = [7,6,4,3,1];
 console.log(maxProfit2(P));
 P = [2,4,1];
 console.log(maxProfit2(P));
+
+//  Dynamic Programming
+var maxProfit = function(prices) {
+  let min = 100000000;
+  let maxP = 0;
+  for (let i = 0; i < prices.length; i++) {
+      if (prices[i] < min) {
+          min = prices[i];
+      } else if (prices[i] - min > maxP) {
+          maxP = prices[i] - min;
+      }
+  }
+  return maxP;
+}
