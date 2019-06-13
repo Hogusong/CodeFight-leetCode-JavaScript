@@ -18,3 +18,17 @@ function isPalindrome(s) {
 s = "A man, a plan, a canal: Panama";
 console.log(isPalindrome(s));
 console.log(isPalindrome('abcddcba'));
+
+function isPalindromeR(s) {
+  s = s.toLowerCase().replace(/[!@#$%^&*()"?:;',\ ]/g, '');
+  return checkRec(s, 0, s.length-1);
+}
+
+function checkRec(s, i, e) {
+  if (i >= e ) return s[i] === s[e];
+  return checkRec(s, i+1, e-1);
+}
+
+s = "A man, a plan, a canal: Panama";
+console.log(isPalindromeR(s));
+console.log(isPalindromeR('abcddcba'));
