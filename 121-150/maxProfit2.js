@@ -47,3 +47,39 @@ P = [7,1,1,5,3,6,2,4];
 console.log(maxProfit(P));      // 9
 P = [5,5,4,9,3,8,5,4,1,6,8,3,4];
 console.log(maxProfit(P));      // 18
+
+//  Dynamic Programming
+var maxProfit = function(prices) {
+  let min = 100000000;
+  let maxP = 0;
+  for (let i = 0; i < prices.length; i++) {
+      if (prices[i] < min) {
+          min = prices[i];
+      } else if (prices[i] - min > maxP) {
+          maxP = prices[i] - min;
+      }
+  }
+  return maxP;
+}
+
+//  Recursiong : Time limit
+function maxProfit(prices) {
+  return calculate(prices, 0);
+}
+
+function calculate(P, s) {
+  if (s >= P.length) return 0;
+
+  let max = 0;
+  for (let i = s; i < P.length; i++) {
+    let maxprofit = 0;
+    for (let j = i + 1; j < P.length; j++) {
+      if (P[i] < P[j]) {
+        const profit = calculate(P, j + 1) + P[j] - P[i];
+        if (profit > maxprofit) maxprofit = profit;
+      }
+    }
+    if (maxprofit > max) max = maxprofit;
+  }
+  return max;
+}
