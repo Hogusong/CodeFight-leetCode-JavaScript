@@ -20,13 +20,14 @@ console.log(isPalindrome(s));
 console.log(isPalindrome('abcddcba'));
 
 function isPalindromeR(s) {
-  s = s.toLowerCase().replace(/[!@#$%^&*()"?:;',\ ]/g, '');
-  return checkRec(s, 0, s.length-1);
+  s = s.toLowerCase().replace(/[\W]/g, '');
+  return checkRec(s, 0);
 }
 
-function checkRec(s, i, e) {
-  if (i >= e ) return s[i] === s[e];
-  return checkRec(s, i+1, e-1);
+function checkRec(s, i) {
+  if (i >= s.length) return true;
+  if (s[i] != s[s.length - 1 - i]) return false;
+  return checkRec(s, i+1);
 }
 
 s = "A man, a plan, a canal: Panama";
