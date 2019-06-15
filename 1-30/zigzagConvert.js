@@ -75,3 +75,26 @@ console.log(conversion("PAYPALISHIRING", 3));
 console.log(convertObj("PAYPALISHIRING", 3));
 console.log(conversion("PAYPALISHIRING", 4));
 console.log(convertObj("PAYPALISHIRING", 4));
+
+function convert(s, rows) {
+  const len = s.length;
+  if (len < rows) return s;
+  const result = [];
+  for (let i = 0; i < rows; i++) result.push('');
+  for (let i = 0; i < rows; i++) {
+    let index = 0, count = 0;
+    while (index <= len) {
+      index = count * (rows-1) * 2
+      if (i === 0 || i === rows - 1) {
+        if (index + i < len) result[i] += s[index + i]
+      } else {
+        if (index - i >= 0 && index - i < len) result[i] += s[index - i];
+        if (index + i >= 0 && index + i < len) result[i] += s[index + i];
+      }
+      count ++;
+    }
+  }
+  return result.join('');
+}
+
+console.log(convert("PAYPALISHIRING", 4));
