@@ -25,6 +25,7 @@
                 Therefore, sum = 495 + 491 + 40 = 1026.
 */
 
+//  Recursion
 function sumNumbers(root) {
   if (!root) return 0;
   sum = 0;
@@ -40,4 +41,32 @@ function getPathRec(node, str) {
   str += node.val;
   if (node.left) getPathRec(node.left, str);
   if (node.right) getPathRec(node.right, str);
+}
+
+//  Using Stack.
+function sumAllPaths(root) {
+  if (!root) return 0;
+
+  let stack = [[root]], ans = [];
+  while (stack.length > 0) {
+    const temp = [...stack];
+    stack = [];
+    for (let t of temp) {
+      const node = t[t.length-1];
+      if (!node.left && !node.right) ans.push(t);
+      else {
+        if (node.left) stack.push([...t, node.left])
+        if (node.right) stack.push([...t, node.right])
+      }
+    }
+  }
+  let sum = 0;
+  for (let a of ans) {
+    let str = '';
+    for (let n of a) {
+      str += n.val;
+    }
+    sum += +str;
+  }
+  return sum;
 }
