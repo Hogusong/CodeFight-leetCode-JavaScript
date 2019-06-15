@@ -33,30 +33,11 @@
                Thefore INT_MIN (−231) is returned.
 */
 
-function myAtoi(str) {
+var myAtoi = function(str) {
   str = str.trim();
   if (str.length < 1) return 0;
-  const c = str[0];
-  if (c != '-' && c != '+' && +c === NaN ) return 0;
-  const arr = str.match(/[0-9]/g);
-  if (!arr) return 0;
-  let ans = 0;
-  for (let i = 0; i < arr.length; i++) {
-    ans = ans * 10 + (+arr[i]);
-  }
-  if (c === '-') ans = -ans;
-  if (ans > 2147483647) return 2147483647;
-  if (ans < -2147483648) return -2147483648;
-  return ans;
-}
-
-console.log(myAtoi('+'));
-
-var myAtoi2 = function(str) {
-  str = str.trim();
-  if (str.length < 1) return 0;
-  const pattA = /[-+0-9]/g;
-  const pattB = /[0-9]/g;
+  const pattA = /[-+\d]/g;
+  const pattB = /[\d]/g;
   let to = 0;
   if (str[0].match(pattA)) {
       for (let i=1; i<str.length; i++) {
