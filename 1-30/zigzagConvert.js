@@ -71,6 +71,27 @@ function conversion(s, rows) {
   return str;
 }
 
+function conversion(s, rows) {
+  if (rows < 2 || rows >= s.length) return s;
+  let r = 0;
+  let result = [];
+  let key = 1;
+  for (let i=0; i<rows; i++) {
+    result.push('');
+  }
+  for (let i=0; i<s.length; i++) {
+    result[r] += s[i];
+    r += key;
+    if (r === rows - 1) {
+      key = -1;
+    } 
+    if (r === 0) {
+      key = 1;
+    }
+  }
+  return result.join('');
+}
+
 console.log(conversion("PAYPALISHIRING", 3));
 console.log(convertObj("PAYPALISHIRING", 3));
 console.log(conversion("PAYPALISHIRING", 4));
@@ -78,7 +99,7 @@ console.log(convertObj("PAYPALISHIRING", 4));
 
 function convert(s, rows) {
   const len = s.length;
-  if (len < rows) return s;
+  if (len <= rows || rows < 2) return s;
   const result = [];
   for (let i = 0; i < rows; i++) result.push('');
   for (let i = 0; i < rows; i++) {
