@@ -38,7 +38,7 @@ function solveBoard(board) {
       stack.push([i, n-1]);
     }
   }
-  
+
   while (stack.length > 0) {
     const [r,c] = stack.pop();
     if (isValid(r-1,c, m, n) && board[r-1][c] === 'O' && !dict[(r-1)+':'+c]) {
@@ -82,4 +82,60 @@ B = [ ["O","X","X","O","X"],
       ["X","O","X","O","X"],
       ["O","X","O","O","O"],
       ["X","X","O","X","O"]]
+console.log();
 console.log(solveBoard(B));
+
+function replaceSurrounded(board) { 
+  if (board.length < 3 || board[0].length < 3) return board;
+  M = board.length;
+  N = board[0].length;
+
+	// Step 1: Replace all 'O' with '-' 
+	for (let i = 0; i < M; i++) for (let j = 0; j < N; j++) 
+    if (board[i][j] == 'O')  board[i][j] = '-'; 
+	
+	// Call floodFill for all '-' lying on edges 
+  // Top & Bottom side 
+  for (let i = 0; i < N; i++) {
+		if (board[0][i] == '-') 			flippingUtil(board, 0, i); 
+    if (board[M - 1][i] == '-')   flippingUtil(board, M - 1,	i); 
+  }
+  
+  // Left side 
+	for (let i = 1; i < M-1; i++) {
+		if (board[i][0] == '-')   		flippingUtil(board, i, 0); 
+    if (board[i][N - 1] == '-')   flippingUtil(board, i, N - 1); 
+  }
+	
+	// Step 3: Replace all '-' with 'X' 
+	for (let i = 0; i < M; i++) 
+		for (let j = 0; j < N; j++) 
+			if (board[i][j] == '-') 
+        board[i][j] = 'X'; 
+
+  return board;
+} 
+
+function flippingUtil(board, x, y) 	{ 
+  // Base cases 
+  if (x < 0 || x >= M || y < 0 || y >= N) return; 
+  if (board[x][y] != '-') return; 
+
+  // Replace the color at (x, y) 
+  board[x][y] = 'O'; 
+
+  // Recur for north, east, south and west 
+  flippingUtil(board, x + 1, y); 
+  flippingUtil(board, x - 1, y); 
+  flippingUtil(board, x, y + 1); 
+  flippingUtil(board, x, y - 1); 
+} 
+
+B = [ ["O","X","X","O","X"],
+      ["X","O","O","X","O"],
+      ["X","O","X","O","X"],
+      ["O","X","O","O","O"],
+      ["X","X","O","X","O"]]
+
+console.log()
+console.log(replaceSurrounded(B));
