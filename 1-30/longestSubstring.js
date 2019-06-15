@@ -59,3 +59,25 @@ console.log(findLongestSubstring('au'));
 console.log(findLongestSubstring('aaa'));
 console.log(findLongestSubstring(' '));
 console.log(findLongestSubstring(''));
+
+var lengthOfLongestSubstring = function(s) {
+  if (s.length < 2) return s.length
+  let i = 0, max = 1;
+  const n = s.length;
+  for (let j = 1; j < n; j++) {
+      const index = s.indexOf(s[j], i) ;
+      if (index >= i && index < j) {
+          max = Math.max(max, j - i);
+          i = index + 1;
+      }
+      if (j === n-1) max = Math.max(max, j - i + 1);
+  }
+  return max;
+}
+
+console.log(lengthOfLongestSubstring('dicvdadvfadi'));
+console.log(lengthOfLongestSubstring('pwwkew'));
+console.log(lengthOfLongestSubstring('au'));
+console.log(lengthOfLongestSubstring('aaa'));
+console.log(lengthOfLongestSubstring(' '));
+console.log(lengthOfLongestSubstring(''));
