@@ -114,3 +114,32 @@ function isNew(R, A) {
 console.time('This')
 console.log(threeSubsetSum(nums));
 console.timeEnd('This')
+
+var threeSum = function(nums) {
+  const n = nums.length;
+  nums = nums.sort((a,b) => a - b);
+  
+  const result = [];
+  const set = new Set();
+  for (let i = 0; i < n - 1; i++) {
+      let l = i + 1;
+      let r = n - 1;
+      while (l < r) {
+          if (nums[i] + nums[l] + nums[r] == 0) {
+              const key = nums[i] + ':' + nums[l] + ':' + nums[r];
+              if (!set.has(key)) {
+                  set.add(key);
+                  result.push([nums[i], nums[l], nums[r]]);    
+              }
+              l++;
+              r--;
+          } else if (nums[i] + nums[l] + nums[r] < 0) l++;
+          else r--;
+      }
+  }
+  return result.length;
+}
+
+console.time('This')
+console.log(threeSum(nums));
+console.timeEnd('This')
