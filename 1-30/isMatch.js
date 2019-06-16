@@ -1,5 +1,5 @@
 /*
-  Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+  Given an input string (s) and a p (p), implement regular expression matching with support for '.' and '*'.
   '.' Matches any single character.
   '*' Matches zero or more of the preceding element.
   The matching should cover the entire input string (not partial).
@@ -22,19 +22,28 @@
   Input:  s = "mississippi",  p = "mis*is*p*."        Output: false
 */
 
-//  Recursion
-function isMatch(s, p) {
+function isMatchDP(s, p) {
   if (p.length < 1) return s.length < 1;
-  let first_match = (s.length > 0 && (p[0] == s[0] || p[0] == '.'));
-
-  if (p.length >= 2 && p[1] == '*'){
-    return (isMatch(s, p.substring(2)) ||
-            (first_match && isMatch(s.substring(1), p)));
-  } else {
-    return first_match && isMatch(s.substring(1), p.substring(1));
+  const m = s.length,  n = p.length;
+  const dp = [];
+  for (let i = 0; i <= m; i++) {
+    const row = []
+    for (let j = 0; j <= n; j++) {
+      row.push(false);
+    }
+    dp.push(row);
   }
+  dp[0][0] = true;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s[i-1] === p[j-1] || p[j-1] === '.') dp[i][j] = dp[i-1][j-1];
+      else if (p[j-1] === '*') dp[i][j] = dp[i-1][j] || dp[i][j-1];
+    }
+  }
+  return dp[m][n];
 }
 
-s = "mississippi";
-p = "mis*is*p*.";
-console.log(isMatch(s, p));
+s = "xaylmzx";
+p = "x.y*bz.";
+console.log(isMatchDP(s, p));
