@@ -44,6 +44,9 @@ function isMatchDP(s, p) {
   return dp[m][n];
 }
 
-s = "xaylmzx";
-p = "x.y*bz.";
+s = "xaylmzx",  p = "x.y*z.";
+console.log(isMatchDP(s, p));
+s = "aa",  p = "a";
+console.log(isMatchDP(s, p));
+s = "aab",  p = ".*.";
 console.log(isMatchDP(s, p));
