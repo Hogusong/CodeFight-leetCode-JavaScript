@@ -166,3 +166,30 @@ function commonPrefixDBF(strs) {
 console.log(commonPrefixDBF(["flower","floa","flight"]));
 console.log(commonPrefixDBF(["caa","","a","acb"]));
 console.log(commonPrefixDBF(["aa","ab"]));
+
+function longestCommon(strs) {
+  if (strs.length < 1 || strs[0] === '') return '';
+  if (strs.length === 1) return strs[0];
+
+  let prefix = strs[0];
+  for (let i = 1; i < strs.length; i++) {
+    prefix = getCommonPrefix(prefix, strs[i]);
+    if (prefix === '') return '';
+  }
+  return prefix;
+}
+
+function getCommonPrefix(p, str) {
+  if (p.length > str.length) return getCommonPrefix(p.substring(0, str.length), str)
+  if ( p === str.substring(0, p.length)) return p;
+  let end = p.length - 1;
+  while (end > 0) {
+    if (p.substring(0, end) === str.substring(0, end)) return p.substring(0, end);
+    end --;
+  }
+  return '';
+}
+
+console.log(longestCommon(["flower","floa","flight"]));
+console.log(longestCommon(["caa","","a","acb"]));
+console.log(longestCommon(["aa","ab"]));
