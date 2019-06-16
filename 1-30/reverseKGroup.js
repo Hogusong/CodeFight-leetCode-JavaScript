@@ -62,3 +62,46 @@ function reverseKGroup(head, k) {
 
 const node = new LinkedNode(1, new LinkedNode(2));
 console.log(reverseKGroup(node, 2));
+
+//  Using Array
+function reverseGroupK(head, k) {
+  if (k < 2 || !head || !head.next) return head;
+  if (!head || !head.next) return head;
+
+  let arr = [],  count = 0;
+  let root = null, curr = head, prev = null;
+  while (curr) {
+    count = 0
+    while (count < k && curr) {
+      const temp = curr.next;
+      curr.next = null;
+      arr.push(curr);
+      curr = temp;
+      count++;
+    }
+
+    if (count === k) {
+      let node = arr.pop();
+      if (!root) {
+        root = node;
+        prev = node;
+        node = arr.pop();
+      }
+      prev.next = node;      
+      while (arr.length > 0) {
+        node.next = arr.pop();
+        node = node.next;
+      }
+      prev = node;
+    }
+  }
+  if (!root) {
+      root = arr.shift();
+      prev = root;
+  }
+  for (let i = 0; i < arr.length; i++) {
+      prev.next = arr[i];
+      prev = prev.next;
+  }
+  return root;
+}
