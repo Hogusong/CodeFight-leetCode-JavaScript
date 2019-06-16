@@ -67,3 +67,17 @@ function swapPairsUsingArray(head) {
 
 node = new LinkedNode(1, new LinkedNode(2, new LinkedNode(3, new LinkedNode(4, new LinkedNode(5)))));
 console.log(swapPairsUsingArray(node));
+
+//  Simple Recursion.
+function swapTwo(head) {
+  if (!head || !head.next) return head;
+
+  const left = head;
+  const right = head.next;
+  const temp = head.next.next;
+  head = right;
+  right.next = left;
+  left.next = temp ? swapTwo(temp) : null;
+
+  return head;
+}
