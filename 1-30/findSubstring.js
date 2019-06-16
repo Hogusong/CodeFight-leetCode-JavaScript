@@ -55,3 +55,23 @@ function combineWords(words) {
     return allAnswers;
   }
 }
+
+//  Getting Permutation
+function makePermutation(arr) {
+  if (arr.length < 2) return arr[0];
+  result = [];
+  permutationRec(arr, '');
+  return result;
+}
+
+function permutationRec(arr, answer) {
+  if (arr.length < 2) {
+    result.push(answer + arr[0]);
+    return;
+  }
+  for (let i = 0; i < arr.length; i++) {
+    permutationRec([...arr.slice(0, i), ...arr.slice(i+1)], answer + arr[i])
+  }
+}
+
+console.log(makePermutation(['A', 'B', 'C', 'D']));
