@@ -81,3 +81,19 @@ function removeElements(nums, val) {
 }
 
 console.log(removeElements([...arr], val));
+
+function removeElem(nums, val) {
+  if (nums.length < 1) return 0;
+  let removed = 0,  n = nums.length - 1;
+  let index = nums.indexOf(val);
+  while (index >= 0) {
+    nums[index] = nums[n - removed];
+    nums[n - removed] = null;
+    index = nums.indexOf(val);
+    removed ++;
+  }
+  // return n-removed+1;
+  return nums.slice(0, n-removed+1);
+}
+
+console.log(removeElem([...arr], val));
