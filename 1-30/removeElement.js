@@ -64,3 +64,20 @@ function removeValue(nums, val) {
 }
 
 console.log(removeValue([...arr], val));
+
+//  Keep origin order.
+function removeElements(nums, val) {
+  if (nums.length < 1) return 0;
+
+  let index = null;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === val && index === null)  index = i;
+    if (nums[i] != val && index != null) {
+      nums[index++] = nums[i];
+    }
+  }
+  index === null ? nums.length : index;
+  return nums.slice(0, index);
+}
+
+console.log(removeElements([...arr], val));
