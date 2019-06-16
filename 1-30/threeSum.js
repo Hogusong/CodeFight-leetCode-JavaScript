@@ -25,7 +25,7 @@ function threeSum(nums) {
       }
     }
   }
-  return result;
+  return result.length;
 }
 
 function getSubsets(arr, n, r, index, data, i) {
@@ -82,3 +82,35 @@ function threeSubset(nums) {
 // console.time('This')
 // console.log(threeSubset(nums));
 // console.timeEnd('This')
+
+function threeSubsetSum(nums) {
+  if (nums.length < 3) return [];
+
+  const result = [], dict = {};
+  for (let i = 0; i < nums.length - 2; i++) {
+    for (let j = i+1; j < nums.length - 1; j++) {
+      const diff = 0 - nums[i] - nums[j];
+      const index = nums.indexOf(diff, j + 1);
+      if (index > j) {
+        const arr = [nums[i], nums[j], nums[index]].sort((a,b) => a-b);
+        const key = arr[0] + ':' + arr[1] + ':' + arr[2]
+        if (!dict[key]) {
+            dict[key] = 1;
+            result.push(arr);
+        }
+      }
+    }
+  }
+  return result.length;
+}
+
+function isNew(R, A) {
+  for (let r of R) {
+    if (r[0] === A[0] && r[1] === A[1] && r[2] === A[2]) return false;
+  }
+  return true;
+}
+
+console.time('This')
+console.log(threeSubsetSum(nums));
+console.timeEnd('This')

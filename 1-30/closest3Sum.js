@@ -48,4 +48,27 @@ console.time('This')
 console.log(closestThreeSum(nums, target));
 console.timeEnd('This')
 
+function threeSum2(nums) {
+  if (nums.length < 3) return null;
+  if (nums.length < 4) return nums[0] + nums[1] + nums[2];
+  const set = new Set();
+  for (let i = 0; i < nums.length - 2; i++) {
+    for (let j = i + 1; j < nums.length - 1; j++) {
+      for (let k = j + 1; k < nums.length; k++) {
+        const sum = nums[i] + nums[j] + nums[k];
+        if (sum === target) return target;
+        if (!set.has(sum)) set.add(sum);
+      }
+    }
+  }
+  let gap = 0;
+  while (true) {
+    if (set.has(target + gap)) return target + gap;
+    if (set.has(target - gap)) return target - gap;
+    gap++;
+  }
+}
 
+console.time('This')
+console.log(threeSum2(nums, target));
+console.timeEnd('This')
