@@ -56,3 +56,23 @@ var myAtoi = function(str) {
   if (ans < -2147483648) return -2147483648;
   return ans;
 };
+
+function myAtoi(str) {
+    str = str.trim();
+    if (str.length < 1) return 0;
+    const pattA = /[-+\d]/g;
+    const pattB = /[\d]/g;
+    let i = 0;
+    if (str[0].match(pattA)) {
+        for (i=1; i<str.length; i++) {
+            if (!str[i].match(pattB)) break
+        }
+    } else {
+        return 0
+    }   
+    const ans = +str.substring(0, i);
+    if (!ans) return 0;
+    if (ans > 2147483647) return 2147483647;
+    if (ans < -2147483648) return -2147483648;
+    return ans;  
+}
