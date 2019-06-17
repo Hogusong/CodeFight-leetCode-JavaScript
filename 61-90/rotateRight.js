@@ -45,3 +45,33 @@ node = new LinkedList(1, new LinkedList(2, new LinkedList(3, new LinkedList(4, n
 console.log(rotateRight(node, 8));
 node = new LinkedList(1, new LinkedList(2, new LinkedList(3, new LinkedList(4, new LinkedList(5)))));
 console.log(rotateRight(node, 2));
+
+function rotateR(head, k) {
+  if (!head  || !head.next || k < 1) return head;
+
+  let node = head, prev = null,  count = 1;
+  while (node.next) {
+    count ++;
+    node = node.next
+  }
+  const tail = node;
+
+  if (k % count < 1) return head;
+
+  k = count - k % count;
+  count = 0;
+  node = head;
+  while (count < k) {
+    count ++;
+    prev = node;
+    node = node.next
+  }
+  tail.next = head;
+  prev.next = null;
+  return node;
+}
+
+node = new LinkedList(1, new LinkedList(2, new LinkedList(3, new LinkedList(4, new LinkedList(5)))));
+console.log(rotateR(node, 8));
+node = new LinkedList(1, new LinkedList(2, new LinkedList(3, new LinkedList(4, new LinkedList(5)))));
+console.log(rotateR(node, 2));
