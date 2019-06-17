@@ -30,3 +30,17 @@ function power(x, n) {
 console.log(myPow(2.1, 3));
 console.log(myPow(8, -3))
 console.log(myPow(125, 15));
+
+function myPow(x, n) {
+  if (x === 0) return 0;
+  if (x === 1 || n === 0) return 1;
+  dict = {};
+  return n > 0 ? power(x, n) : 1/power(x, -n);
+}
+
+function power(x, n) {
+  if (n === 1) return x;
+  const k = Math.floor(n / 2);
+  if (!dict[k]) dict[k] = power(x, k);
+  return n % 2 > 0 ? x * dict[k] * dict[k] : dict[k] * dict[k]
+}
