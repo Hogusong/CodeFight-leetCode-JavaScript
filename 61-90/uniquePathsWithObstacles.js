@@ -30,12 +30,12 @@ function uniquePathsWithObstacles(obstacleGrid) {
 
   // Filling the values for the first column
   for (let i = 1; i < R; i++) {
-    obstacleGrid[i][0] = (obstacleGrid[i][0] == 0 && obstacleGrid[i - 1][0] == 1) ? 1 : 0;
+    obstacleGrid[i][0] = (obstacleGrid[i][0] == 1 || obstacleGrid[i - 1][0] == 0) ? 0 : 1;
   }
 
   // Filling the values for the first row
   for (let i = 1; i < C; i++) {
-    obstacleGrid[0][i] = (obstacleGrid[0][i] == 0 && obstacleGrid[0][i - 1] == 1) ? 1 : 0;
+    obstacleGrid[0][i] = (obstacleGrid[0][i] == 1 || obstacleGrid[0][i - 1] == 0) ? 0 : 1;
   }
 
   // Starting from cell(1,1) fill up the values
