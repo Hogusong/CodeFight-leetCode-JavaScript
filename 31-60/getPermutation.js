@@ -46,7 +46,12 @@ console.log(getPermutation(4, 9));
 //  Recursion
 function gneKthPermutation(n, k) {
   count = 0, result = '';
-  helpRec(n, 0, k, '');
+  let fact = 1;
+  for (let i = 1; i <= n; i++) fact *= i;
+  if (k > fact/2) {
+    k = fact - k + 1;
+    helpRecReverse(n, n, k, '');
+  } else helpRec(n, 0, k, '');
   return result;
 }
 
@@ -61,6 +66,20 @@ function helpRec(n, i, k, answer) {
   for (let j = 1; j <= n; j++) {
     if (answer.includes(j)) continue
     helpRec(n, i+1, k, answer+j)
+  }
+}
+
+function helpRecReverse(n, i, k, answer) {
+  if (i < 1) {
+    count ++;
+    if (k === count) {
+      result = answer;
+      return ;
+    }
+  }
+  for (let j = n; j >= 1; j--) {
+    if (answer.includes(j)) continue
+    helpRecReverse(n, i-1, k, answer+j)
   }
 }
 
