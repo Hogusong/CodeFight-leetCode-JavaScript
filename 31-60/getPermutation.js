@@ -42,3 +42,27 @@ function getKthPermute(result, nums, n, k, fact) {
 console.log(getPermutation(9, 37098));
 console.log(getPermutation(3, 5));
 console.log(getPermutation(4, 9));
+
+//  Recursion
+function gneKthPermutation(n, k) {
+  count = 0, result = '';
+  helpRec(n, 0, k, '');
+  return result;
+}
+
+function helpRec(n, i, k, answer) {
+  if (i >= n) {
+    count ++;
+    if (k === count) {
+      result = answer;
+      return ;
+    }
+  }
+  for (let j = 1; j <= n; j++) {
+    if (answer.includes(j)) continue
+    helpRec(n, i+1, k, answer+j)
+  }
+}
+
+console.log(gneKthPermutation(3, 5));
+console.log(gneKthPermutation(4, 9));
