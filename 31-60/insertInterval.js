@@ -67,3 +67,24 @@ console.log(insert(group, arr));
 group = [];
 arr = [5,10];
 console.log(insert(group, arr));
+
+//  Simple and Best solution (Time and Space).
+function insertInterval(intervals, newInterval) {
+  const len = intervals.length;
+  if (len < 1) return [newInterval];
+
+  let answer = [],  N = newInterval;
+  for (let i = 0; i < len; i++) {
+    const I = intervals[i];
+    if (N[1] < I[0]) {
+      return [...answer, N, ...intervals.slice(i)];
+    }
+    if (N[0] > I[1]) answer.push(I);
+    else if (I[0] <= N[1] && N[1] <= I[1]) {
+      N = [Math.min(I[0], N[0]), I[1]];
+    } else if (I[0] <= N[0] && N[0] <= I[1]) {
+      N = [I[0], Math.max(N[1], I[1])]
+    }
+  }
+  return [...answer, N];
+}
