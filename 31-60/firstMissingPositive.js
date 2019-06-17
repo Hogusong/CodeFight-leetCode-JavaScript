@@ -37,3 +37,21 @@ function findFirstPositive(arr) {
 console.log(firstMissingPositive([3,4,8,10,12]));
 console.log(firstMissingPositive([1,2,0]));
 console.log(firstMissingPositive([3,5,-1,0,1,-2]));
+
+function findNumber(arr, t) {
+  if (arr[0] >= t) return 0;
+  if (arr[arr.length-1] < t) return arr.length;
+  let start = 0, end = arr.length - 1;
+  while (start <= end) {
+    const mid = Math.floor((start + end) / 2);
+    if (arr[mid] === t) return mid;
+    if (arr[mid] > t) end = mid - 1;
+    else start = mid + 1
+  }
+  return start;
+}
+
+console.log()
+console.log(findNumber([1,3,5,7,9,11],6));
+console.log(findNumber([1,3,5,7,9,11],5));
+console.log(findNumber([1,3,5,7,9,11],12));
