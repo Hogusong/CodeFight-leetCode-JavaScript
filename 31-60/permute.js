@@ -52,3 +52,23 @@ function permuteRec(result, temp, nums, n) {
 console.time('Recursion');
 console.log(permutateR(arr));
 console.timeEnd('Recursion');
+
+function permutationsA(nums) {
+  if (nums.length <  2) return [nums];
+  result = [];
+  permuteRe(nums, 0, []);
+  return result;
+}
+
+function permuteRe(N, i, answer) {
+  if (i === N.length) {
+    result.push(answer);
+    return 
+  }
+  for (let j = 0 ; j < N.length; j++) {
+    if (answer.includes(N[j])) continue;
+    permuteRe(N, i+1, [...answer, N[j]]);
+  }
+}
+
+console.log(permutationsA([1,2,3]));
