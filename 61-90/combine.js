@@ -54,3 +54,24 @@ function combineIter(n, k) {
 }
 
 console.log(combineIter(N, K));
+
+//  Brute Force
+function combine(n, k) {
+  if (n < k) return [];
+  if (n === k) return makeArray(n);
+  let stack = [[]],  count = 0;
+  while (count < k) {
+    const temp = [...stack];
+    stack = [];
+    for (let t of temp) {
+      const start = (t.length < 1) ? 1 : t[t.length-1] + 1;
+      for (let i = start; i <= n; i++) {
+        if (!t.includes(i)) {
+          stack.push([...t, i])
+        }
+      }
+    }
+    count ++;
+  }
+  return stack;
+}
