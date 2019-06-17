@@ -14,13 +14,25 @@ function searchInRotated(nums, target) {
   const len = nums.length;
   if (len < 1) return -1;
   if (len === 1) return nums[0] != target ? -1 : 0;
-  const pivot = findPivot(nums);
+  
+  const pivot = findPivot(nums, 0, len - 1);
   if (pivot < 0) return binarySearch(nums, target, 0, len - 1);
   if (nums[len-1] < target) return binarySearch(nums, target, 0, pivot);
   return binarySearch(nums, target, pivot + 1, len - 1)
 };
 
-function findPivot(arr) {
+function findPivot(arr, s, e) {
+  if (s === e) {
+    if (arr[s-1] < arr[s] && arr[s] > arr[s+1]) return s;
+    return -1
+  }
+  const m = Math.floor((s + e) / 2)
+  if ((m < 1 || arr[m-1] < arr[m]) && arr[m] > arr[m+1]) return m;
+  if (arr[s] < arr[m] && arr[m] > arr[e]) return findPivot(arr, m, e) ;
+  return findPivot(arr, s, m);
+}
+
+function findPivotBF(arr) {
   if (arr[0] < arr[arr.length-1]) return -1;
   for (let i=1; i<arr.length; i++) {
     if (arr[i-1] > arr[i]) return i-1;

@@ -74,4 +74,4 @@ function permutationRec(arr, answer) {
   }
 }
 
-console.log(makePermutation(['A', 'B', 'C', 'D']));
+console.log(makePermutation([1,2,3,4,5,6]));
