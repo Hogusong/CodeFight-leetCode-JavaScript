@@ -36,3 +36,22 @@ function countAndSay(n) {
 }
 
 console.log(countAndSay(5));
+
+function countSay(n) {
+  let strNo = '1';
+  for (let i = 1; i < n; i++) {
+    const temp = strNo.split('');
+    let count = 1;
+    strNo = '';
+    for (let j = 1; j < temp.length; j++) {
+      if (temp[j-1] != temp[j]) {
+        strNo += '' + count + temp[j-1];
+        count = 1;
+      } else {
+        count ++;
+      }
+    }
+    strNo += '' + count + temp[temp.length - 1];
+  }
+  return strNo;
+}
