@@ -42,3 +42,22 @@ function makeCombination(arr, t, storage) {
 }
 
 console.log(combinationSum([2,3,6,7], 7));
+
+function comboSum(candidates, target) {
+  result = [];
+  candidates = candidates.sort((a,b) => a-b);
+  if (target >= candidates[0]) comboSumRec(candidates, target, []);
+  return result;
+}
+
+function comboSumRec(C, target, A) {
+  if (target === 0) {
+    result.push(A);
+    return;
+  }
+  if (C.length < 1 || C[0] > target) return;
+  if (C[0] <= target) comboSumRec([...C], target - C[0], [...A, C[0]]);
+  comboSumRec(C.slice(1), target, [...A]);
+}
+
+console.log(comboSum([2,6,5,3,7], 8));
