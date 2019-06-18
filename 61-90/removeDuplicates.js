@@ -23,27 +23,47 @@
 */
 
 function removeDuplicates(nums) {
-  if (nums.length < 3) return nums.length;
-  let num = null, countNum = 0, cutTotal = 0;
-  for (let i = 0; i < nums.length; i++) {
-      if (i > 0 && nums[i] < nums[i-1]) break;
-      if (nums[i] != num) {
-          num = nums[i];
-          if (countNum > 2) {
-              const cutCount = countNum - 2;
-              for (let j = i; j < nums.length; j++) {
-                  [nums[j], nums[j-cutCount]] = [nums[j-cutCount], nums[j]];
-              }
-              i = i - cutCount;
-              cutTotal += cutCount;
-          }
-          countNum = 1;
-      } else {
-          countNum++;
-      }
+    if (nums.length < 3) return nums.length;
+    let num = null, countNum = 0, cutTotal = 0;
+    for (let i = 0; i < nums.length; i++) {
+        if (i > 0 && nums[i] < nums[i-1]) break;
+        if (nums[i] != num) {
+            num = nums[i];
+            if (countNum > 2) {
+                const cutCount = countNum - 2;
+                for (let j = i; j < nums.length; j++) {
+                    [nums[j], nums[j-cutCount]] = [nums[j-cutCount], nums[j]];
+                }
+                i = i - cutCount;
+                cutTotal += cutCount;
+            }
+            countNum = 1;
+        } else {
+            countNum++;
+        }
+    }
+    if (countNum > 2) cutTotal += countNum - 2;
+    return nums.slice(0, nums.length - cutTotal);
   }
-  if (countNum > 2) cutTotal += countNum - 2;
-  return nums.slice(0, nums.length - cutTotal);
-}
-
-console.log(removeDuplicates([0,0,1,1,1,1,2,3,3]));
+  
+  console.log(removeDuplicates([0,0,1,1,1,1,2,3,3]));
+  
+  function removeDup(nums) {
+    const len = nums.length;  
+    if (len < 3) return len;
+  
+    let index = null, count = 1;
+    for (let i = 1; i < len; i++) {
+      if (nums[i-1] === nums[i]) {
+        count ++
+        if (count > 2 && index === null) index = i;
+      } else {
+        count = 1;
+      }
+      if (index != null && count < 3) nums[index++] = nums[i];
+    }
+    return (index != null) ? index : len
+  }
+  
+  console.log(removeDup([0,0,1,1,1,1,2,3,3]));
+  
