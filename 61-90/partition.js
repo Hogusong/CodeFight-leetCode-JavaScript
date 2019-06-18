@@ -83,3 +83,25 @@ printNode(node);
 N = new LinkedNode(4, new LinkedNode(5, new LinkedNode(7, new LinkedNode(2, new LinkedNode(1, new LinkedNode(3))))));
 node = makePartition(N, 3);
 printNode(node);
+
+//  Navigating
+function partitions(head, x) {
+  if (!head || !head.next) return head;
+
+  let leftHead = null, rightHead = null, left = null, right = null;
+  while (head) {
+    if (head.val < x) {
+      if (!leftHead) leftHead = head;
+      else left.next = head;
+      left = head;
+    } else {
+      if (!rightHead) rightHead = head;
+      else right.next = head;
+      right = head      
+    }
+    head = head.next
+  }
+  if (right) right.next = null
+  if (left) left.next = rightHead;
+  return leftHead ? leftHead : rightHead;
+}
