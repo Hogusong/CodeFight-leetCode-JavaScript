@@ -68,7 +68,7 @@ function countPossibleRec(str, i) {
   x = dict[i+1]
 
   if (i+2 < str.length && +str.substr(i, 2) <= 26) {
-    if (!dict[i+1]) dict[i+2] = countPossibleRec(str, i+2);
+    if (!dict[i+2]) dict[i+2] = countPossibleRec(str, i+2);
     y = dict[i+2] ;
   }
   return x + y;
