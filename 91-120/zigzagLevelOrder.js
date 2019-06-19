@@ -31,3 +31,30 @@ function zigzagLevelOrder(root) {
   }
   return result
 }
+
+//  Sliding Window.
+function zigzagLevelOrder(root) {
+  if (!root) return [];
+  let stack = [root], result = [], swap = false;
+  let from = 0, to = 1, added = 1
+  while (added > 0) {
+    const values = [];
+    added = 0;
+    for (let i = from; i < to; i++) {
+      if (stack[i].left) {
+        added++;
+        stack.push(stack[i].left);
+      } 
+      if (stack[i].right) {
+        stack.push(stack[i].right);
+        added++;
+      }
+      values.push(stack[i].val)
+    }
+    [from, to] = [to, to + added];
+    if (swap) result.push(values.reverse());
+    else result.push(values);
+    swap = !swap;
+  }
+  return result
+}
