@@ -75,3 +75,29 @@ function compareRec(L, R) {
   if (L.val != R.val) return false;
   return isMirror(L.left, R.right) && isMirror(L.right, R.left);
 }
+
+function isSymmetricStack(root) {
+  if (!root) return true;
+  let stack = [root], arr = [];
+  while (stack.length > 0) {
+    const temp = [...stack];
+    stack = [];
+    arr = [];
+    for (let t of temp) {
+      if (!t.left) {
+          arr.push(null);
+      } else {
+          arr.push(t.left.val);
+          stack.push(t.left)
+      }
+      if (!t.right) {
+          arr.push(null);
+      } else {
+          arr.push(t.right.val);
+          stack.push(t.right)
+      }
+    }
+    if (!checkArr(arr)) return false;
+  }
+  return true;
+}
