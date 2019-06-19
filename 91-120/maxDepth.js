@@ -30,3 +30,10 @@ function searchDepth(node, count) {
   searchDepth(node.left, count);
   searchDepth(node.right, count);
 }
+
+function maxDepth(root) {
+  if (!root) return 0;
+  const l_D = maxDepth(root.left)
+  const r_D = maxDepth(root.right);
+  return 1 + Math.max(l_D, r_D);
+}
