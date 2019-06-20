@@ -24,6 +24,7 @@ function minimumDepth(root) {
               minimumDepth(root.right)) + 1; 
 }
 
+//  Using Stack
 function minDepth(root) {
   if (!root) return 0;
   let stack = [{'node': root , 'depth' : 1}] 
@@ -40,3 +41,28 @@ function minDepth(root) {
     }
   }
 }
+
+//  Sliding Window 
+function minDepthSW(root) {
+  if (!root) return 0;
+  let stack = [{'node': root , 'depth' : 1}] 
+  let from = 0, to = 1, added = 1;
+  while(added > 0) {
+    added = 0
+    for (let i = from; i < to; i++) {
+      const node = stack[i]['node'] ;
+      const depth = stack[i]['depth'] ;
+      if (!node.left && !node.right) return depth ;
+      if (node.left) {
+          stack.push({'node' : node.left , 'depth' : depth+1}) ;
+          added++;
+      }
+      if (node.right) {
+          stack.push({'node': node.right , 'depth' : depth+1});
+          added++;
+      }
+    }
+    [from, to] = [to, to + added];
+  }
+}
+
