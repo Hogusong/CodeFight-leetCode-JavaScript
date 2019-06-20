@@ -76,3 +76,26 @@ function minDepthSW(root) {
   }
 }
 
+//  use less memory and a little faster than above.
+function minDepthBest(root) {
+  if (!root) return 0;
+  let stack = [root] 
+  let from = 0, to = 1, added = 1, count = 0; 
+  while(added > 0) {
+    added = 0;
+    count++;
+    for (let i = from; i < to; i++) {
+      const node = stack[i];
+      if (!node.left && !node.right) return count ;
+      if (node.left) {
+          stack.push(node.left);
+          added++;
+      }
+      if (node.right) {
+          stack.push(node.right);
+          added++;
+      }
+    }
+    [from, to] = [to, to + added];
+  }
+}
