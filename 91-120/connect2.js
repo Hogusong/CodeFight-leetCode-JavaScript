@@ -46,15 +46,6 @@ function getNext(node) {
   return getNext(node.next)
 }
 
-// function getNext(node) {
-//   while (node) {
-//     if (node.left) return node.left;
-//     if (node.right) return node.right;
-//     node = node.next
-//   }
-//   return null;
-// }
-
 //  Iterative 
 function connect(root) {
   if (!root) return null;
