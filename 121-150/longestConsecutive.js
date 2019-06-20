@@ -6,6 +6,7 @@
   Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
 */
 
+//  Using space : 2nd,  Using time : 2nd
 function longestConsecutive(nums) {
   if (nums.length < 2) return nums.length;
   
@@ -25,6 +26,7 @@ function longestConsecutive(nums) {
 N = [100, 4, 200, 1, 3, 2, 3];
 console.log(longestConsecutive(N));
 
+//  Using space : 3rd,  Using time : Best
 function longestConsecutiveSet(nums) {
   const num_set = new Set();
   for (let num of nums) {
@@ -51,3 +53,24 @@ function longestConsecutiveSet(nums) {
 
 N = [100, 4, 200, 1, 3, 2, 3];
 console.log(longestConsecutiveSet(N));
+
+//  Using space : Best,  Using time : 3rd
+function longestConsecutiveSet(nums) {
+  if (nums.length < 2) return nums.length;
+  let longestStreak = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums.indexOf(nums[i]-1) < 0) {
+      let currentNum = nums[i];
+      let currentStreak = 1;
+      while (nums.indexOf(currentNum+1) >= 0) {
+        currentNum += 1;
+        currentStreak += 1;
+      }
+
+      longestStreak = Math.max(longestStreak, currentStreak);
+    }
+  }
+
+  return longestStreak;
+}
