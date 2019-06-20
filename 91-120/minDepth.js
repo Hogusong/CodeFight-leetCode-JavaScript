@@ -14,14 +14,24 @@
      15   7     minimum depth = 2.
 */
 
+//  Brute Force Recursion.
 function minimumDepth(root) {
   if (!root) return 0;
-  if (root.left == null && root.right == null) return 1; 
+    
+  minD = 100000000;
+  findMin(root, 0);
+  return minD;
+}
 
-  if (root.left == null) return minimumDepth(root.right) + 1; 
-  if (root.right == null) return minimumDepth(root.left) + 1; 
-  return Math.min(minimumDepth(root.left), 
-              minimumDepth(root.right)) + 1; 
+function findMin(node, count) {
+  if (!node.left && !node.right) {
+      minD = Math.min(minD, ++count);
+      return;
+  } 
+  count++;
+  if (!node.left) findMin(node.right, count);
+  else if (!node.right) findMin(node.left, count); 
+  else Math.min(findMin(node.left, count), findMin(node.right, count)); 
 }
 
 //  Using Stack
