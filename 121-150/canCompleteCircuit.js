@@ -48,3 +48,28 @@ c = [3,3,5,2,1];
 g = [5,1,2,3,4]
 c = [4,4,1,5,1]
 console.log(canCompleteCircuit(g, c));
+
+function canCompleteCircuit(gas, cost) {
+  let sumRemaining = 0;     // track current remaining
+  let total = 0;            // track total remaining
+  let start = 0;            // set starting index. it can move
+  for (let i = 0; i < gas.length; i++) {
+    let remaining = gas[i] - cost[i];
+
+    // if sum remaining of (i-1) >= 0, continue
+    if (sumRemaining >= 0) {
+      sumRemaining += remaining;
+      
+    // otherwise, reset start index to be current
+    } else {
+      sumRemaining = remaining;
+      start = i;
+    }
+    total += remaining;
+  }
+  if (total >= 0){
+    return start;
+  } else{
+    return -1;
+  }
+}
