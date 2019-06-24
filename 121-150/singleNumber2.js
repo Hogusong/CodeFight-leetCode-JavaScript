@@ -48,3 +48,17 @@ function singleNumber(nums) {
   }
   return null;
 }
+
+// Math:  3 * (a + b + c) - (a + a + a + b + c + c + c) = 2 * b
+function singleNumber(nums) {
+  const set = new Set();
+  let sumSet = 0, sumArray = 0;
+  for (let i = 0; i < nums.length; i++) {
+      sumArray += nums[i];
+      if (!set.has(nums[i])) {
+          set.add(nums[i]);
+          sumSet += nums[i];
+      }
+  }
+  return (3 * sumSet - sumArray) / 2;
+}
