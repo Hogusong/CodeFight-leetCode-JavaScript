@@ -35,3 +35,16 @@ function singleNumber(nums) {
   }
   return nums[nums.length-1];
 }
+
+//  Using Object
+function singleNumber(nums) {
+  const dict = {};
+  for (let n of nums) {
+    if (!dict[n]) dict[n] = 1;
+    else dict[n]++
+  }
+  for (let key in dict) {
+    if (dict[key] === 1) return key
+  }
+  return null;
+}
