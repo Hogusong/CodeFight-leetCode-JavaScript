@@ -19,3 +19,19 @@ function singleNumber(nums) {
   }
   return nums[nums.length-1];
 }
+
+//  Sorting first
+function singleNumber(nums) {
+  nums = nums.sort((a,b) => a-b);
+  let count = 0, value = null;
+  for (let n of nums) {
+    if (n != value) {
+      if (count === 1) return value;
+      count = 1;
+      value = n;
+    } else {
+      count++;
+    }
+  }
+  return nums[nums.length-1];
+}
