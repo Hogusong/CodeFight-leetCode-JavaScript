@@ -17,6 +17,7 @@
 */
 
 function wordBreak(s, wordDict) {
+  wordDict = wordDict.sort((a, b) => b.length - a.length);
   return breakWord(s, 0, s.length, wordDict);
 }
 
@@ -35,3 +36,21 @@ s = "cars";
 words = ["car","ca","rs"];
 console.log(wordBreak(s, words));
 
+function wordBreak(s, wordDict) {
+  const lookup = [];
+  for (let i = 0; i <= s.length; i++) lookup[i] = -1;
+  return breakWord(s, wordDict, lookup)
+}
+
+function breakWord(str, dict, lookup) {
+  const n = str.length;
+  if (n < 1) return true;
+  if (lookup[n] < 0) {
+    lookup[n] = 0
+    for (let i = 1; i <= n; i++) {
+      const prefix = str.substring(0, i);
+      if (dict.includes(prefix) && breakWord(str.substring(i), dict, lookup))  return true;
+    }
+  }
+  return false;
+}
