@@ -13,3 +13,16 @@ function traversal(node) {
   if (node.left) traversal(node.left);
   if (node.right) traversal(node.right);
 }
+
+// Using Stack
+function preorder(root) {
+  if (!root) return [];
+  let result = [], stack = [root];
+  while (stack.length > 0) {
+    const node = stack.pop();
+    result.push(node.val);
+    if (node.right) stack.push(node.right);
+    if (node.left) stack.push(node.left);
+  }
+  return result;
+}
