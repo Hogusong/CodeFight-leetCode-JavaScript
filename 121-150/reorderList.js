@@ -28,3 +28,22 @@ function reorderList(head) {
   }
   return head
 }
+
+function reorderList(head) {
+  if (!head || !head.next) return head;
+  const arr = [];
+  while(head) {
+    const newNode = head;
+    head = head.next;
+    newNode.next = null;
+    arr.push(newNode);
+  }
+  const n = arr.length;
+  for (let i = 0; i < n/2; i++) {
+    if (n-i-1 === i) break;
+    arr[i].next = arr[n-i-1];
+    if (n-i-1 === i+1) break;
+    arr[n-i-1].next = arr[i+1]
+  }
+  return arr[0]
+}
