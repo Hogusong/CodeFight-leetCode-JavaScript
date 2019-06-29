@@ -45,3 +45,24 @@ function combine(A, B) {
   if (j < b) ans = [...ans, ...B.slice(j)];
   return ans
 }
+
+// Use JS sort function.
+function sortList(head) {
+  if (!head || !head.next) return head;
+  let nodes = [];
+  let node = head;
+  while (node) {
+    const temp = node;
+    node = node.next;
+    temp.next = null;
+    nodes.push(temp);
+  }
+  const sortedNodes = nodes.sort((a,b) => a.val - b.val);
+  head = sortedNodes[0];
+  node = head;
+  for (let i = 1; i < sortedNodes.length; i++) {
+    node.next = sortedNodes[i]
+    node = node.next
+  }
+  return head;
+}
