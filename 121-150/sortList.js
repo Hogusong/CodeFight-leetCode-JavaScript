@@ -66,3 +66,66 @@ function sortList(head) {
   }
   return head;
 }
+
+//using constant space complexity
+function sortList(head) {
+  if (!head || !head.next) return head;
+  return mergeList(head);
+}
+
+function mergeList(head) {
+  if (!head || !head.next) return head;
+  let slow = head;
+  let fast = head.next;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next
+  }
+  const mid = slow.next;
+  slow.next = null;
+  const left = mergeList(head);
+  const right = mergeList(mid);
+  return merge(left, right);
+}
+
+function mergeRec(L, R) {
+  if (!L) return R;
+  if (!R) return L;
+  let head = null;
+  if (L.val < R.val) {
+    head = L;
+    head.next = mergeRec(L.next, R);
+  } else {
+    head = R;
+    head.next = mergeRec(L, R.next);
+  }
+  return head;
+}
+
+function merge(L, R) {
+  let head, curr;
+  while (L && R) {
+    if (L.val > R.val) {
+      if (!curr) {
+        curr = R;
+        head = curr;
+      } else {
+        curr.next = R;
+        curr = curr.next;
+      }
+      R = R.next;
+    } else {
+      if (!curr) {
+        curr = L;
+        head = curr;
+      } else {
+        curr.next = L;
+        curr = curr.next;
+      }
+      L = L.next;
+    }
+  }
+  if (L) curr.next = L;
+  if (R) curr.next = R;
+  return head;
+}
