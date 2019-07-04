@@ -50,3 +50,56 @@ T = ["4","13","5","/","+"];
 T = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"];    //  22
 T = ["4","-2","/","2","-3","-","-"];    //  -7
 console.log(evalRPN(T));
+
+function makeRPN(str) {
+  const strArray = parseStr(str);
+  const stack = [], ans = [];
+  for (let s of strArray) {
+    if (isNaN(s)) {
+      if (s != ')') {
+        stack.push(s);
+      } else {
+        while (stack[stack.length-1] != '(') {
+          ans.push(stack.pop())
+        }
+        stack.pop();
+      }
+    } else {
+      ans.push(s);
+    }
+  }
+  if (stack.length > 0) ans.push(stack.pop());
+  return ans;
+}
+
+function parseStr(str) {
+  const S = str.replace(/ /g, '').split('');
+  let ans = [], value = '';
+  for (let s of S) {
+    if ('()*/+'.includes(s)) {
+      if (value.length > 0) {
+        ans.push(value);
+        value = ''
+      }
+      ans.push(s);
+    } else if (s === '-') {
+      if ('(*/+-'.includes(ans[ans.length-1])) {
+        value = s;
+      } else {
+        if (value.length > 0) {
+          ans.push(value);
+          value = ''
+        }
+          ans.push(s);
+      }
+    } else {
+      value += s;
+    }
+  }
+  if (value.length > 0) ans.push(value);
+  return ans;
+}
+
+str = '((10 * (6 / ((9 + 3) * -11))) + 17) + 5'
+T = ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"];
+console.log(makeRPN(str));
