@@ -34,8 +34,8 @@ console.log(longestPalindromeBF('dabcdcbab'));
 
 function longestPalindrome(s) {
   if (s != null && s.length < 1) return "";
-  let start = 0, end = 0;
-  for (let i=0; i<s.length; i++) {
+  let start = 0, end = 0, len = 1, len1 = 1, len2 = 1;
+  for (let i=0; i<s.length - (len/2); i++) {
     len1 = expandFromCenter(s, i, i);
     len2 = expandFromCenter(s, i, i+1); 
     len = Math.max(len1, len2);
@@ -48,7 +48,7 @@ function longestPalindrome(s) {
 }
 
 function expandFromCenter(s, left, right) {
-  while(left >= 0 && right < s.length && s.charAt(left) === s.charAt(right)) {
+  while(left >= 0 && right < s.length && s[left] === s[right]) {
     left--;
     right++;
   }
