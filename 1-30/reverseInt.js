@@ -19,9 +19,28 @@ function reverseInt(n) {
     n = Math.floor(n / 10);
     ans = ans * 10 + remain;
   }
-  return isNegative ? -ans : ans;
+  anc = isNegative ? -ans : ans;
+  if (ans < -2147483648 || ans > 2147483647) return 0;
+  return ans;
 }
 
 console.log(reverseInt(123));
 console.log(reverseInt(-123));
 console.log(reverseInt(120));
+
+function reverse(n) {
+  const isNegative = n < 0;
+  n = Math.abs(n);
+  const arr = [];
+  while (n > 0) {
+    arr.push(n % 10);
+    n = Math.floor(n / 10);
+  }
+  let num = 0;
+  for (let i = 0; i < arr.length; i++) {
+    num += arr[arr.length-i-1] * 10**i;
+  }
+  num = isNegative ? -num : num;
+  if (num < -2147483648 || num > 2147483647) return 0;
+  return num;
+}
