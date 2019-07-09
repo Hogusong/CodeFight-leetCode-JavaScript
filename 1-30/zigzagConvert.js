@@ -119,3 +119,18 @@ function convert(s, rows) {
 }
 
 console.log(convert("PAYPALISHIRING", 4));
+
+function convert(s, rows) {
+  if (rows < 2) return s;
+  let result = [];
+  for (let i = 0; i < rows; i++) {
+    result.push('');
+  }
+  const key = 2 * (rows - 1);
+  for (let i = 0; i < s.length; i++) {
+    let row = i % key;
+    if (row > key / 2) row = key - row;
+    result[row] += s[i]
+  }
+  return result.join('');
+}
