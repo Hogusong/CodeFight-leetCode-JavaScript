@@ -76,3 +76,22 @@ function myAtoi(str) {
     if (ans < -2147483648) return -2147483648;
     return ans;  
 }
+
+function myAtoi(str) {
+    str = str.trim();
+    if (!str[0].match(/[0-9-+]/)) return 0;
+    let i = 1, j = 0;
+    while (i < str.length && str[i].match(/[0-9]/)) {
+        i++;
+    }
+    if (str[0] === '-' || str[0] === '+') j = 1;
+    let ans = 0;
+    while (j < i) {
+        ans = ans * 10 + +str[j++];
+        if (ans > 2147483648) break
+    }
+    if (str[0] === '-') ans = -ans;
+    if (ans < -2147483648) return -2147483648;
+    if (ans > 2147483647) return 2147483647;
+    return ans;
+}
