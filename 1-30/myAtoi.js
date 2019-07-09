@@ -79,6 +79,7 @@ function myAtoi(str) {
 
 function myAtoi(str) {
     str = str.trim();
+    if (str.length < 1) return 0;
     if (!str[0].match(/[0-9-+]/)) return 0;
     let i = 1, j = 0;
     while (i < str.length && str[i].match(/[0-9]/)) {
@@ -95,3 +96,6 @@ function myAtoi(str) {
     if (ans > 2147483647) return 2147483647;
     return ans;
 }
+
+S = ['   -42', '4193 with', 'abc 41', '95236598412442'];
+S.forEach(s => console.log(myAtoi(s)));
