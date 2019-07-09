@@ -16,10 +16,10 @@
   Input:  s = "ab",  p = ".*"                         Output: true
   Explanation: ".*" means "zero or more (*) of any character (.)".
 
-  Input:  s = "aab", p = "c*a*b"                      Output: true
+  Input:  s = "aab", p = "c*a*b"                      Output: false
   Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore it matches "aab".
 
-  Input:  s = "mississippi",  p = "mis*is*p*."        Output: false
+  Input:  s = "mississippi",  p = "mis*is*p*."        Output: true
 */
 
 function isMatchDP(s, p) {
@@ -44,9 +44,43 @@ function isMatchDP(s, p) {
   return dp[m][n];
 }
 
+s = "aab",  p = "c*a*b";
+console.log(isMatchDP(s, p));
+console.log(isMatch(s, p));
 s = "xaylmzx",  p = "x.y*z.";
 console.log(isMatchDP(s, p));
+console.log(isMatch(s, p));
 s = "aa",  p = "a";
 console.log(isMatchDP(s, p));
+console.log(isMatch(s, p));
 s = "aab",  p = ".*.";
 console.log(isMatchDP(s, p));
+console.log(isMatch(s, p));
+
+//  Wrong answer ------------  which is in LeetCode solution.
+function isMatch(s, p) {
+  if (p.length < 1) return s.length < 1;
+  result = [];
+  for (let i = 0; i <= s.length; i++) {
+    const row = [];
+    for (let j = 0; j <= p.length; j++) row.push('');
+    result.push(row);
+  }
+  return recursion(0, 0, s, p);
+}
+
+function recursion(i, j, s, p) {
+  if (result[i][j]) return result[i][j] === 'T';
+  let ans, first_match;
+  if (j == p.length) ans = i == s.length;
+  else {
+    first_match = (i < s.length && (p[j] == s[i] || p[j] == '.'));
+    if (j + 1 < p.length && p[j+1] == '*') {
+      ans = recursion(i, j+2, s, p) || first_match && recursion(i+1, j, s, p)
+    } else {
+      ans = first_match && recursion(i+1, j+1, s, p);
+    }
+  }
+  result[i][j] = ans ? 'T' : 'F';
+  return ans;  
+}
