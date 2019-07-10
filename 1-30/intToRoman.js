@@ -57,3 +57,69 @@ function intToRoman(num) {
 
   return ans;
 }
+
+function intToRoman(num) {
+  const R = ['M', 'D', 'C', 'L', 'X', 'V', 'I'];
+  const N = [1000, 500, 100, 50, 10, 5, 1]
+  let answer = '', i = 2, value = 0;
+  if (num >= 1000) {
+    value = Math.floor(num / 1000);
+    answer += R[0].repeat(value);
+    num = num % 1000;
+  }
+  while (num > 0) {
+    if (num >= N[i]) {
+      if (num >= N[i-1]) {
+        value = Math.floor((num - N[i-1]) / N[i]);
+        if (value > 3) answer += R[i] + R[i-2];
+        else answer += R[i-1] + R[i].repeat(value);
+        num -= (N[i-1] + value * N[i]);
+      } else {
+        value = Math.floor(num / N[i]);
+        if (value > 3) answer += R[i] + R[i-1];
+        else answer += R[i].repeat(value);
+        num -= value * N[i];
+      }
+    }
+    i += 2;
+  }
+  return answer;
+}
+
+console.log(intToRoman(9));
+console.log(intToRoman(239));
+console.log(intToRoman(999));
+console.log(intToRoman(154));
+console.log(intToRoman(94));
+
+function intToRoman(num) {
+  const R = ['M', 'D', 'C', 'L', 'X', 'V', 'I'];
+  const N = [1000, 500, 100, 50, 10, 5, 1]
+  let answer = '', i = 0, remain = 0, value = 0;
+  while (num > 0) {
+    if (i === 0 && num >= N[i]) {
+      answer += R[i];
+      num -= N[i]
+    } else {
+      i += 2;
+      value = Math.floor(num / N[i]);
+      remain = num % N[i];
+      if (value === 9) {
+        answer += R[i] + R[i-2];
+      } else if (value > 4) {
+        answer += R[i-1];
+        for (let j=0; j<value-5; j++) {
+          answer += R[i];
+        }
+      } else if (value === 4) {
+        answer += R[i] + R[i-1];
+      } else {
+        for (let j=0; j<value; j++) {
+          answer += R[i];
+        }
+      }
+      num = remain;
+    }
+  }   
+  return answer;
+}
