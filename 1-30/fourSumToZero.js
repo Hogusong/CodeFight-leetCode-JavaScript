@@ -11,7 +11,7 @@
 */
 
 //  Brute Force
-function forSumZero(nums, target) {
+function fourSumZero(nums, target) {
   subsets = [];
   const data = nums.map((e,i) => i);
   getSubsets(nums, nums.length, 4, 0, data, 0);
@@ -45,4 +45,38 @@ function getSubsets(arr, n, r, index, data, i) {
   data[index] = arr[i];
   getSubsets(arr, n, r, index+1, data, i+1);
   getSubsets(arr, n, r, index, data, i+1);
+}
+
+var fourSum = function(nums, target) {
+  if (nums.length < 4) return []
+  result = [];
+  data = [];
+  set = new Set();
+  nums = nums.sort((a,b) => a - b);
+  makeSubsets(nums, 4, 0, 0, target);
+  return result;
+}
+
+function makeSubsets(nums, maxCount, count, i, target) {
+  if (maxCount === count) {
+    if (getSum(data) === target) {
+      const key = data.join(':');
+      if (!set.has(key)) {
+        set.add(key);
+        result.push([...data]);
+      }
+    }
+    return;
+  }
+  if (i >= nums.length) return ;
+
+  data[count] = nums[i];
+  makeSubsets(nums, maxCount, count+1, i+1, target);
+  makeSubsets(nums, maxCount, count, i+1, target);
+}
+
+function getSum(arr) {
+  let sum = 0
+  arr.forEach(i => sum += i);
+  return sum;
 }

@@ -45,3 +45,32 @@ target = 13;
 console.log(searchMatrix(input, target));
 target = 11;
 console.log(searchMatrix(input, target));
+
+var searchMatrix = function(matrix, target) {
+  const row = findRow(matrix, target, 0, matrix.length-1);
+  if (row < 0) return false;
+  return searchInRow(matrix[row], target, 0, matrix[row].length-1)
+}
+
+function findRow(M, T, s, e) {
+  if (s === e) {
+    if (M[s][0] <= T && T <= M[s][M[s].length-1]) return s;
+    return -1;
+  }
+  if (s > e) return -1;
+
+  const mid = Math.floor((s + e) / 2);
+  if (T < M[mid][0]) return findRow(M, T, s, mid-1);
+  if (T > M[mid][M[mid].length-1]) return findRow(M, T, mid+1, e);
+  return mid;
+}
+
+function searchInRow(M, T, s, e) {
+  if (s === e) return M[s] === T;
+  if (s > e) return false;
+
+  const mid = Math.floor((s + e) / 2);
+  if (T < M[mid]) return searchInRow(M, T, s, mid-1);
+  if (T > M[mid]) return searchInRow(M, T, mid+1, e);
+  return true;
+}

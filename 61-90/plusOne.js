@@ -25,3 +25,16 @@ function plusOne(digits) {
 arr = [8,0,9,9];
 arr = [0];
 console.log(plusOne(arr));
+
+var plusOne = function(digits) {
+  let up = 1;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    if (digits[i] + up > 9) digits[i] = 0;
+    else {
+      digits[i] += up--;
+      break;
+    }
+  }
+  if (up > 0) digits.unshift(up);
+  return digits;
+}

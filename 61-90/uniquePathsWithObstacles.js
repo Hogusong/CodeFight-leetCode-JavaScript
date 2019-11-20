@@ -68,3 +68,35 @@ matrix = [[0,0],[1,1],[0,0]]
 console.log(uniquePathsWithObstacles(matrix));        //   0
 matrix = [[0,0],[0,0],[0,0],[0,0],[1,0],[0,0],[0,0],[0,0],[0,0],[0,1],[0,0],[0,0],[1,0],[0,0],[0,0],[0,1],[0,0],[0,0],[0,0],[0,0],[0,0]];
 console.log(uniquePathsWithObstacles(matrix));        //   0
+
+// Using table
+var uniquePathsWithObstacles = function(obstacleGrid) {
+  const m = obstacleGrid.length;
+  const n = obstacleGrid[0].length;
+    
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (obstacleGrid[r][c] === 1) obstacleGrid[r][c] = -1;
+    }
+  }
+
+  let stayZero = false;
+  for (let r = 0; r < m; r++) {
+    if (obstacleGrid[r][0] < 0) stayZero = true;
+    else if (!stayZero) obstacleGrid[r][0] = 1;
+  }
+  stayZero = false;
+  for (let c = 0; c < n; c++) {
+    if (obstacleGrid[0][c] < 0) stayZero = true;
+    else if (!stayZero) obstacleGrid[0][c] = 1;
+  }
+    
+  for (let r = 1; r < m; r++) {
+    for (let c = 1; c < n; c++) {
+      if (obstacleGrid[r][c] < 0) continue;
+      obstacleGrid[r][c] = obstacleGrid[r-1][c] + obstacleGrid[r][c-1];
+      if (obstacleGrid[r-1][c] < 0 || obstacleGrid[r][c-1] < 0) obstacleGrid[r][c] += 1;
+    }
+  }
+  return obstacleGrid[m-1][n-1] < 0 ? 0 : obstacleGrid[m-1][n-1];
+}

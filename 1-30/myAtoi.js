@@ -99,3 +99,48 @@ function myAtoi(str) {
 
 S = ['   -42', '4193 with', 'abc 41', '95236598412442'];
 S.forEach(s => console.log(myAtoi(s)));
+
+var myAtoi = function(str) {
+    const exp = '0123456789+-';
+    const digit = '0123456789';
+    let numStr = '';
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] == ' ' && numStr.length == 0) continue;
+      if (numStr.length > 0) {
+        if (digit.includes(str[i])) numStr += str[i];
+        else break;
+      } else {
+        if (exp.includes(str[i])) numStr = str[i];
+        else break;
+      } 
+    }
+    if (numStr.length < 1) return 0;
+    let ans = 0;
+    for (let i = 0; i < numStr.length; i++) {
+        if (numStr[i] == '-' || numStr[i] == '+') continue;
+        ans = ans * 10 + parseInt(numStr[i]);
+    }
+    if (numStr[0] === '-') ans *= -1;
+    if (ans < -2147483648) return -2147483648;
+    if (ans > 2147483647) return 2147483647;
+    return ans;
+  };
+  
+  function myAtoi(str) {
+    str = str.trim();
+    if ('0123456789+-'.indexOf(str[0]) < 0) return 0;
+  
+    const prefix = str[0] == '-' ? -1 : 1;
+    let n = 0;
+    let index  = (str[0] == '-' || str[0] == '+') ? 1 : 0;
+  
+    while (index < str.length) {
+      if (!'0123456789'.includes(str[index])) break;
+      n = n * 10 + (+str[index++]);
+    }
+    n = prefix * n;
+    if ( n < -2147483648) return -2147483648;
+    if ( n > 2147483647) return 2147483647;
+    return n;
+  }
+  

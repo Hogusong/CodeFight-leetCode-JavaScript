@@ -74,3 +74,17 @@ function mergeNodeListDC(lists) {
 }
 
 console.log(mergeNodeListDC(lists));
+
+var mergeKLists = function(lists) {
+  if (lists.length < 1) return null;
+  while (lists.length > 1) {
+    const temp = [];
+    for (let i = 1; i < lists.length; i+=2) {
+      const node = mergeTwoNodes(lists[i-1], lists[i]);
+      temp.push(node);
+    }
+    if (lists.length % 2 > 0) temp.push(lists.pop());
+    lists = temp;
+  }
+  return lists[0];
+}

@@ -34,3 +34,17 @@ function isValid(str) {
 console.log(isValid("()[]{}"));
 console.log(isValid("([)]"));
 console.log(isValid('({}{(){}})'));
+
+var isValid = function(str) {
+  const dict = { ')': '(', '}': '{', ']': '[' };
+  if (str.length % 2 > 0 || dict[str[0]]) return false;
+  const stack = [];
+  for (let s of str) {
+    if (!dict[s]) stack.push(s);
+    else {
+      const l = stack.pop();
+      if (dict[s] != l) return false;
+    }
+  }
+  return stack.length === 0;
+};

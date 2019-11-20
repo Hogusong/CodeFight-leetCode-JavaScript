@@ -76,11 +76,9 @@ function uniquePaths(m, n) {
   const arr = [];
   for (let i = 1; i < n; i++) arr.push('d');
   for (let i = 1; i < m; i++) arr.push('r');
-
+ 
   let result = [], used = [];
   for (let i=0; i<arr.length; i++) used[i] = false;
-
-  // arr = arr.sort((a,b) => a - b);   //  do it if needed.
 
   permuteRec(result, [], arr, used, arr.length);
   return result.length;

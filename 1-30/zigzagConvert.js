@@ -134,3 +134,36 @@ function convert(s, rows) {
   }
   return result.join('');
 }
+
+var convert = function(s, numRows) {
+  if (s.length < 2 || s.length <= numRows || numRows < 2) return s;
+  let ans = [], row = 0, direction = 1;
+  for (let i = 0; i < numRows; i++) ans.push('');
+  for (let i = 0; i < s.length; i++) {
+    ans[row] += s[i];
+    row += direction;
+    if (row == ans.length - 1) direction = -1;
+    if (row == 0) direction = 1;
+  }
+  let result = "";
+  for (let i = 0; i < numRows; i++) {
+    result += ans[i];
+  }
+  return result;
+};
+
+function zigzag(s, numRows) {
+  if (s.length < 2 || numRows >= s.length || numRows < 2) return s;
+  const key = (numRows - 1) * 2;
+  const arr = []
+  for (let i = 0; i < numRows; i++) arr.push('');
+  for (let i = 0; i < s.length; i++) {
+    for (let j = 0; j < key; j++) {
+      if (i % key === key - j || i % key == j) {
+        arr[j] += s[i];
+        break;
+      }
+    }
+  }
+  return arr.join('');
+}

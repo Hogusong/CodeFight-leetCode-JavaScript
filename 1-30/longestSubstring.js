@@ -61,18 +61,18 @@ console.log(findLongestSubstring(' '));
 console.log(findLongestSubstring(''));
 
 var lengthOfLongestSubstring = function(s) {
-  if (s.length < 2) return s.length
-  let i = 0, max = 1;
-  const n = s.length;
-  for (let j = 1; j < n; j++) {
-      const index = s.indexOf(s[j], i) ;
-      if (index >= i && index < j) {
-          max = Math.max(max, j - i);
-          i = index + 1;
+  if (s.length < 2) return s.length;
+  let start = 0, maxLen = 1;
+  for (let i = 1; i < s.length; i++) {
+    const index = s.indexOf(s[i], start);
+    if (index > start && index < i) {
+      if (maxLen < i - start) {
+        maxLen = i - start;
       }
-      if (j === n-1) max = Math.max(max, j - i + 1);
+      start = index + 1;
+    } 
   }
-  return max;
+  return Math.max(maxLen, s.length - start);
 }
 
 console.log(lengthOfLongestSubstring('dicvdadvfadi'));
@@ -81,3 +81,16 @@ console.log(lengthOfLongestSubstring('au'));
 console.log(lengthOfLongestSubstring('aaa'));
 console.log(lengthOfLongestSubstring(' '));
 console.log(lengthOfLongestSubstring(''));
+
+var lengthOfLongestSubstring = function(s) {
+  const dict = {};
+  let from = 0, maxLen = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (dict[s[i]] >= from) {
+      maxLen = Math.max(maxLen, i - from);
+      from = dict[s[i]] + 1;
+    }
+    dict[s[i]] = i;
+  }
+  return Math.max(maxLen, s.length-from);  
+}

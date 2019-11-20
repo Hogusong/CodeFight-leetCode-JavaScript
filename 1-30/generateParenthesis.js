@@ -57,3 +57,22 @@ function backtrack(n, S='', left = 0, right = 0) {
 }
 
 console.log(generateBTR(n));
+
+var generateParenthesis = function(n) {
+  if (n == 1) return ['()'];
+  result = []
+  getPrenthesisRec(n, n, '');
+  return result;
+}
+
+function getPrenthesisRec(open, close, str) {
+  if (open === 0 && close === 0) {
+    result.push(str);
+    return;
+  }
+  if (open === close) getPrenthesisRec(open-1, close, str + '(');
+  else {
+    getPrenthesisRec(open, close-1, str + ')');
+    if (open > 0) getPrenthesisRec(open-1, close, str + '(');
+  }
+}

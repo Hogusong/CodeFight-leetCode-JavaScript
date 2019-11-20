@@ -92,34 +92,28 @@ console.log(intToRoman(999));
 console.log(intToRoman(154));
 console.log(intToRoman(94));
 
-function intToRoman(num) {
-  const R = ['M', 'D', 'C', 'L', 'X', 'V', 'I'];
-  const N = [1000, 500, 100, 50, 10, 5, 1]
-  let answer = '', i = 0, remain = 0, value = 0;
-  while (num > 0) {
-    if (i === 0 && num >= N[i]) {
-      answer += R[i];
-      num -= N[i]
-    } else {
-      i += 2;
-      value = Math.floor(num / N[i]);
-      remain = num % N[i];
-      if (value === 9) {
-        answer += R[i] + R[i-2];
-      } else if (value > 4) {
-        answer += R[i-1];
-        for (let j=0; j<value-5; j++) {
-          answer += R[i];
-        }
-      } else if (value === 4) {
-        answer += R[i] + R[i-1];
-      } else {
-        for (let j=0; j<value; j++) {
-          answer += R[i];
-        }
-      }
-      num = remain;
+var intToRoman = function(num) {
+  const N = [1000, 500, 100, 50, 10, 5, 1];
+  const R = 'MDCLXVI';
+  let roman = '';
+  let count = 0;
+  if (num >= 1000) {
+    count = Math.floor(num / 1000);
+    for (let i = 0; i < count; i++) roman += 'M'
+    num = num % 1000;
+  }
+  for (let i = 2; i < N.length; i += 2) {
+    if (num >= N[i]) {
+      count = Math.floor(num / N[i]);
+      if (count == 9) roman += R[i] + R[i-2];
+      else if (count >= 5) {
+        roman += R[i-1];
+        count = count - 5;
+        for (let j = 0; j < count; j++) roman += R[i];
+      } else if (count == 4) roman += R[i] + R[i-1];
+      else for (let j = 0; j < count; j++) roman += R[i];
+      num = num % N[i];
     }
-  }   
-  return answer;
-}
+  }
+  return roman;
+};

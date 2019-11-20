@@ -103,3 +103,34 @@ board = [ ["a","a","a","a"],
           ["a","a","a","a"] ]
 word = "aaaaaaaaaaaaa";
 console.log(findExit(board, word));   //  false
+
+function exist(board, word) {
+  const m = board.length;
+  const n = board[0].length;
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (board[r][c] === word[0]) {
+        if (findWord(board, word, r, c, 1, [r+':'+c])) return true;
+      }
+    }
+  }
+  return false;
+}
+
+function findWord(B, W, r, c, i, path) {
+  if (i === W.length) return true;
+  let left = false, right = false, top = false, bottom = false;
+  if (r-1 >= 0 && !path.includes(r-1 + ':' + c) && B[r-1][c] === W[i]) {
+    top = findWord(B, W, r-1, c, i+1, [...path, (r-1)+':'+ c])
+  }
+  if (r+1 < B.length && !path.includes(r+1 + ':' + c) && B[r+1][c] === W[i]) {
+    bottom = findWord(B, W, r+1, c, i+1, [...path, (r+1)+':'+ c])
+  } 
+  if (c-1 >= 0 && !path.includes(r + ':' + (c-1)) && B[r][c-1] === W[i]) {
+    left = findWord(B, W, r, c-1, i+1, [...path, r+':'+(c-1)])
+  }
+  if (c+1 < B[0].length && !path.includes(r+':'+(c+1)) && B[r][c+1] === W[i]) {
+    right = findWord(B, W, r, c+1, i+1, [...path, r+':'+(c+1)])
+  } 
+  return left || right || top || bottom;
+}

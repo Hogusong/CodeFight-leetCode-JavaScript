@@ -57,3 +57,53 @@ function expandFromCenter(s, left, right) {
 
 console.log(longestPalindrome('dabcdcbab'));
 console.log(longestPalindrome('cbbd'));
+
+var longestPalindrome = function(s) {
+  if (s.length < 2) return s;
+  let max = 1, ans = s[0];
+  for (let i = 0; i < s.length-max/2; i++) {
+    const str1 = getPalindrome(s, i, i);
+    const str2 = getPalindrome(s, i, i+1);
+    if (str2.length > str1.length) {
+      if (str2.length > max) {
+        max = str2.length;
+        ans = str2;
+      }
+    } else if (str1.length > str2.length && str1.length > max) {
+      max = str1.length;
+      ans = str1;
+    } 
+  }
+  return ans;
+};
+
+function getPalindrome(S, left, right) {
+  while (left >= 0 && right < S.length && S[left] == S[right]) {
+    left--;
+    right++;
+  }
+  return S.substring(left+1, right);
+}
+
+function longestPalindrome(s) {
+  let from = 0, to = 0, left = 0, right = 0;
+  for (let i = 0; i < s.length - 1; i++) {
+    [left, right] = findPalindrome(i, i, s);
+    if (to - from < right - left) {
+      [from, to] = [left, right];
+    }
+    [left, right] = findPalindrome(i, i+1, s);
+    if (to - from < right - left) {
+      [from, to] = [left, right];
+    }
+  }
+  return s.substring(from, to + 1);
+}
+
+function findPalindrome(left, right, s) {
+  while (left >= 0 && right < s.length && s[left] == s[right]) {
+      left --;
+      right ++;
+  }
+  return [left + 1, right - 1]
+}

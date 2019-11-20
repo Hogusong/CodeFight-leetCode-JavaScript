@@ -56,8 +56,34 @@ function comboSumRec(C, target, A) {
     return;
   }
   if (C.length < 1 || C[0] > target) return;
-  if (C[0] <= target) comboSumRec([...C], target - C[0], [...A, C[0]]);
+  comboSumRec([...C], target - C[0], [...A, C[0]]);
   comboSumRec(C.slice(1), target, [...A]);
 }
 
 console.log(comboSum([2,6,5,3,7], 8));
+
+var combinationSum = function(candidates, target) {
+  candidates = candidates.sort((a,b) => a-b);
+  if (candidates.length < 1 || candidates[0] > target) return [];
+  result = [];
+  set = new Set();
+  makeSumRec(candidates, target, 0, []);
+  return result;
+}
+
+function makeSumRec(C, T, i, data) {
+  if (i >= C.length) return;
+  if (T === 0) {
+    const str = data.join(':');
+    if (!set.has(str)) {
+      set.add(str);
+      result.push(data);
+    }
+    return;
+  }
+  if (C[i] <= T) {
+    makeSumRec(C, T-C[i], i, [...data, C[i]]);
+    makeSumRec(C, T-C[i], i+1, [...data, C[i]]);
+    makeSumRec(C, T, i+1, [...data]);
+  }
+}

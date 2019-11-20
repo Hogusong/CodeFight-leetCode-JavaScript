@@ -30,3 +30,17 @@ function removeDuplicates(nums) {
   }
   return ++index;
 }
+
+var removeDuplicates = function(nums) {
+  let key = nums[0];
+  let index = null;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] === key) {
+      if (!index) index = i;
+    } else {
+      key = nums[i];
+      if (index) nums[index++] = nums[i]
+    }
+  }
+  return index ? index : nums.length;
+};

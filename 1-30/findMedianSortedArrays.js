@@ -54,13 +54,13 @@ function getMedian(A, B) {
   }
 }
 
-function calcMedian(AA, i, BB, j, is_even, jump=0) {
-  if (!is_even)   return AA[i+jump];
-  if (BB) {
-    if (AA[i+1] && AA[i+1] <= BB[j])  return (AA[i] + AA[i+1]) / 2;
-    return (AA[i] + BB[j]) / 2
+function calcMedian(A, i, B, j, is_even, jump=0) {
+  if (!is_even)   return A[i+jump];
+  if (B) {
+    if (A[i+1] && A[i+1] <= B[j])  return (A[i] + A[i+1]) / 2;
+    return (A[i] + B[j]) / 2
   } else {
-    return (AA[i+jump] + AA[i+jump+1]) / 2
+    return (A[i+jump] + A[i+jump+1]) / 2
   }
 }
 
@@ -97,11 +97,9 @@ function findMedian(A, B) {
   while (i < A.length && j < B.length) {
     prev = curr;
     if (A[i] > B[j]) {
-      curr = B[j];
-      j++;
+      curr = B[j++];
     } else {
-      curr = A[i];
-      i++;
+      curr = A[i++];
     }
     if (count >= mid) {
       if (isEven) return (prev + curr) / 2;
@@ -122,3 +120,17 @@ function findMedian(A, B) {
     else return B[j];
   } 
 }
+
+var findMedianSortedArrays = function(A, B) {
+  const isEven = (A.length + B.length) % 2 == 0;
+  const mid = Math.floor(A.length + B.length) / 2;
+  let i = 0, j = 0, count = 0, pre = null, curr = null;
+  while (count <= mid) {
+    pre = curr;
+    if (i >= A.length) curr = B[j++];
+    else if (j >= B.length) curr = A[i++];
+    else curr = A[i] < B[j] ? A[i++] : B[j++];
+    count++
+  }
+  return !isEven ? curr : (curr + pre) / 2;
+};

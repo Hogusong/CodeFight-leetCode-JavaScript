@@ -55,3 +55,25 @@ function countSay(n) {
   }
   return strNo;
 }
+
+var countAndSay = function(n) {
+  if (n == 1) return '1';
+  let str = '1' ;
+  for (let i = 1; i < n; i++) {
+    let temp = '';
+    let count = 0, prev = '';
+    for (let j = 0; j < str.length; j++) {
+      if (!prev) {
+        count++;
+        prev = str[j];
+      } else if (prev === str[j]) count++;
+      else {
+        temp += count + prev;
+        prev = str[j];
+        count = 1;
+      }
+    }
+    str = temp + count + prev;
+  }
+  return str;
+}

@@ -1,37 +1,15 @@
-function goHead(A, B) {
-  const tLen = A.length + B.length;
-  const mid = Math.floor(tLen / 2);
-  const isEven = (tLen % 2 === 0);
-  let count = 0, i = 0; j = 0, prev = 0, curr = 0;
-  while (i < A.length && j < B.length) {
-    prev = curr;
-    if (A[i] > B[j]) {
-      curr = B[j];
-      j++;
-    } else {
-      curr = A[i];
-      i++;
-    }
-    if (count >= mid) {
-      if (isEven) return (prev + curr) / 2;
-      else return curr
-    }
-    count++;
+var findMedianSortedArrays = function(A, B) {
+  const isEven = (A.length + B.length) % 2 == 0;
+  const mid = Math.floor(A.length + B.length) / 2;
+  let i = 0, j = 0, count = 0, pre = null, curr = null;
+  while (count <= mid) {
+    pre = curr;
+    if (i >= A.length) curr = B[j++];
+    else if (j >= B.length) curr = A[i++];
+    else curr = A[i] < B[j] ? A[i++] : B[j++];
+    count++
   }
-  if (i < A.length) {
-    i = i + mid - count;
-    if (i > 0) curr = Math.max(curr, A[j-1])
-    if (isEven) return (curr + A[i]) / 2;
-    else return A[i];
-  }
-  if (j < B.length) {
-    j = j + mid - count;
-    if (j > 0) curr = Math.max(curr, B[j-1])
-    if (isEven) return (curr + B[j]) / 2;
-    else return B[j];
-  }
+  return !isEven ? curr : (curr + pre) / 2;
 }
 
-A = [];
-B = [1,2,3,4];
-console.log(goHead(A, B));
+console.log(findMedianSortedArrays([1,3], [2]));

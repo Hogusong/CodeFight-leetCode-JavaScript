@@ -52,13 +52,13 @@ function fullJustify(words, maxWidth) {
     size += w.length + 1;
   }
   const str = temp.join(' ')
-  answer.push(str + addSpace(maxWidth - str.length));
+  answer.push(str + ' '.repeat(maxWidth - str.length));
   return answer;
 }
 
 function makeJustify(temp, max) {
   const count = temp.length;
-  if (count === 1) return temp[0] + addSpace(max-temp[0].length);
+  if (count === 1) return temp[0] + ' '.repeat(max-temp[0].length);
   let tot_width = 0;
   const spaces = [];
   for (let w of temp) {
@@ -83,13 +83,40 @@ function combine(W, S) {
   return str + W[W.length - 1];
 }
 
-function addSpace(n) {
-  let space = '';
-  for (let i = 0; i < n; i++) space += " ";
-  return space;
-}
-
 words = ["What","must","be","acknowledgment","shall","be"];
 words = ["What","must"];
 maxWidth = 16;
 console.log(fullJustify(words, maxWidth));
+
+var fullJustify = function(words, maxWidth) {
+  let ans = [], strs = [], width = 0;
+  for (let w of words) {
+    if (width + w.length > maxWidth) {
+      ans.push(makeLine(strs, maxWidth));
+      strs = [w];
+      width = w.length + 1;
+    } else {
+      width += w.length + 1;
+      strs.push(w);
+    }
+  }
+  if (strs.length > 0) {
+    const s = strs.join(' ');
+    ans.push(s + ' '.repeat(maxWidth - s.length));
+  }
+  return ans;
+}
+
+function makeLine(strs, maxWidth) {
+  if (strs.length < 2) return strs[0] + ' '.repeat(maxWidth - strs[0].length);
+  const spaceCount = strs.length - 1;
+  for (let s of strs) maxWidth -= s.length;
+  const x = Math.floor(maxWidth / spaceCount);
+  let r = maxWidth % spaceCount;
+  let str = '';
+  for (let s of strs) {
+    str += s + ' '.repeat(x) + (r > 0 ? ' ' : '');
+    r--;
+  }
+  return str.trim();
+}

@@ -15,3 +15,14 @@ function isPalindrome(x) {
   }
   return true
 }
+
+var isPalindrome = function(x) {
+  if (x < 0) return false;
+  let ans = 0;
+  let z = x
+  while (z > 0) {
+      ans = ans * 10 + z % 10;
+      z = Math.floor(z / 10);
+  }
+  return x == ans;
+};

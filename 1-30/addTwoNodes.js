@@ -26,8 +26,7 @@ function addTwoNodes(l1, l2) {
   while (l1 || l2) {
     const value = up + (l1 ? l1.val : 0 ) + (l2 ? l2.val : 0);
     up = value > 9 ? 1 : 0;
-    const newValue = value % 10;
-    curr.next = new ListNode(newValue);
+    curr.next = new ListNode(value % 10);
     curr = curr.next;
     if (l1) l1 = l1.next;
     if (l2) l2 = l2.next;
@@ -42,3 +41,29 @@ const n1 = new ListNode(2, new ListNode(4, new ListNode(1)));
 const n2 = new ListNode(5, new ListNode(6, new ListNode(4)));
 
 console.log(addTwoNodes(n1, n2));
+
+var addTwoNumbers = function(l1, l2) {
+  if (!l1) return l2;
+  if (!l2) return l1;
+  const root = l1;
+  let up = 0;
+  while (l1) {
+    let v1 = l1 ? l1.val : 0;
+    let v2 = l2 ? l2.val : 0;
+    l1.val = (v1 + v2 + up) % 10;
+    up = Math.floor((v1 + v2 + up) / 10);
+    if (l2) l2 = l2.next;
+    if (l1.next) l1 = l1.next;
+    else {
+      if (l2) {
+        l1.next = l2;
+        l1 = l1.next;
+        l2 = null;
+      } else break;
+    }
+  }
+  if (up > 0) {
+    l1.next = new ListNode(up);
+  }
+  return root;
+};

@@ -57,7 +57,6 @@ function reverseKGroup(head, k) {
     }
   }
   return root;
-
 }
 
 const node = new LinkedNode(1, new LinkedNode(2));
@@ -104,4 +103,39 @@ function reverseGroupK(head, k) {
       prev = prev.next;
   }
   return root;
+}
+
+//  I got 100% for speed and 100% for using space
+var reverseKGroup = function(head, k) {
+  if (!head) return head;
+  let uptoKth = getUptoKth(head, k)
+  if (uptoKth.length < 1) return head;
+  let tailNode = head;
+  let afterKth = uptoKth.pop();
+  head = makeReverse(uptoKth);
+  tailNode.next = reverseKGroup(afterKth, k);
+  return head;
+}
+
+function getUptoKth(node, k) {
+  let count = 0;
+  let temp = [];
+  while (temp.length < k) {
+    if (!node) return [];
+    temp.push(node);
+    node = node.next;
+    count ++;
+  }
+  temp.push(node);
+  return temp;
+}
+
+function makeReverse(lists) {
+  const head = lists.pop();
+  let curr = head;
+  while (lists.length > 0) {
+    curr.next = lists.pop();
+    curr = curr.next;
+  }
+  return head;
 }

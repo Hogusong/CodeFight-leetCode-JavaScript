@@ -143,3 +143,18 @@ var threeSum = function(nums) {
 console.time('This')
 console.log(threeSum(nums));
 console.timeEnd('This')
+
+var threeSum = function(nums) {
+  if (nums.length < 3) return [];
+  const result = [];
+  for (let i = 0; i < nums.length; i++) {
+    const target = -nums[i];
+    const dict = {};
+    for (let j = i+1; j < nums.length; j++) {
+      const key = target - nums[j];
+      if (dict[key]) result.push([-target, key, nums[j]]);
+      dict[nums[j]] = true;
+    }
+  }
+  return result;
+};

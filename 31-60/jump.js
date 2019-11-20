@@ -32,6 +32,41 @@ function jump(nums) {
   }
 }
 
+var jumpRec = function(nums) {
+  if (nums.length < 2) return 0;
+  minStep = nums.length;
+  makeJump(nums, 0, 0);
+  return minStep;
+}
+
+function makeJump(nums, index, steps) {
+  if (index >= nums.length - 1) {
+    minStep = Math.min(minStep, steps);
+    return;
+  }
+  for (let i = nums[index]; i > 0; i--) {
+    makeJump(nums, index + i, steps+1);
+  }
+}
+
+function jumpSD(nums) {
+  if (nums.length < 2) return 0;
+  const queue = [[0]];
+  for (let i = 0; i < queue.length; i++) {
+    const temp = queue[i];
+    const last = temp[temp.length-1]
+    if (last >= nums.length - 1) return temp.length - 1;
+    for (let j = nums[last]; j > 0; j--) {
+      queue.push([...temp, last+j]);
+    }
+  }
+}
+
 console.log(jump([2,3,0,1,4,2,3,1,5,1,3,2,1,3]));
 console.log(jump([2,3,1,1,4]));
+console.time('this Shift')
 console.log(jump([9,4,5,4,1,8,1,2,0,7,8,7,0,6,6,1,1,2,5,0,9,8,4,7,9,6,8,1,4,0,8,5,5,3,9,8,1,2,2,3,0,1,3,2,7,9,3,0,1]));
+console.timeEnd('this Shift')
+console.time('this Sliding')
+console.log(jumpSD([9,4,5,4,1,8,1,2,0,7,8,7,0,6,6,1,1,2,5,0,9,8,4,7,9,6,8,1,4,0,8,5,5,3,9,8,1,2,2,3,0,1,3,2,7,9,3,0,1]));
+console.timeEnd('this Sliding')

@@ -31,3 +31,17 @@ arr = [[1,3],[2,6],[8,10],[15,18]];
 arr = [[3,6],[0,2],[1,4]];
 console.log(merge(arr));
 
+var merge = function(intervals) {
+  if (intervals.length < 1) return []
+  intervals = intervals.sort((a,b) => a[0] - b[0]);
+  let ans = [intervals[0]];
+  for (let i = 1; i < intervals.length; i++) {
+    const last = ans[ans.length-1];
+    if (intervals[i][0] > last[1]) {
+      ans.push(intervals[i]);
+    } else {
+      ans[ans.length-1] = [last[0], Math.max(last[1], intervals[i][1])];
+    }
+  }
+  return ans;
+}

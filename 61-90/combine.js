@@ -33,7 +33,7 @@ function makeArray(n) {
 N = 4, K = 2;
 console.log(combine(N, K));
 
-//  Iterative Algorithim
+//  Iterative Algorithm
 function combineIter(n, k) {
   const result = [];
   const arr = [];

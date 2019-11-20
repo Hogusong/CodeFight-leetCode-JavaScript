@@ -84,3 +84,15 @@ function recursion(i, j, s, p) {
   result[i][j] = ans ? 'T' : 'F';
   return ans;  
 }
+
+var isMatch = function(s, p) {
+  if (p.length < 1) return s.length < 1;
+  let first_match = (s.length > 0 && (p[0] == s[0] || p[0] == '.'));
+
+  if (p.length > 1 && p[1] == '*'){
+    return (isMatch(s, p.substring(2)) ||
+            (first_match && isMatch(s.substring(1), p)));
+  } else {
+    return first_match && isMatch(s.substring(1), p.substring(1));
+  }
+};

@@ -43,7 +43,7 @@ console.log(getPermutation(9, 37098));
 console.log(getPermutation(3, 5));
 console.log(getPermutation(4, 9));
 
-//  Recursion
+//  Recursion : Time limit.
 function gneKthPermutation(n, k) {
   count = 0, result = '';
   let fact = 1;
@@ -85,3 +85,32 @@ function helpRecReverse(n, i, k, answer) {
 
 console.log(gneKthPermutation(3, 5));
 console.log(gneKthPermutation(4, 9));
+
+var getPermutation = function(n, k) {
+  let N = [];
+  for (let i = 1; i <= n; i++) N.push(i)
+
+  return getKthPermutation(N, k-1);
+}
+
+function getKthPermutation(N, n) {
+  let count = 0;
+  while (count < n) {
+    let i = N.length - 2;
+    while (i >= 0 && N[i] >= N[i+1]) i--;
+    if (i >= 0) {
+      let j = N.length - 1;
+      while (N[i] >= N[j]) j--;
+      [N[i], N[j]] = [N[j], N[i]];      
+    }
+      
+    j = N.length - 1;
+    while (j > i+1 ) {
+      [N[i+1], N[j]] = [N[j], N[i+1]];
+      i++;
+      j--;
+    }
+    count++;
+  }
+  return N.join('');
+}

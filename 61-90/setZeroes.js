@@ -106,3 +106,26 @@ input = [ [1,0,2,0],
           [3,4,5,2],          
           [1,3,1,5] ]         
 console.log(setZeroesEff(input));
+
+var setZeroes = function(matrix) {
+  const m = matrix.length;
+  const n = matrix[0].length;
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (matrix[r][c] === 0) {
+        for (let i = 0; i < n; i++) {
+          if (matrix[r][i] != 0) matrix[r][i] = 'X';
+        }
+        for (let i = 0; i < m; i++) {
+          if (matrix[i][c] != 0) matrix[i][c] = 'X';
+        }
+      }
+    }
+  }
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (matrix[r][c] === 'X') matrix[r][c] = 0;
+    }
+  }
+  return matrix;
+};

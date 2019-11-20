@@ -95,3 +95,31 @@ n2 = "72156405165936898"    //  6957587772858372748255887645188542
 // n2 = '99';
 console.log(multiply(n1, n2));
 console.log(multiply2(n1, n2));
+
+var multiply = function(num1, num2) {
+  if (num1 === '0' || num2 === '0') return '0';
+  const len1 = num1.length, len2 = num2.length;
+  const matrix = [];
+  for (let i = 0; i < len2; i++) {
+    const row = []
+    for (let j = 0; j < len1 + len2 -1; j++) {
+      row[j] = 0;
+    }
+    matrix.push(row);
+  }
+  for (let r = 0; r < len2; r++) {
+    for (let c = 0; c < len1; c++) {
+      matrix[r][c+r] = num1[c] * num2[r];
+    }
+  }
+  let ans = [], up = 0;
+  for (let c = len1 + len2 - 2; c >= 0; c--) {
+    for (let r = 0; r < len2; r++) up += matrix[r][c];
+    const remain = up % 10;
+    up = Math.floor(up / 10);
+    ans.push(remain);
+  }
+  if (up) ans.push(up);
+  ans = ans.reverse();
+  return ans.join('');
+}

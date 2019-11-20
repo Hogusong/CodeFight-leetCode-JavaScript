@@ -78,3 +78,43 @@ function spiralOrderS(matrix) {
 console.log(spiralOrderS(matrix));
 matrix = [  [ 1, 2, 3 ],  [ 4, 5, 6 ],  [ 7, 8, 9 ]  ];
 console.log(spiralOrderS(matrix));
+
+var spiralOrder = function(matrix) {
+  const rows = matrix.length;
+  if (rows < 1) return [];
+  if (rows < 2) return matrix[0];
+  const cols = matrix[0].length;
+  let ans = [], r = 0, c = 0;
+  let top = 0, bottom = rows-1, left = 0, right = cols-1, count = 0;
+  let direction = 'R';
+  while ( count < rows * cols) {
+    ans.push(matrix[r][c])
+    if (direction === 'R') {
+      if (c === right) {
+        direction = 'D';
+        r++;
+        top++;
+      } else c++;
+    } else if (direction === 'D') {
+      if (r === bottom) {
+        direction = 'L';
+        c--;
+        right--;
+      } else r++;
+    } else if (direction === 'L') {
+      if (c === left) {
+        direction = 'U';
+        r--;
+        bottom--;
+      } else c--; 
+    } else {
+      if (r === top) {
+        direction = 'R';
+        left++;
+        c++;
+      } else r--;
+    }
+    count++;
+  }
+  return ans;
+}

@@ -43,3 +43,13 @@ path = "/a/../../b/../c//.//";
 console.log(simplifyPath(path));
 path = "/a//b////c/d//././/..";
 console.log(simplifyPath(path));
+
+var simplify = function(path) {
+  const paths = path.split('/');
+  const queue = [];
+  for (let p of paths) {
+    if (p === '..') queue.pop();
+    else if (p != '.' && p != '') queue.push(p)
+  }
+  return '/' + queue.join('/');
+}

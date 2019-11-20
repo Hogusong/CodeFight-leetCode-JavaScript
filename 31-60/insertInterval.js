@@ -88,3 +88,21 @@ function insertInterval(intervals, newInterval) {
   }
   return [...answer, N];
 }
+
+var insert = function(intervals, newInterval) {
+  if (intervals.length < 1) return [newInterval];
+
+  let N = newInterval, ans = [];
+  for (let i = 0; i < intervals.length; i++) {
+    const I = intervals[i];
+    if (I[1] < N[0]) ans.push(I);
+    else if (I[0] <= N[0] && I[1] >= N[0]) {
+      N = [I[0], Math.max(I[1], N[1])];
+    } else if (I[0] <= N[1] && I[1] >= N[1]) {
+      N = [Math.min(I[0], N[0]), I[1]];
+    } else if (N[1] < I[0]) {
+      return [...ans, N, ...intervals.slice(i)];
+    }
+  }
+  return [...ans, N];
+}

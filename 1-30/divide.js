@@ -63,3 +63,25 @@ console.timeEnd('This')
 console.time('This')
 console.log(divideSmart(2147483648, 2));
 console.timeEnd('This')
+
+var divide = function(dividend, divisor) {
+  if (dividend === 0) return 0;
+  const isNegative = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0);
+  dividend = Math.abs(dividend);
+  divisor = Math.abs(divisor);
+  let count = 0, subCount = 1, subSum = divisor;
+  while (dividend >= divisor) {
+    if (dividend >= subSum) {
+      dividend -= subSum;
+      count += subCount;
+      subCount = subCount + subCount;
+      subSum = subSum + subSum;
+    } else {
+      subCount = 1;
+      subSum = divisor;
+    }
+  }
+  if (isNegative) count = -count;
+  if (count < 0) return count < -2147483648 ? -2147483648 : count;
+  if (count >= 0) return count > 2147483647 ? 2147483647 : count;
+}

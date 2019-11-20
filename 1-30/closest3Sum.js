@@ -72,3 +72,26 @@ function threeSum2(nums) {
 console.time('This')
 console.log(threeSum2(nums, target));
 console.timeEnd('This')
+
+var threeSumClosest = function(nums, target) {
+  if (nums.length < 3) return [];
+  subSets = new Set();
+  nums = nums.sort((a,b) => a - b);
+  for (let i = 0; i < nums.length-2; i++) {
+    let left = i + 1;
+    let right = nums.length - 1;
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+      if (sum === target) return sum;
+      if (!subSets.has(sum)) subSets.add(sum);
+      if (sum > target) right--;
+      else left++;
+    }
+  }
+  let gab = 1;
+  while (true) {
+    if (subSets.has(target + gab)) return target + gab;
+    if (subSets.has(target - gab)) return target - gab;
+    gab ++;
+  }
+}

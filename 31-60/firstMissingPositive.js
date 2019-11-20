@@ -55,3 +55,25 @@ console.log()
 console.log(findNumber([1,3,5,7,9,11],6));
 console.log(findNumber([1,3,5,7,9,11],5));
 console.log(findNumber([1,3,5,7,9,11],12));
+
+var firstMissingPositive = function(nums) {
+  const len = nums.length;
+  if (len < 1) return 1;
+  nums = nums.sort((a,b) => a - b);
+  if (nums[0] > 1 || nums[len-1] < 1) return 1;
+
+  let index = findFirstPositive(nums, 0, len-1) ;
+  if (nums[index] != 1) return 1;
+  for (let i = index + 1; i < len; i++) {
+    if (nums[i-1] + 1 < nums[i]) return nums[i-1] + 1;
+  }
+  return nums[len-1] + 1;
+}
+
+function findFirstPositive(N, from, to) {
+  if (from > to) return from;
+  const mid = Math.floor((from + to) / 2);
+  if (N[mid] === 1) return mid;
+  if (N[mid] < 1) return findFirstPositive(N, mid+1, to);
+  return findFirstPositive(N, from, mid-1);
+}

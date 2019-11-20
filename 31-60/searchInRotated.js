@@ -59,3 +59,30 @@ console.log(searchInRotated([6,7,8], 1));     //  -1
 console.log(searchInRotated([6,7,8], 10));    //  -1
 console.log(searchInRotated([6,2,4], 1));     //  -1
 console.log(searchInRotated([6,2,4], 10));    //  -1
+
+var search = function(nums, target) {
+  const len = nums.length;
+  if (len < 1) return -1;
+  if (len === 1) return nums[0] === target ? 0 : -1;
+
+  if (nums[0] < nums[len-1]) return findTarget(nums, 0, len-1, target)
+
+  const pickIndex = findPick(nums, 0, len-1);
+  if (target >= nums[0]) return findTarget(nums, 0, pickIndex, target);
+  return findTarget(nums, pickIndex+1, len-1, target);
+}
+
+function findPick(N, from, to) {
+  const mid = Math.floor((from + to) / 2);
+  if ((mid < 1 || N[mid] > N[mid-1]) && N[mid] > N[mid+1]) return mid;
+  if (N[mid] > N[from] && N[mid] > N[to]) return findPick(N, mid+1, to);
+  return findPick(N, from, mid);
+}
+
+function findTarget(N, from, to, T) {
+  if (N[from] > T || N[to] < T) return -1
+  if (from === to) return N[from] === T ? from : -1;
+  const mid = Math.floor((from + to) / 2);
+  if (N[mid] > T) return findTarget(N, from, mid, T);
+  return findTarget(N, mid+1, to, T);
+}

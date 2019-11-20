@@ -133,3 +133,13 @@ function canJumpGreedy(nums) {
 }
 
 console.log(canJumpGreedy(arr));
+
+var canJump = function(nums) {
+  const len = nums.length;
+  let jump = 0;
+  for  (let i = 0; i < len; i++) {
+    jump = Math.max(--jump, nums[i]);
+    if (jump === 0 && i != len - 1) return false;
+  }
+  return true;
+}

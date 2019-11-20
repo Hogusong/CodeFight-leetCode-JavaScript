@@ -61,3 +61,26 @@ function inAnswer(storage) {
 
 console.log(combinationSum2([10,1,2,7,6,1,5], 8));
 console.log(combinationSum2([4,4,2,1,4,2,2,1,3], 6));
+
+var combinationSum2 = function(candidates, target) {
+  candidates = candidates.sort((a,b) => a - b);
+  if (candidates.length < 1 || candidates[0] > target) return [];
+  result = [];
+  subSet = new Set();
+  makeCombination(candidates, target, 0, []);
+  return result; 
+}
+
+function makeCombination(C, T, i, data) {
+  if (T === 0) {
+    const key = data.join(':');
+    if (!subSet.has(key)) {
+      subSet.add(key);
+      result.push([...data]);
+      return;  
+    }
+  }
+  if (i > C.length - 1 || C[i] > T) return;
+  makeCombination(C, T, i+1, data);
+  makeCombination(C, T-C[i], i+1, [...data, C[i]])
+}

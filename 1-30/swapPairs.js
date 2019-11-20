@@ -81,3 +81,23 @@ function swapTwo(head) {
 
   return head;
 }
+
+var swapPairs = function(head) {
+  if (!head || !head.next) return head;
+  let first = head;
+  let second = head.next;
+  let third = second.next;
+  second.next = first;
+  head = second;
+  first.next = third;
+  while (third && third.next) {
+    const last = first;
+    first = third;
+    second = third.next;
+    third = third.next.next;
+    last.next = second; 
+    second.next = first;
+    first.next = third;
+  }
+  return head;
+}

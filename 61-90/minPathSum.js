@@ -83,3 +83,17 @@ matrix = [[7,1,3,5,8,9,9,2,1,9,0,8,3,1,6,6,9,5],[9,5,9,4,0,4,8,8,9,5,7,3,6,6,6,9
 console.time('Using table')
 console.log(minPathSumTable(matrix));
 console.timeEnd('Using table')
+
+// without using extra space.
+var minPathSum = function(grid) {
+  const m = grid.length;
+  const n = grid[0].length;
+  for (let r = 1; r < m; r++) grid[r][0] += grid[r-1][0];
+  for (let c = 1; c < n; c++) grid[0][c] += grid[0][c-1];
+  for (let r = 1; r < m; r++) {
+    for (let c = 1; c < n; c++) {
+      grid[r][c] += Math.min(grid[r-1][c], grid[r][c-1]); 
+    }
+  }
+  return grid[m-1][n-1];
+}

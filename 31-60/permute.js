@@ -31,12 +31,12 @@ console.timeEnd('Using Queue');
 
 function permutateR(nums) {
   if (nums.length < 2) return [nums];
-  let result = [];
-  permuteRec(result, [], nums, nums.length)
+  result = [];
+  permuteRec([], nums, nums.length)
   return result;
 }
 
-function permuteRec(result, temp, nums, n) {
+function permuteRec(temp, nums, n) {
   if (n === 0) {
     result.push([...temp]);
     return;
@@ -44,7 +44,7 @@ function permuteRec(result, temp, nums, n) {
   for (let i=0; i<nums.length; i++) {
     if (temp.includes(nums[i])) continue;
     temp.push(nums[i]);
-    permuteRec(result, temp, nums, n-1);
+    permuteRec(temp, nums, n-1);
     temp.pop();
   }
 }
