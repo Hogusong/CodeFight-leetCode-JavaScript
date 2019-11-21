@@ -8,8 +8,7 @@
 
 function closestThreeSum(nums, target) {
   subsets = [];
-  const data = nums.map((e,i) => i);
-  getSubsets(nums, nums.length, 3, 0, data, 0);
+  getSubsets(nums, nums.length, 3, 0, []);
   let gap = 0;
   while (true) {
     for (let s of subsets) {
@@ -24,20 +23,14 @@ function closestThreeSum(nums, target) {
   }
 }
 
-function getSubsets(arr, n, r, index, data, i) {
-  if (index === r) {
-    const temp = []
-    for (let j=0; j<r; j++) {
-      temp.push(data[j]);
-    }
-    subsets.push(temp)
-    return
+function getSubsets(arr, n, r, i, data) {
+  if (data.length == r) {
+    subsets.push(data);
+    return;
   }
-  if (i >= n) return
-
-  data[index] = arr[i];
-  getSubsets(arr, n, r, index+1, data, i+1);
-  getSubsets(arr, n, r, index, data, i+1);
+  if (i >= n) return;
+  getSubsets(arr, n, r, i+1, [...data]);
+  getSubsets(arr, n, r, i+1, [...data, arr[i]]);
 }
 
 // nums = [-13,10,11,-3,8,11,-4,8,12,-13,5,-6,-4,-2,12,11,7,-7,-3,10,12,13,-3,-2,6,-1,14,7,-13,8,14,-10,-4,10,-6,11,-2,-3,4,-13,0,-14,-3,3,-9,-6,-9,13,-6,3,1,-9,-6,13,-4,-15,-11,-12,7,-9,3,-2,-12,6,-15,-10,2,-2,-6,13,1,9,14,5,-11,-10,14,-5,11,-6,6,-3,-8,-15,-13,-4,7,13,-1,-9,11,-13,-4,-15,9,-4,12,-4,1,-9,-5,9,8,-14,-1,4,14];
@@ -46,6 +39,32 @@ nums = [-79,-95,8,-76,-93,-6,19,-68,-64,21,47,37,-47,-88,-12,23,-99,-63,43,-20,5
 target = 289;
 console.time('This')
 console.log(closestThreeSum(nums, target));
+console.timeEnd('This')
+
+var threeSumClosest = function(nums, target) {
+  if (nums.length < 3) return null;
+  set = new Set();
+  let i = 0;
+  getSumOfSubsets(nums, nums.length, 3, 0, []);
+  while (true) {
+    if (set.has(target-i)) return target-i;
+    if (set.has(target+i)) return target+i;
+    i++;
+  }
+}
+
+function getSumOfSubsets(arr, n, r, i, data) {
+  if (data.length == r) {
+    set.add(data[0]+data[1]+data[2]);
+    return;
+  }
+  if (i >= n) return;
+  getSumOfSubsets(arr, n, r, i+1, [...data]);
+  getSumOfSubsets(arr, n, r, i+1, [...data, arr[i]]);
+}
+
+console.time('This')
+console.log(threeSumClosest(nums, target));
 console.timeEnd('This')
 
 function threeSum2(nums) {
@@ -73,7 +92,7 @@ console.time('This')
 console.log(threeSum2(nums, target));
 console.timeEnd('This')
 
-var threeSumClosest = function(nums, target) {
+var threeSumClosestSort = function(nums, target) {
   if (nums.length < 3) return [];
   subSets = new Set();
   nums = nums.sort((a,b) => a - b);
@@ -83,7 +102,7 @@ var threeSumClosest = function(nums, target) {
     while (left < right) {
       const sum = nums[i] + nums[left] + nums[right];
       if (sum === target) return sum;
-      if (!subSets.has(sum)) subSets.add(sum);
+      subSets.add(sum);
       if (sum > target) right--;
       else left++;
     }
@@ -95,3 +114,7 @@ var threeSumClosest = function(nums, target) {
     gab ++;
   }
 }
+
+console.time('This')
+console.log(threeSumClosestSort(nums, target));
+console.timeEnd('This')
