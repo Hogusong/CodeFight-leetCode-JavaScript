@@ -13,8 +13,7 @@
 //  Brute Force
 function fourSumZero(nums, target) {
   subsets = [];
-  const data = nums.map((e,i) => i);
-  getSubsets(nums, nums.length, 4, 0, data, 0);
+  getSubsets(nums, nums.length, 4, 0, []);
   const result = []
   for (let s of subsets) {
     if (s[0] + s[1] + s[2] + s[3] === target) {
@@ -31,23 +30,17 @@ function fourSumZero(nums, target) {
   return result;
 }
 
-function getSubsets(arr, n, r, index, data, i) {
-  if (index === r) {
-    const temp = []
-    for (let j=0; j<r; j++) {
-      temp.push(data[j]);
-    }
-    subsets.push(temp)
-    return
+function getSubsets(arr, n, r, i, data) {
+  if (data.length === r) {
+    subsets.push(data);
+    return;
   }
-  if (i >= n) return
-
-  data[index] = arr[i];
-  getSubsets(arr, n, r, index+1, data, i+1);
-  getSubsets(arr, n, r, index, data, i+1);
+  if (i >= n) return;
+  getSubsets(arr, n, r, i+1, [...data, arr[i]]);
+  getSubsets(arr, n, r, i+1, [...data]);
 }
 
-var fourSum = function(nums, target) {
+var fourSumSubsets = function(nums, target) {
   if (nums.length < 4) return []
   result = [];
   data = [];
@@ -80,3 +73,37 @@ function getSum(arr) {
   arr.forEach(i => sum += i);
   return sum;
 }
+
+// fastest
+var fourSum = function(nums, target) {
+  const n = nums.length;
+  if (n < 4) return [];
+
+  nums = nums.sort((a,b) => a-b); 
+  const result = [];
+  const set = new Set();
+  for (let x = 0; x < n - 2; x++) {
+    if (nums[x] > 0 && nums[x] > target) break;
+    if (x > 0 && nums[x-1] == nums[x]) continue;
+    for (let i = x + 1; i < n - 1; i++) {
+      if (nums[i] > 0 && nums[x] + nums[i] > target) break;
+      if (i > x + 1 && nums[i-1] == nums[i]) continue;
+      let l = i + 1;
+      let r = n - 1;
+      while (l < r) {
+        if (nums[x] + nums[i] + nums[l] + nums[r] === target ) {
+          const key = nums[i] + ':' + nums[l] + ':' + nums[r]
+          if (!set.has(key)) {
+            result.push([nums[x], nums[i], nums[l], nums[r]]);
+            set.add(key);
+          }
+          l++;
+          r--;
+        } else if (nums[x] + nums[i] + nums[l] + nums[r] > target ) {
+          r--;
+        } else l++;
+      }
+    }
+  }
+  return result
+};
