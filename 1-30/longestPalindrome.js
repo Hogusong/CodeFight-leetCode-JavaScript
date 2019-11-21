@@ -85,25 +85,21 @@ function getPalindrome(S, left, right) {
   return S.substring(left+1, right);
 }
 
-function longestPalindrome(s) {
-  let from = 0, to = 0, left = 0, right = 0;
-  for (let i = 0; i < s.length - 1; i++) {
-    [left, right] = findPalindrome(i, i, s);
-    if (to - from < right - left) {
-      [from, to] = [left, right];
-    }
-    [left, right] = findPalindrome(i, i+1, s);
-    if (to - from < right - left) {
-      [from, to] = [left, right];
-    }
+var longestPalindrome = function(s) {
+  let from = 0, to = 1;
+  for (let i = 1; i < s.length; i++) {
+    [from, to] = findPalindromic(s, i, i, from, to);
+    [from, to] = findPalindromic(s, i-1, i, from, to);
   }
-  return s.substring(from, to + 1);
+  return s.substring(from, to);
 }
 
-function findPalindrome(left, right, s) {
-  while (left >= 0 && right < s.length && s[left] == s[right]) {
-      left --;
-      right ++;
+function findPalindromic(str, left, right, from, to) {
+  while (left >= 0 && right < str.length && str[left] == str[right]) {
+    left--;
+    right++;
   }
-  return [left + 1, right - 1]
+  left++;
+  if (to - from < right - left) return [left, right]
+  return [from, to];
 }

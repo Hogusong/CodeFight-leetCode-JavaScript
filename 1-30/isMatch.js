@@ -22,42 +22,6 @@
   Input:  s = "mississippi",  p = "mis*is*p*."        Output: true
 */
 
-function isMatchDP(s, p) {
-  if (p.length < 1) return s.length < 1;
-  const m = s.length,  n = p.length;
-  const dp = [];
-  for (let i = 0; i <= m; i++) {
-    const row = []
-    for (let j = 0; j <= n; j++) {
-      row.push(false);
-    }
-    dp.push(row);
-  }
-  dp[0][0] = true;
-
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      if (s[i-1] === p[j-1] || p[j-1] === '.') dp[i][j] = dp[i-1][j-1];
-      else if (p[j-1] === '*') dp[i][j] = dp[i-1][j] || dp[i][j-1];
-    }
-  }
-  return dp[m][n];
-}
-
-s = "aab",  p = "c*a*b";
-console.log(isMatchDP(s, p));
-console.log(isMatch(s, p));
-s = "xaylmzx",  p = "x.y*z.";
-console.log(isMatchDP(s, p));
-console.log(isMatch(s, p));
-s = "aa",  p = "a";
-console.log(isMatchDP(s, p));
-console.log(isMatch(s, p));
-s = "aab",  p = ".*.";
-console.log(isMatchDP(s, p));
-console.log(isMatch(s, p));
-
-//  Wrong answer ------------  which is in LeetCode solution.
 function isMatch(s, p) {
   if (p.length < 1) return s.length < 1;
   result = [];
@@ -81,7 +45,6 @@ function recursion(i, j, s, p) {
       ans = first_match && recursion(i+1, j+1, s, p);
     }
   }
-  result[i][j] = ans ? 'T' : 'F';
   return ans;  
 }
 
@@ -96,3 +59,32 @@ var isMatch = function(s, p) {
     return first_match && isMatch(s.substring(1), p.substring(1));
   }
 };
+
+var isMatch2 = function(s, p) {
+  return isMatchRec2(s, p, 0, 0);
+}
+
+function isMatchRec2(s, p, i, j) {
+  if (j > p.length - 1) return i > s.length - 1;
+  let first_match = (s.length > i && (p[j] == s[i] || p[j] == '.'));
+
+  if (j < p.length - 1 && p[j+1] == '*'){
+    return (isMatchRec(s, p, i, j+2) ||
+            (first_match && isMatchRec(s, p, i+1, j)));
+  } else {
+    return first_match && isMatchRec(s, p, i+1, j+1);
+  }
+}
+
+s = "aab",  p = "c*a*b";
+console.log(isMatch(s, p));
+console.log(isMatch2(s, p));
+s = "xaylmzx",  p = "x.y*z.";
+console.log(isMatch(s, p));
+console.log(isMatch2(s, p));
+s = "aa",  p = "a";
+console.log(isMatch(s, p));
+console.log(isMatch2(s, p));
+s = "aab",  p = ".*.";
+console.log(isMatch(s, p));
+console.log(isMatch2(s, p));
