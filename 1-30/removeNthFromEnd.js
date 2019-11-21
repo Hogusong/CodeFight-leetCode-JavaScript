@@ -22,7 +22,6 @@ var removeNthFromEnd = function(head, n) {
       count++;
       curr = curr.next;
   }
-  if (n > count) return head;
   if (n === count) return head.next;
   curr = head;
   for (let i=0; i<count-n-1; i++) {
@@ -43,9 +42,28 @@ var removeNthFromEnd = function(head, n) {
     dict[i++] = curr;
     curr = curr.next;
   }
-  if (n > i) return head;
   if (n === i) return head.next;
   const key = i - n;
   dict[key-1].next = dict[key-1].next.next;
   return head;
+};
+
+var removeNthFromEnd = function(head, n) {
+  const data = [];
+  let curr = head;
+  while (curr) {
+    const keep = curr;
+    curr = curr.next;
+    keep.next = null;
+    data.push(keep);
+  }
+  const key = data.length - n;
+  const root = new ListNode(0);
+  curr = root;
+  for (let i = 0; i < data.length; i++) {
+    if (i == key) continue;
+    curr.next = data[i];
+    curr = curr.next;
+  }
+  return root.next;
 };
