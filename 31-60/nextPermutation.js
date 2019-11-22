@@ -31,3 +31,45 @@ function nextPermutation(nums) {
 console.log(nextPermutation([1,4,2,5,3]));  //  1 4 3 2 5
 console.log(nextPermutation([5,4,3,2,1]));  //  1 2 3 4 5
 
+//  Getting Permutation
+function makePermutation(arr) {
+  if (arr.length < 2) return arr[0];
+  result = [];
+  permutationRec(arr, []);
+  return result.length;
+}
+
+function permutationRec(arr, answer) {
+  if (arr.length < 2) {
+    result.push([...answer, arr[0]]);
+    return;
+  }
+  for (let i = 0; i < arr.length; i++) {
+    permutationRec([...arr.slice(0, i), ...arr.slice(i+1)], [...answer, arr[i]])
+  }
+}
+
+console.time('Rec');
+console.log(makePermutation([1,2,3,4,5,6,7,8,9]));
+console.timeEnd('Rec');
+
+var makePermutations = function(arr) {
+  let result = [[]];
+  for (let i = 0; i < arr.length; i++) {
+    const temp = [...result];
+    result = [];
+    for (let j = 0; j < arr.length; j++) {
+      temp.forEach(t => {
+        if (!t.includes(arr[j])) {
+          result.push([arr[j], ...t]);
+        }
+      })
+    }
+  }
+  return result.length;
+}
+
+console.time('Array');
+console.log(makePermutations([1,2,3,4,5,6,7,8,9]));
+console.timeEnd('Array');
+
