@@ -56,6 +56,32 @@ function combineWords(words) {
   }
 }
 
+var findSubstring = function(s, words) {
+  if (words.length < 1) return [];
+  const wLen = words[0].length;
+  const len = wLen * words.length;
+  result = [];
+  for (let i = 0; i < s.length-len+1; i++) {
+    if (words.includes(s.substr(i, wLen))) {
+      checkAllWords(s, [...words], i, wLen);
+    }
+  }
+  return result;
+}
+
+function checkAllWords(s, words, i, wLen) {
+  let j = i;
+  while (words.length > 0) {
+    const index = words.indexOf(s.substr(j, wLen));
+    if (index < 0) return;
+    words.splice(index, 1);
+    j += wLen;
+  }
+  result.push(i);
+}
+
+console.log(findSubstring('wordgoodgoodgoodbestword', ["word","good","best","good"]));
+
 //  Getting Permutation
 function makePermutation(arr) {
   if (arr.length < 2) return arr[0];
