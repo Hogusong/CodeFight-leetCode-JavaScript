@@ -97,3 +97,15 @@ function removeElem(nums, val) {
 }
 
 console.log(removeElem([...arr], val));
+
+var removeElement = function(nums, val) {
+  if (nums.indexOf(val) < 0) return nums.length;
+  let index = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] != val) {
+      if (index != i) nums[index] = nums[i];
+      index++;
+    }
+  }
+  return index;
+}

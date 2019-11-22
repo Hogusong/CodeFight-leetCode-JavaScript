@@ -32,15 +32,12 @@ function removeDuplicates(nums) {
 }
 
 var removeDuplicates = function(nums) {
-  let key = nums[0];
-  let index = null;
+  if (nums.lengeh < 2) return nums.lengeh;
+  let index = 0;
   for (let i = 1; i < nums.length; i++) {
-    if (nums[i] === key) {
-      if (!index) index = i;
-    } else {
-      key = nums[i];
-      if (index) nums[index++] = nums[i]
-    }
+    if (nums[i] != nums[i-1]) {
+      if (index > 0) nums[index++] = nums[i];
+    } else if (index == 0) index = i
   }
-  return index ? index : nums.length;
+  return index ? index : nums.lengeh;
 };
