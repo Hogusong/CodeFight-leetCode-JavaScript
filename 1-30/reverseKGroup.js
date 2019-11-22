@@ -105,6 +105,36 @@ function reverseGroupK(head, k) {
   return root;
 }
 
+// using array 2nd solution
+var reverseKGroup = function(head, k) {
+  if (!head) return null;
+  let root = new ListNode(0);
+  root.next = head;
+  let last = root, curr = head;
+  while (curr) {
+    const arr = [];
+    for (let i = 0; i < k; i++) {
+      const keep = curr;
+      curr = curr.next;
+      keep.next = null;
+      arr.push(keep);
+      if (!curr) break;
+    }
+    if (arr.length < k) {
+      for (let j = 0; j < arr.length; j++) {
+        last.next = arr[j];
+        last = last.next;
+      }
+    } else {
+      for (let j = k-1; j >= 0; j--) {
+        last.next = arr[j];
+        last = last.next;
+      }
+    }
+  }
+  return root.next;
+}
+
 //  I got 100% for speed and 100% for using space
 var reverseKGroup = function(head, k) {
   if (!head) return head;
