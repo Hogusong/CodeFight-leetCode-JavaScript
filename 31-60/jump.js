@@ -9,8 +9,9 @@
   Note:  You can assume that you can always reach the last index.
 */
 
+// time limit exceeded
 function jump(nums) {
-  if (nums.length === 1) return 0;
+  if (nums.length < 2) return 0;
   const destination = nums.length - 1;
 
   //  initialize to start from index 0 of nums
@@ -32,6 +33,7 @@ function jump(nums) {
   }
 }
 
+// time limit exceeded
 var jumpRec = function(nums) {
   if (nums.length < 2) return 0;
   minStep = nums.length;
@@ -49,6 +51,7 @@ function makeJump(nums, index, steps) {
   }
 }
 
+// time limit exceeded
 function jumpSD(nums) {
   if (nums.length < 2) return 0;
   const queue = [[0]];
@@ -60,6 +63,27 @@ function jumpSD(nums) {
       queue.push([...temp, last+j]);
     }
   }
+}
+
+// no time limit exceeded. (good)
+var jump = function(nums) {
+  const n = nums.length
+  if (n < 2) return 0;
+
+  const jumps = [];
+  let i, j; 
+  jumps[0] = 0; 
+         
+  for (i = 1; i < n; i++) { 
+    jumps.push(n); 
+    for (j = 0; j < i; j++) { 
+      if (i <= j + nums[j] && jumps[j] != n) { 
+        jumps[i] = Math.min(jumps[i], jumps[j] + 1); 
+        break; 
+      } 
+    } 
+  } 
+  return jumps[n-1]; 
 }
 
 console.log(jump([2,3,0,1,4,2,3,1,5,1,3,2,1,3]));
