@@ -11,18 +11,18 @@
 var groupAnagrams = function(strs) {
   if (strs.length < 2) return [strs];
   const dict = {};
-  for (let str of strs) {
-    const temp = str.split('').sort((a,b) => a>b);
-    const key = temp.join('');
+  for (let s of strs) {
+    const key = s.split('').sort((a,b) => a > b).join('');
     if (!dict[key]) dict[key] = [];
-    dict[key].push(str)
+    dict[key].push(s);
   }
 
-  const answer = []
-  for (let key in dict) {
-    answer.push(dict[key]);
-  }
-  return answer;
+  // const answer = []
+  // for (let key in dict) {
+  //   answer.push(dict[key]);
+  // }
+  // return answer;
+  return Object.values(dict)
 }
 
 strs = ["eat", "tea", "tan", "ate", "nat", "bat"];

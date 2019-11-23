@@ -11,6 +11,20 @@
                jump length is 0, which makes it impossible to reach the last index.
 */
 
+// most basic and stupid way.
+var canJump = function(nums) {
+  if (nums.length > 1 && nums[0] == 0) return false;
+  let queue = [0];
+  while (queue.length > 0) {
+    const t = queue.shift();
+    if (t >= nums.length-1) return true;
+    for (let i = t+1; i <= t + nums[t]; i++) {
+      if (!queue.includes(i)) queue.push(i);
+    }
+  }
+  return false;
+}
+
 function canJump(nums) {
   if (nums.length < 2) return true;
   if (nums[0] < 1) return false;
@@ -72,22 +86,21 @@ console.log(canJumpBT(arr));
 //  Dynamin Programming : Top Down
 function canJumpDP_TD(nums) {
   memo = [];
-  for (let i = 0; i < nums.length; i++) {
+  for (let i = 0; i < nums.length-1; i++) {
     memo[i] = 'Unknown';
   }
-  memo[memo.length-1] = 'Good';
+  memo.push('Good');
   return canJumpInPosition(0, nums);
 }
 
 function canJumpInPosition(curr_idx, nums) {
   if (memo[curr_idx] != 'Unknown') {
-    return memo[curr_idx] === 'Good' ? true : false;
+    return memo[curr_idx] === 'Good';
   }
 
   let max_move = Math.min(curr_idx + nums[curr_idx], nums.length - 1);
   for (let next = curr_idx + 1; next <= max_move; next++) {
     if (canJumpInPosition(next, nums)) {
-      memo[curr_idx] = 'Good';
       return true;
     }
   }
@@ -101,10 +114,10 @@ console.log(canJumpDP_TD(arr));
 //  Dynamin Programming : Bottom Up
 function canJumpDP_BU(nums) {
   let memo = [];
-  for (let i = 0; i < nums.length; i++) {
+  for (let i = 0; i < nums.length-1; i++) {
     memo[i] = 'Unknown';
   }
-  memo[memo.length-1] = 'Good';
+  memo.push('Good');
 
   for (let i = nums.length - 2; i >= 0; i--) {
     let max_move = Math.min(i + nums[i], nums.length - 1);

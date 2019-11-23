@@ -13,28 +13,6 @@ function myPow(x, n) {
   if (x === 0) return 0;
   if (x === 1 || n === 0) return 1;
   dict = {};
-  return power(x, n);
-}
-
-function power(x, n) {
-  if (n === 1) return x;
-  if (n === -1) return 1/x;
-  const k = n > 0 ? Math.floor(n/2) : Math.floor(n/2) + (n % 2 != 0 ? 1 : 0);
-  if (!dict[k]) dict[k] = power(x, k);
-  if (n % 2 === 0) {
-    return dict[k] * dict[k];
-  } 
-  return n > 0 ? x * dict[k] * dict[k] : dict[k] * dict[k] / x;
-}
-
-console.log(myPow(2.1, 3));
-console.log(myPow(8, -3))
-console.log(myPow(125, 15));
-
-function myPow(x, n) {
-  if (x === 0) return 0;
-  if (x === 1 || n === 0) return 1;
-  dict = {};
   return n > 0 ? power(x, n) : 1/power(x, -n);
 }
 
@@ -43,4 +21,32 @@ function power(x, n) {
   const k = Math.floor(n / 2);
   if (!dict[k]) dict[k] = power(x, k);
   return n % 2 > 0 ? x * dict[k] * dict[k] : dict[k] * dict[k]
+}
+
+console.log(myPow(2.1, 3));
+console.log(myPow(8, -3))
+console.log(myPow(125, 15));
+
+var myPowMath = function(x, n) {
+  if (n == 0) return 1;
+  if (x == 0 || x == 1) return 1;
+  if (n < 0) {
+    x = 1 / x;
+    n = -n;
+  }
+  let sum = 1, subValue = x, subCount = 1;
+  while (n > 0) {
+    if (n >= subCount) {
+      sum *= subValue;
+      n -= subCount;
+      subValue *= subValue;
+      subCount += subCount;
+    } else {
+      sum *= x;
+      n--;
+      subCount = 2;
+      subValue = x * x;
+    }
+  }
+  return sum;
 }
