@@ -65,17 +65,15 @@ console.log(trapUsingPoint([0,1,0,2,1,0,1,3,2,1,2,1]));
 
 //  Using Math
 function trapMath(heights) {
-  const len = heights.length;
-  if (len < 3) return 0;
-  let l_sum = 0, l_max = 0, r_sum = 0, r_max = 0, h_sum = 0;
+  const len = height.length;
+  let left = 0, right = 0, sum = 0, totalH = 0;
   for (let i = 0; i < len; i++) {
-    l_max = Math.max(l_max, heights[i]);
-    l_sum += l_max;
-    r_max = Math.max(r_max, heights[len - i - 1]);
-    r_sum += r_max;
-    h_sum += heights[i];
+    left = Math.max(left, height[i]);
+    right = Math.max(right, height[len - i - 1])
+    totalH += height[i];
+    sum += left + right;
   }
-  return l_sum + r_sum - h_sum - (r_max * len);
+  return sum - totalH - right * len;
 }
 
 console.log(trapMath([0,1,0,2,1,0,1,3,2,1,2,1]));
