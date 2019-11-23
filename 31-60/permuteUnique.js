@@ -90,3 +90,25 @@ function permuteRec(result, temp, nums, used, n) {
 }
 
 console.log(uniquePermutate(arr));
+
+var permuteUsingSet = function(nums) {
+  if (nums.length < 2) return [nums];
+  result = [];
+  set = new Set();
+  permuteSetRec(nums, []);
+  return result; 
+}
+
+function permuteSetRec(arr, data) {
+  if (arr.length < 2) {
+    const key = data.join(':') + ':' + arr[0];
+    if (!set.has(key)) {
+      set.add(key);
+      result.push([...data, arr[0]]);
+    }
+    return;
+  }
+  for (let i = 0; i < arr.length; i++) {
+    permuteSetRec([...arr.slice(0,i), ...arr.slice(i+1)], [...data, arr[i]]);
+  }
+}
