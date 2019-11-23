@@ -1,6 +1,9 @@
 /*
   You are given an n x n 2D matrix representing an image.  Rotate the image by 90 degrees (clockwise).
 
+  You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. 
+  DO NOT allocate another 2D matrix and do the rotation.
+
   Given input matrix     rotate the input matrix in-place such that it becomes:
       [                             [
         [1,2,3],                      [7,4,1],
@@ -18,17 +21,33 @@
 
 function rotateMatrix(matrix) {
   const len = matrix.length;
-  if (len < 2) return matrix;
-  const result = [];
-  for (let i = 0; i < len; i++) {
-    const rows = [];
-    for (let j = 0; j < len; j++) {
-      rows.push(matrix[len-j-1][i])
-    }
-    result.push(rows)
+  if (len < 2) return matrix; 
+
+  // Rotate clockwise 
+  reverseColumns(matrix, len);
+  console.log(matrix)
+  transpose(matrix, len);
+
+  // Rotate anti-clockwise
+  // transpose(matrix, len);
+  // reverseColumns(matrix, len);
+  console.log(matrix)
+}
+
+function reverseColumns(arr, len) {
+  for (let i=0; i<len/2; i++) {
+    [arr[i], arr[len-i-1]] = [arr[len-i-1], arr[i]]
   }
-  return result;
+}
+
+function transpose(arr, len) {
+  for (let i = 0; i < len; i++) {
+    for (let j = i; j < len; j++) {
+      [arr[i][j], arr[j][i]] = [arr[j][i], arr[i][j]]
+    }
+  }
 }
 
 matrix = [ [1,2,3], [4,5,6], [7,8,9] ]
-console.log(rotateMatrix(matrix));
+matrix = [ [1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,16] ]
+rotateMatrix(matrix);
