@@ -16,16 +16,16 @@ function getPermutation(n, k) {
   for (let i = 0; i < n; i++) nums[i] = i + 1;
   if (k === 1) return nums.join('');
 
-  let fact = 1    // get factorial of n - 1.
-  for (let i = 1; i < n; i++) fact *= i;
+  dict = {};
+  let fact = getFactorial(n-1);
   k--;            // k can be used as index.
 
   result = [];
-  result = getKthPermute(result, nums, n, k, fact);
+  getKthPermute(nums, n, k, fact);
   return result.join('')
 }
 
-function getKthPermute(result, nums, n, k, fact) {
+function getKthPermute(nums, n, k, fact) {
   if (nums.length === 1 || n === 1) {
     result.push(nums[0]);
     return result;
@@ -36,7 +36,13 @@ function getKthPermute(result, nums, n, k, fact) {
   k = k % fact;
   fact = fact / (n - 1);
   n--;
-  return getKthPermute(result, nums, n, k, fact);
+  return getKthPermute(nums, n, k, fact);
+}
+
+function getFactorial(n) {
+    if (n == 1) return 1;
+    if (!dict[n-1]) dict[n-1] = getFactorial(n-1);
+    return n * dict[n-1];
 }
 
 console.log(getPermutation(9, 37098));
@@ -87,30 +93,27 @@ console.log(gneKthPermutation(3, 5));
 console.log(gneKthPermutation(4, 9));
 
 var getPermutation = function(n, k) {
-  let N = [];
-  for (let i = 1; i <= n; i++) N.push(i)
-
-  return getKthPermutation(N, k-1);
-}
-
-function getKthPermutation(N, n) {
-  let count = 0;
-  while (count < n) {
-    let i = N.length - 2;
-    while (i >= 0 && N[i] >= N[i+1]) i--;
-    if (i >= 0) {
-      let j = N.length - 1;
-      while (N[i] >= N[j]) j--;
-      [N[i], N[j]] = [N[j], N[i]];      
-    }
-      
-    j = N.length - 1;
-    while (j > i+1 ) {
-      [N[i+1], N[j]] = [N[j], N[i+1]];
-      i++;
-      j--;
-    }
-    count++;
-  }
+  N = [];  
+  for (let i = 1; i <= n ; i++) N.push(i);
+  for (let j = 1; j < k; j++) getNextPermutation();
   return N.join('');
 }
+
+function getNextPermutation() {
+  let index = N.length-1;
+  while (index > 0 && N[index] < N[index-1]) index--;
+
+  let i = N.length-1;
+  while (N[index-1] > N[i]) i--;
+  [N[index-1], N[i]] = [N[i], N[index-1]];
+  
+  let left = index;
+  let right = N.length - 1;
+  while (left < right) {
+    [N[left], N[right]] = [N[right], N[left]];
+    left++;
+    right--;
+  }
+}
+
+console.log(getPermutation(3,3));
