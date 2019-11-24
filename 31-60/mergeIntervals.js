@@ -40,7 +40,7 @@ var merge = function(intervals) {
     if (intervals[i][0] > last[1]) {
       ans.push(intervals[i]);
     } else {
-      ans[ans.length-1] = [last[0], Math.max(last[1], intervals[i][1])];
+      ans[ans.length-1][1] = Math.max(last[1], intervals[i][1]);
     }
   }
   return ans;

@@ -89,20 +89,46 @@ function insertInterval(intervals, newInterval) {
   return [...answer, N];
 }
 
+
+var insertInterval = function(intervals, newInterval) {
+  if (intervals.length < 1) return [newInterval];
+  for (let i = 0; i < intervals.length; i++) {
+    if (intervals[i][1] >= newInterval[0]) {
+      if (intervals[i][0] > newInterval[1]) {
+        return [...intervals.slice(0, i), newInterval, ...intervals.slice(i)];
+      }
+      intervals[i] = [Math.min(intervals[i][0], newInterval[0]), Math.max(intervals[i][1], newInterval[1])];
+      return mergeIntervals(intervals, i);
+    } 
+  }
+  intervals.push(newInterval);
+  return intervals;
+}
+
+function mergeIntervals(intervals, i) {
+  let curr = intervals[i];
+  let j = i + 1;
+  for (j; j < intervals.length; j++) {
+    if (curr[1] >= intervals[j][0]) {
+      curr[1] = Math.max(curr[1], intervals[j][1]);
+    } else break;
+  }
+  return [...intervals.slice(0, i), curr, ...intervals.slice(j)];
+}
+
 var insert = function(intervals, newInterval) {
   if (intervals.length < 1) return [newInterval];
 
-  let N = newInterval, ans = [];
+  let N = newInterval, index = -1;
   for (let i = 0; i < intervals.length; i++) {
     const I = intervals[i];
-    if (I[1] < N[0]) ans.push(I);
-    else if (I[0] <= N[0] && I[1] >= N[0]) {
-      N = [I[0], Math.max(I[1], N[1])];
-    } else if (I[0] <= N[1] && I[1] >= N[1]) {
-      N = [Math.min(I[0], N[0]), I[1]];
-    } else if (N[1] < I[0]) {
-      return [...ans, N, ...intervals.slice(i)];
-    }
+    if (I[1] < N[0]) index = i;
+    else if (N[1] < I[0]) {
+      return [...intervals.slice(0, index+1), N, ...intervals.slice(i)];
+    } else {
+      N[0] = I[0] < N[0] ? I[0] : N[0];
+      N[1] = I[1] > N[1] ? I[1] : N[1];
+    } 
   }
-  return [...ans, N];
+  return [...intervals.slice(0, index+1), N];
 }
